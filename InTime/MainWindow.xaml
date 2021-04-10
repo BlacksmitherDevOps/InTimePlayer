@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InTime"
         mc:Ignorable="d"
-        Title="MainWindow" Height="798" Width="1419">
-    <Grid>
+        Title="MainWindow" Height="798" Width="1419" WindowStyle="None">
+    <Border CornerRadius="20,20,20,20" Background="Cornsilk">
+        <Grid >
         <ListBox HorizontalAlignment="Left" Height="130" Margin="10,40,0,0" VerticalAlignment="Top" Width="210" Background="#FFD64646">
             <ListBoxItem FontSize="25">Home page</ListBoxItem>
             <ListBoxItem FontSize="25">Recomendations</ListBoxItem>
@@ -32,8 +33,8 @@
         <TextBlock HorizontalAlignment="Left" Margin="475,125,0,0" TextWrapping="Wrap" Text="Description" VerticalAlignment="Top" Height="65" Width="242" FontSize="25"/>
         <DataGrid HorizontalAlignment="Left" Height="320" Margin="290,250,0,0" VerticalAlignment="Top" Width="830"/>
         <ProgressBar HorizontalAlignment="Left" Height="10" Margin="303,735,0,0" VerticalAlignment="Top" Width="817"/>
-        <TextBox HorizontalAlignment="Left" Height="59" Margin="575,671,0,0" TextWrapping="Wrap" Text="Navigation buttons" VerticalAlignment="Top" Width="455" TextChanged="TextBox_TextChanged" FontSize="24"/>
+        <TextBox HorizontalAlignment="Left" Height="59" Margin="575,671,0,0" TextWrapping="Wrap" Text="Navigation buttons" VerticalAlignment="Top" Width="455" FontSize="24"/>
         <ListBox HorizontalAlignment="Left" Height="490" Margin="1205,150,0,0" VerticalAlignment="Top" Width="150" Background="#FFBB1F1F"/>
-
-    </Grid>
+        </Grid>
+    </Border>
 </Window>
