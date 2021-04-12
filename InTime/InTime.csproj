@@ -68,29 +68,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Albums.cs">
-      <DependentUpon>Player_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="C__MigrationHistory.cs">
-      <DependentUpon>Player_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Player_DB.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Player_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Playlists.cs">
-      <DependentUpon>Player_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Singers.cs">
-      <DependentUpon>Player_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Tracks.cs">
-      <DependentUpon>Player_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Users.cs">
-      <DependentUpon>Player_DB.tt</DependentUpon>
-    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -110,16 +87,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Player_DB.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Player_DB.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Player_DB.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Player_DB.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -141,14 +108,7 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\ServiceReference1\Service1.wsdl" />
-    <EntityDeploy Include="Player_DB.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Player_DB.Designer.cs</LastGenOutput>
-    </EntityDeploy>
     <None Include="packages.config" />
-    <None Include="Player_DB.edmx.diagram">
-      <DependentUpon>Player_DB.edmx</DependentUpon>
-    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -174,18 +134,6 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Player_DB.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Player_DB.Context.cs</LastGenOutput>
-      <DependentUpon>Player_DB.edmx</DependentUpon>
-    </Content>
-    <Content Include="Player_DB.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Player_DB.edmx</DependentUpon>
-      <LastGenOutput>Player_DB.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
