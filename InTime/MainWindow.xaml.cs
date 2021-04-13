@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using InTime.Controls;
 using InTime.ServiceReference1;
 
 namespace InTime
@@ -25,9 +26,7 @@ namespace InTime
         public MainWindow()
         {
             InitializeComponent();
-            Service1Client client = new Service1Client();
-            byte[] arr = client.GetFile();
-            File.WriteAllBytes(@"C:\test_track.mp3",arr);
+            Control_Bord.Child = new MainPlayerPage_Control();
         }
     }
 }
