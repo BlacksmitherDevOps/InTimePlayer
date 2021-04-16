@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +25,9 @@ namespace InTime.Controls
         {
             InitializeComponent();
             testAddPlaylist();
+            testInfoBord();
+            testInfoBord();
+            testInfoBord();
         }
         void testAddPlaylist()
         {
@@ -32,6 +36,11 @@ namespace InTime.Controls
             lst.Add(new tempPlaylist() { Title = "ListName" });
             lst.Add(new tempPlaylist() { Title = "ListName" });
             myList_lb.ItemsSource = lst;
+        }
+        void testInfoBord()
+        {
+            Playlist_Control playlist_Control = new Playlist_Control();
+            tape_panel.Children.Add(playlist_Control);
         }
     }
 }

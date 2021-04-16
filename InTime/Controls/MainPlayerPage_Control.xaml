@@ -102,7 +102,13 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <TextBox Name="search_tb" Text="Search..." Width="250" FontSize="20"/>
-                    <Border Name="centralInfo_bord" Grid.Row="1"/>
+                    <Border Name="centralInfo_bord" Grid.Row="1">
+                        <ScrollViewer>
+                            <StackPanel Name="tape_panel" VerticalAlignment="Stretch">
+                                
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Border>
                 </Grid>
                 <Grid Grid.Column="2"><!--right panel-->
                     <Grid.RowDefinitions>

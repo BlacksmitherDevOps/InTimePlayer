@@ -9,7 +9,8 @@ namespace InTime
     public class tempSong
     {
         public string Title { get; set; }
-        public double Duration { get; set; }
+        public string Duration { get; set; }
+        public string Album { get; set; }
         public string Singer { get; set; }
     }
 }

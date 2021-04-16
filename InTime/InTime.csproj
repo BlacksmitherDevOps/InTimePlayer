@@ -68,9 +68,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\Playlist_Control.xaml.cs">
+      <DependentUpon>Playlist_Control.xaml</DependentUpon>
+    </Compile>
     <Compile Include="tempPlaylist.cs" />
     <Compile Include="tempSong.cs" />
     <Page Include="Controls\MainPlayerPage_Control.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Playlist_Control.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
