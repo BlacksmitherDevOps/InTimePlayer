@@ -100,7 +100,7 @@
                 <Style TargetType="{x:Type ListBoxItem}">
                     <Setter Property="Padding" Value="5"/>
                     <Setter Property="FontSize" Value="36"/>
-                    <Setter Property="Background" Value="#FFFFCECE"/>
+                    <Setter Property="Background" Value="White"/>
                     <EventSetter Event="MouseEnter" Handler="ListBoxItem_MouseEnter"/>
                     <EventSetter Event="MouseLeave" Handler="ListBoxItem_MouseLeave"/>
                     <EventSetter Event="Selected" Handler="ListBoxItem_Selected"/>
@@ -108,10 +108,11 @@
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                <Border x:Name="border" Background="{TemplateBinding Background}"
-                                                    BorderBrush="{TemplateBinding BorderBrush}" 
-                                                    CornerRadius="10"
-                                                    BorderThickness="{TemplateBinding BorderThickness}">
+                                <Border x:Name="border" 
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}" 
+                                        CornerRadius="10"
+                                        BorderThickness="{TemplateBinding BorderThickness}">
                                     <ContentPresenter HorizontalAlignment="Stretch" Margin="{TemplateBinding Padding}"/>
                                 </Border>
                                 <ControlTemplate.Triggers>

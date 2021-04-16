@@ -76,24 +76,28 @@
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="30"/>
                     </Grid.RowDefinitions>
-                    <StackPanel Grid.Row="1" Background="#FFE83B3B">
-                        <TextBlock Name="homePage_tb" Text="Home Page"
+                    <StackPanel Grid.Row="1" Background="WhiteSmoke">
+                        <TextBlock Name="homePage_tb" Foreground="Red" Text="Home Page"
                                Style="{StaticResource MainButton_Style}"/>
                         <TextBlock Name="recomend_tb" Text="Recomendations"
-                               Style="{StaticResource MainButton_Style}" Margin="0,7,0,0"/>
+                               Foreground="Red" Style="{StaticResource MainButton_Style}" Margin="0,7,0,0"/>
                         <TextBlock Name="liked_tb" Text="Liked songs"
-                               Style="{StaticResource MainButton_Style}" Margin="0,7,0,0"/>
+                               Foreground="Red" Style="{StaticResource MainButton_Style}" Margin="0,7,0,0"/>
                     </StackPanel>
                     <TextBlock Text="My playlists:" Grid.Row="2" Style="{StaticResource MainButton_Style}"
                            Foreground="#FFE83B3B" FontWeight="Normal"/>
-                    <ListBox Name="myList_lb" Background="#FFE83B3B" Grid.Row="3" ItemsSource="{Binding}" 
-                         ItemContainerStyle="{StaticResource itemSong_Style}"
-                         ItemTemplate="{StaticResource itemSong_Template}"
+                    <ListBox Name="myList_lb" Background="White" Grid.Row="3" 
+                         
                          ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <ListBoxItem Content="Playlist" Foreground="Red" Margin="20,0,0,0" FontSize="25"/>
+                        <ListBoxItem Content="Playlist" Foreground="Red" Margin="20,0,0,0" FontSize="25"/>
+                        <ListBoxItem Content="Playlist" Foreground="Red" Margin="20,0,0,0" FontSize="25"/>
+                        <ListBoxItem Content="Playlist" Foreground="Red" Margin="20,0,0,0" FontSize="25"/>
                     </ListBox>
                     <Border Grid.Row="4" BorderThickness="2,0,2,2" BorderBrush="#FFE83B3B">
                         <TextBlock Name="addPlaylist_btn" Text="+" Style="{StaticResource MainButton_Style}"
-                               Foreground="#FF26FF4E" FontSize="26" FontWeight="Bold"/>
+                               Foreground="Red" FontSize="26" FontWeight="Bold" />
+                        
                     </Border>
                 </Grid>
                 <Grid Grid.Column="1"> <!--central panel-->
@@ -101,7 +105,7 @@
                         <RowDefinition Height="40"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <TextBox Name="search_tb" Text="Search..." Width="250" FontSize="20"/>
+                    <TextBox Name="search_tb" Text="Search..." Width="250" Foreground="Red" FontSize="20"/>
                     <Border Name="centralInfo_bord" Grid.Row="1">
                         <ScrollViewer>
                             <StackPanel Name="tape_panel" VerticalAlignment="Stretch">
@@ -163,8 +167,8 @@
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <TextBlock Text="Singer" FontSize="18" Margin="2,0" FontWeight="Medium"/>
-                    <TextBlock Text="Track name" FontSize="18" Margin="2,0" Grid.Row="1" FontWeight="Medium"/>
+                    <TextBlock Text="Singer" Foreground="Red" FontSize="18" Margin="2,0" FontWeight="Medium"/>
+                    <TextBlock Text="Track name" Foreground="Red" FontSize="18" Margin="2,0" Grid.Row="1" FontWeight="Medium"/>
                 </Grid>
                 <StackPanel Grid.Column="2">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -172,7 +176,8 @@
                         <Button Width="70" Margin="10,0" FontSize="20" Content="Rereat"/>
                         <Button Width="70" Margin="10,0" FontSize="20" Content="Next"/>
                     </StackPanel>
-                    <ProgressBar Margin="0,5" Height="5"/>
+                    <ProgressBar Margin="0,5" Height="5" Foreground="DarkRed"
+                                 Background="#CD5C5C" Value="50"/>
                 </StackPanel>
             </Grid>
             
