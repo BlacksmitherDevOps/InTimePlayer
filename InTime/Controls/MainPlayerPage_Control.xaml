@@ -5,8 +5,88 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InTime.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="500" d:DesignWidth="800">
+             d:DesignHeight="900" d:DesignWidth="1550">
     <UserControl.Resources>
+
+
+        <!-- Стиль ползунка песни-->
+        <Style x:Key="Slider_repeat_btn1" TargetType="RepeatButton">
+            <Setter Property="SnapsToDevicePixels" Value="true" />
+            <Setter Property="OverridesDefaultStyle" Value="true" />
+            <Setter Property="IsTabStop" Value="false" />
+            <Setter Property="Focusable" Value="false" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RepeatButton">
+                        <Border  BorderThickness="1" BorderBrush="#ff8282" Background="#ff8282" Height="3"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="Slider_repeat_btn2" TargetType="RepeatButton">
+            <Setter Property="SnapsToDevicePixels" Value="true" />
+            <Setter Property="OverridesDefaultStyle" Value="true" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RepeatButton">
+                        <Border SnapsToDevicePixels="True" Background="#ff0000"  BorderThickness="1" BorderBrush="#ff0000" Height="3"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="SliderThumb" TargetType="Thumb" >
+            <Setter Property="SnapsToDevicePixels" Value="true" />
+            <Setter Property="Visibility" Value="Hidden"/>
+            <Setter Property="OverridesDefaultStyle" Value="true" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Thumb">
+                        <Ellipse x:Name="ThumbEllipse" Height="10" Width="10" Fill="#ff0000"></Ellipse>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <ControlTemplate x:Key="Slider" TargetType="Slider">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" MinHeight="{TemplateBinding MinHeight}" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Track Grid.Row="1" x:Name="PART_Track"   >
+                    <Track.DecreaseRepeatButton>
+                        <RepeatButton Style="{StaticResource Slider_repeat_btn2}"  Command="Slider.DecreaseLarge" />
+                    </Track.DecreaseRepeatButton>
+                    <Track.Thumb>
+                        <Thumb x:Name="Thumb1" Style="{StaticResource SliderThumb}"  />
+                    </Track.Thumb>
+                    <Track.IncreaseRepeatButton>
+                        <RepeatButton Style="{StaticResource Slider_repeat_btn1}" Command="Slider.IncreaseLarge" />
+                    </Track.IncreaseRepeatButton>
+                </Track>
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="Thumb1" Property="Visibility" Value="Visible"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="False">
+                    <Setter TargetName="Thumb1" Property="Visibility" Value="Collapsed"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <Style x:Key="Horizontal_Slider" TargetType="Slider">
+            <Setter Property="Focusable" Value="False"/>
+            <Setter Property="SnapsToDevicePixels" Value="true" />
+            <Setter Property="IsMoveToPointEnabled" Value="True"/>
+            <Setter Property="OverridesDefaultStyle" Value="true" />
+            <Style.Triggers>
+                <Trigger Property="Orientation" Value="Horizontal">
+                    <Setter Property="MinHeight" Value="21" />
+                    <Setter Property="MinWidth" Value="104" />
+                    <Setter Property="Template" Value="{StaticResource Slider}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
         <Style x:Name="mainBtns_Style" x:Key="MainButton_Style" TargetType="TextBlock">
             <Setter Property="FontSize" Value="22"/>
             <Setter Property="FontWeight" Value="DemiBold"/>
@@ -14,6 +94,7 @@
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
         </Style>
+
         <Style x:Name="ListboxPlaylist_Style" x:Key="ListboxPlaylist_Style" TargetType="TextBlock">
             <Setter Property="FontSize" Value="18"/>
             <Setter Property="FontWeight" Value="Medium"/>
@@ -55,11 +136,16 @@
         </DataTemplate>
     </UserControl.Resources>
     <Grid Background="White">
-        <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="151*"/>
+            <ColumnDefinition Width="8*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.ColumnSpan="3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="0"/>
                 <RowDefinition/>
-                <RowDefinition Height="50"/>
+                <RowDefinition Height="100"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
@@ -67,7 +153,8 @@
                     <ColumnDefinition/>
                     <ColumnDefinition Width="180"/>
                 </Grid.ColumnDefinitions>
-                <Grid><!--left panel-->
+                <Grid>
+                    <!--left panel-->
                     <Grid.RowDefinitions>
                         <RowDefinition Height="40"/>
                         <RowDefinition Height="110"/>
@@ -97,10 +184,11 @@
                     <Border Grid.Row="4" BorderThickness="2,0,2,2" BorderBrush="#FFE83B3B">
                         <TextBlock Name="addPlaylist_btn" Text="+" Style="{StaticResource MainButton_Style}"
                                Foreground="Red" FontSize="26" FontWeight="Bold" />
-                        
+
                     </Border>
                 </Grid>
-                <Grid Grid.Column="1"> <!--central panel-->
+                <Grid Grid.Column="1">
+                    <!--central panel-->
                     <Grid.RowDefinitions>
                         <RowDefinition Height="40"/>
                         <RowDefinition/>
@@ -109,12 +197,13 @@
                     <Border Name="centralInfo_bord" Grid.Row="1">
                         <ScrollViewer>
                             <StackPanel Name="tape_panel" VerticalAlignment="Stretch">
-                                
+
                             </StackPanel>
                         </ScrollViewer>
                     </Border>
                 </Grid>
-                <Grid Grid.Column="2"><!--right panel-->
+                <Grid Grid.Column="2">
+                    <!--right panel-->
                     <Grid.RowDefinitions>
                         <RowDefinition Height="40"/>
                         <RowDefinition/>
@@ -154,33 +243,155 @@
                     </ListBox>
                 </Grid>
             </Grid>
-            <Grid Grid.Row="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="60"/>
-                    <ColumnDefinition MinWidth="100" MaxWidth="200"/>
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="180"/>
-                </Grid.ColumnDefinitions>
-                <Image Source="3E-zsSjyGLU.jpg"/>
-                <Grid Grid.Column="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Text="Singer" Foreground="Red" FontSize="18" Margin="2,0" FontWeight="Medium"/>
-                    <TextBlock Text="Track name" Foreground="Red" FontSize="18" Margin="2,0" Grid.Row="1" FontWeight="Medium"/>
+            <Border Grid.Row="2" BorderThickness="0,2,0,0" BorderBrush="Red">
+
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition MinWidth="100" MaxWidth="200"/>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="300"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Margin="5,0,0,15" Source="3E-zsSjyGLU.jpg" Grid.Column="0"/>
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Singer" Foreground="Red" FontSize="18" Margin="10,15,-6,10" FontWeight="Medium"/>
+                        <TextBlock Text="Track name" Foreground="Red" FontSize="18" Margin="10,45,-6,30" FontWeight="Medium" Grid.RowSpan="2"/>
+                    </Grid>
+                    <Grid Grid.Column="2">
+                        <!--Play button-->
+                        <Path x:Name="Play_btn" Width="40" Height="40" StrokeThickness="0" Margin="475,19,475,39">
+                            <Path.Data>
+                                <PathGeometry Figures="M 0,0 L20,15 L0,30 Z"/>
+                            </Path.Data>
+                            <Path.Fill>
+                                <SolidColorBrush Color="#ff8282"/>
+                            </Path.Fill>
+                            <Path.Triggers>
+                                <EventTrigger RoutedEvent="Path.MouseEnter">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetProperty="(Path.Fill).(SolidColorBrush.Color)" To="Red" Duration="0:0:0.5"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                                <EventTrigger RoutedEvent="Path.MouseLeave">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetProperty="(Path.Fill).(SolidColorBrush.Color)" To="#ff8282" Duration="0:0:0.5"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </Path.Triggers>
+                        </Path>
+                        <!---Prev button setttings-->
+                        <Path x:Name="Prev_btn" Width="20" StrokeThickness="0" Margin="435,20.833,535,52.75" RenderTransformOrigin="-0.25,-0.8" Stretch="Fill">
+                            <Path.Data>
+                                <PathGeometry Figures="M 20,0 L 10,10 V 1.5 H 2,5 V 18.5 H 10 V 10 L 20,20 Z"/>
+                            </Path.Data>
+                            <Path.Fill>
+                                <SolidColorBrush Color="#ff8282"/>
+                            </Path.Fill>
+                            <Path.Triggers>
+                                <EventTrigger RoutedEvent="Path.MouseEnter">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetName="Prev_btn" Storyboard.TargetProperty="(Path.Fill).(SolidColorBrush.Color)" To="Red" Duration="0:0:0.5"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                                <EventTrigger RoutedEvent="Path.MouseLeave">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetProperty="(Path.Fill).(SolidColorBrush.Color)" To="#ff8282" Duration="0:0:0.5"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </Path.Triggers>
+                        </Path>
+                        <!--Next button settings-->
+                        <Path x:Name="Next_btn" Width="20" StrokeThickness="0" Margin="510,20.833,460,52.75" Stretch="Fill">
+                            <Path.Data>
+                                <PathGeometry Figures="M 0,0 L 10,10 V 1.5 H 15 V 18.5 H 10 V 10 L 0,20 Z"/>
+                            </Path.Data>
+                            <Path.Fill>
+                                <SolidColorBrush Color="#ff8282"/>
+                            </Path.Fill>
+                            <Path.Triggers>
+                                <EventTrigger RoutedEvent="Path.MouseEnter">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetProperty="(Path.Fill).(SolidColorBrush.Color)" To="Red" Duration="0:0:0.5"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                                <EventTrigger RoutedEvent="Path.MouseLeave">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetProperty="(Path.Fill).(SolidColorBrush.Color)" To="#ff8282" Duration="0:0:0.5"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </Path.Triggers>
+                        </Path>
+                        <!--Shuffle button-->
+                        <Path x:Name="Shuffle_btn" Width="60" Height="25" StrokeThickness="2" Stroke="#ff8282" Margin="385,13,545,60">
+                            <Path.Data>
+                                <PathGeometry Figures="M 5,12.5 C 20,12.5 5,20 22,20 M 25,20 L 22.5,17.5 V 22.5 Z M 5,20 C 17.5,20 7.5,12.5 22,12.5 M 25,12.5 L 22.5,10 V 15 Z "/>
+                            </Path.Data>
+                            <Path.RenderTransform>
+                                <ScaleTransform ScaleY="1.2"/>
+                            </Path.RenderTransform>
+                            <Path.Triggers>
+                                <EventTrigger RoutedEvent="Path.MouseEnter">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetProperty="(Path.Stroke).(SolidColorBrush.Color)" To="Red" Duration="0:0:0.3"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                                <EventTrigger RoutedEvent="Path.MouseLeave">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetProperty="(Path.Stroke).(SolidColorBrush.Color)" To="#ff8282" Duration="0:0:0.5"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </Path.Triggers>
+                        </Path>
+                        <!--Repeat button-->
+                        <Path x:Name="Repeat_btn" Width="40" Height="40" StrokeThickness="2" Stroke="#ff8282"  Margin="550,23,400,35">
+                            <Path.Data>
+                                <PathGeometry Figures="M 0,10 S 0,0 20,2.5 M 20,2.5 L 17.5,0 V 5 L 20,2.5 M 21.5,7.5 S 22.5,20 0,16.5 M 0,16.5 L 2.5,14 V 19 Z"/>
+                            </Path.Data>
+                            <Path.RenderTransform>
+                                <RotateTransform Angle="10"/>
+                            </Path.RenderTransform>
+                            <Path.Triggers>
+                                <EventTrigger RoutedEvent="Path.MouseEnter">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetProperty="(Path.Stroke).(SolidColorBrush.Color)" To="Red" Duration="0:0:0.5"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                                <EventTrigger RoutedEvent="Path.MouseLeave">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetProperty="(Path.Stroke).(SolidColorBrush.Color)" To="#ff8282" Duration="0:0:0.5"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </Path.Triggers>
+                        </Path>
+                        <Slider Margin="185,59,185,18" Width="620" Height="5" Style="{StaticResource Horizontal_Slider}"/>
+                    </Grid>
                 </Grid>
-                <StackPanel Grid.Column="2">
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <Button Width="70" Margin="10,0" FontSize="20" Content="Prew"/>
-                        <Button Width="70" Margin="10,0" FontSize="20" Content="Rereat"/>
-                        <Button Width="70" Margin="10,0" FontSize="20" Content="Next"/>
-                    </StackPanel>
-                    <ProgressBar Margin="0,5" Height="5" Foreground="DarkRed"
-                                 Background="#CD5C5C" Value="50"/>
-                </StackPanel>
-            </Grid>
-            
+            </Border>
         </Grid>
     </Grid>
 </UserControl>

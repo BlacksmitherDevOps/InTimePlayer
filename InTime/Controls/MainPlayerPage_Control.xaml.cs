@@ -31,11 +31,7 @@ namespace InTime.Controls
         }
         void testAddPlaylist()
         {
-            List<tempPlaylist> lst = new List<tempPlaylist>();
-            lst.Add(new tempPlaylist() { Title = "ListName" });
-            lst.Add(new tempPlaylist() { Title = "ListName" });
-            lst.Add(new tempPlaylist() { Title = "ListName" });
-            myList_lb.ItemsSource = lst;
+           
         }
         void testInfoBord()
         {
