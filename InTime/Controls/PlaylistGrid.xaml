@@ -43,6 +43,54 @@
                 </Setter>
             </Style>
 
+            <Style x:Key="item_Container" TargetType="{x:Type ListBoxItem}">
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="BorderThickness" Value="0,0,0,2"/>
+                <Setter Property="BorderBrush" Value="Red"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                            <Border x:Name="border" 
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}" 
+                                        CornerRadius="10,10,0,0"
+                                        BorderThickness="{TemplateBinding BorderThickness}">
+                                <ContentPresenter HorizontalAlignment="Stretch" Margin="{TemplateBinding Padding}"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="#FFB8FF8F"/>
+                                    <Setter Property="BorderThickness" Value="1"/>
+                                    <Setter Property="BorderBrush" Value="Black"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <DataTemplate x:Key="item_Template">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="130"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="50"/>
+                    </Grid.ColumnDefinitions>
+                    <Border BorderBrush="Red" Height="33" Grid.ColumnSpan="7"/>
+                    <Button x:Name="PlayBtn" Style="{StaticResource Play_btn}" Grid.Column="0"/>
+                    <TextBlock Text="{Binding SongTitle}" Grid.Column="1" FontSize="20"
+                                       Margin="7,3,0,0"/>
+                    <TextBlock Grid.Column="2" Text="{Binding SongArtist}" FontSize="20"
+                                       Margin="7,3,0,0"/>
+                    <TextBlock Grid.Column="3" Text="{Binding SongAlbum}" FontSize="20"
+                                       Margin="7,3,0,0"/>
+                    <TextBlock Grid.Column="4" Text="{Binding SongDuration,StringFormat=mm:ss}" FontSize="20"
+                                       Margin="7,3,0,0"/>
+                    <Button Content="menu" Style="{StaticResource SongMenu}" Grid.Column="5"/>
+                </Grid>
+            </DataTemplate>
             <Style x:Key="PlaylistItems" TargetType="{x:Type ListBoxItem}">
                 <Setter Property="Template">
                     <Setter.Value>
@@ -70,11 +118,6 @@
                                     <Button Content="menu" Style="{StaticResource SongMenu}" Grid.Column="5"/>
                                 </Grid>
                             </Border>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
@@ -134,8 +177,8 @@
             <TextBlock Grid.Column="4" Text="duration" FontSize="20"
                        Margin="7,8,0,0" Foreground="Red"/>
         </Grid>
-        <ListBox x:Name="SongList" Grid.Row="2">
-            <ListBoxItem Style="{StaticResource PlaylistItems}"></ListBoxItem>
+        <ListBox x:Name="SongList" ItemContainerStyle="{StaticResource item_Container}" ItemTemplate="{StaticResource item_Template}" Grid.Row="2">
+            
         </ListBox>
     </Grid>
 </UserControl>

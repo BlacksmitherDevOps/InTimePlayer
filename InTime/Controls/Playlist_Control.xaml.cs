@@ -49,6 +49,7 @@ namespace InTime.Controls
             ((ListBoxItem)sender).Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFFCECE"));
             ColorAnimation color = new ColorAnimation((Color)ColorConverter.ConvertFromString("#FFE83B3B"), TimeSpan.FromSeconds(0.2));
             ((ListBoxItem)sender).Background.BeginAnimation(SolidColorBrush.ColorProperty, color);
+
         }
 
         private void ListBoxItem_Selected(object sender, RoutedEventArgs e)

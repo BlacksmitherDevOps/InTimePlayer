@@ -116,27 +116,12 @@
                                     <ContentPresenter HorizontalAlignment="Stretch" Margin="{TemplateBinding Padding}"/>
                                 </Border>
                                 <ControlTemplate.Triggers>
-                                    <!--<EventTrigger RoutedEvent="IsMouseOver">
-                                        <BeginStoryboard Storyboard="{StaticResource Selected_Animation}"/>
-                                    </EventTrigger>
-                                    <EventTrigger RoutedEvent="MouseLeave">
-                                        <BeginStoryboard Storyboard="{StaticResource Unselected_Animation}"/>
-                                    </EventTrigger>-->
                                     <Trigger Property="IsSelected" Value="True">
                                         <Setter Property="Background" Value="#FFB8FF8F"/>
                                         <Setter Property="BorderThickness" Value="1"/>
                                         <Setter Property="BorderBrush" Value="Black"/>
                                     </Trigger>
-                                    <!--<Trigger Property="IsMouseOver" Value="True">
-                                        <Trigger.EnterActions>
-                                            <BeginStoryboard Storyboard="{StaticResource Selected_Animation}"/>
-                                        </Trigger.EnterActions>
-                                        <Trigger.ExitActions>
-                                            <BeginStoryboard Storyboard="{StaticResource Unselected_Animation}"/>
-                                        </Trigger.ExitActions>
-                                    </Trigger>-->
                                 </ControlTemplate.Triggers>
-
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
