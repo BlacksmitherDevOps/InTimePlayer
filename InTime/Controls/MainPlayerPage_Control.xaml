@@ -257,9 +257,9 @@
             <ControlTemplate x:Key="Slider" TargetType="Slider">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" MinHeight="{TemplateBinding MinHeight}" />
-                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" MinHeight="{TemplateBinding MinHeight}" />
+                        <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <Track Grid.Row="1" x:Name="PART_Track"   >
                         <Track.DecreaseRepeatButton>
@@ -522,7 +522,7 @@
                             <RowDefinition/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <TextBlock Text="Singer" Foreground="Red" FontSize="18" Margin="10,15,-6,4" FontWeight="Medium">
+                        <TextBlock Text="Singer" Foreground="Red" FontSize="18" HorizontalAlignment="Left" Margin="10,15,0,4" FontWeight="Medium">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Style.Triggers>
@@ -536,137 +536,156 @@
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
-                        <TextBlock Text="Track name" Foreground="Red" FontSize="18" Margin="10,45,-6,30" FontWeight="Medium" Grid.RowSpan="2"/>
+                        <TextBlock Text="Track name" Foreground="Red" FontSize="18" HorizontalAlignment="Left" Margin="10,45,-6,30" FontWeight="Medium" Grid.RowSpan="2"/>
                     </Grid>
                     <Grid Grid.Column="2">
-                        <!--Play button-->
-                        <Path x:Name="Play_btn" Width="40" Height="40" StrokeThickness="0" Margin="475,19,475,39">
-                            <Path.Data>
-                                <PathGeometry Figures="M 0,0 L20,15 L0,30 Z"/>
-                            </Path.Data>
-                            <Path.Fill>
-                                <SolidColorBrush Color="#ff8282"/>
-                            </Path.Fill>
-                            <Path.Triggers>
-                                <EventTrigger RoutedEvent="Path.MouseEnter">
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <ColorAnimation Storyboard.TargetProperty="(Path.Fill).(SolidColorBrush.Color)" To="Red" Duration="0:0:0.5"/>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger>
-                                <EventTrigger RoutedEvent="Path.MouseLeave">
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <ColorAnimation Storyboard.TargetProperty="(Path.Fill).(SolidColorBrush.Color)" To="#ff8282" Duration="0:0:0.5"/>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger>
-                            </Path.Triggers>
-                        </Path>
-                        <!---Prev button setttings-->
-                        <Path x:Name="Prev_btn" Width="20" StrokeThickness="0" Margin="435,20.833,535,52.75" RenderTransformOrigin="-0.25,-0.8" Stretch="Fill">
-                            <Path.Data>
-                                <PathGeometry Figures="M 20,0 L 10,10 V 1.5 H 2,5 V 18.5 H 10 V 10 L 20,20 Z"/>
-                            </Path.Data>
-                            <Path.Fill>
-                                <SolidColorBrush Color="#ff8282"/>
-                            </Path.Fill>
-                            <Path.Triggers>
-                                <EventTrigger RoutedEvent="Path.MouseEnter">
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <ColorAnimation Storyboard.TargetName="Prev_btn" Storyboard.TargetProperty="(Path.Fill).(SolidColorBrush.Color)" To="Red" Duration="0:0:0.5"/>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger>
-                                <EventTrigger RoutedEvent="Path.MouseLeave">
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <ColorAnimation Storyboard.TargetProperty="(Path.Fill).(SolidColorBrush.Color)" To="#ff8282" Duration="0:0:0.5"/>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger>
-                            </Path.Triggers>
-                        </Path>
-                        <!--Next button settings-->
-                        <Path x:Name="Next_btn" Width="20" StrokeThickness="0" Margin="510,20.833,460,52.75" Stretch="Fill">
-                            <Path.Data>
-                                <PathGeometry Figures="M 0,0 L 10,10 V 1.5 H 15 V 18.5 H 10 V 10 L 0,20 Z"/>
-                            </Path.Data>
-                            <Path.Fill>
-                                <SolidColorBrush Color="#ff8282"/>
-                            </Path.Fill>
-                            <Path.Triggers>
-                                <EventTrigger RoutedEvent="Path.MouseEnter">
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <ColorAnimation Storyboard.TargetProperty="(Path.Fill).(SolidColorBrush.Color)" To="Red" Duration="0:0:0.5"/>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger>
-                                <EventTrigger RoutedEvent="Path.MouseLeave">
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <ColorAnimation Storyboard.TargetProperty="(Path.Fill).(SolidColorBrush.Color)" To="#ff8282" Duration="0:0:0.5"/>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger>
-                            </Path.Triggers>
-                        </Path>
-                        <!--Shuffle button-->
-                        <Path x:Name="Shuffle_btn" Width="60" Height="25" StrokeThickness="2" Stroke="#ff8282" Margin="385,13,545,60">
-                            <Path.Data>
-                                <PathGeometry Figures="M 5,12.5 C 20,12.5 5,20 22,20 M 25,20 L 22.5,17.5 V 22.5 Z M 5,20 C 17.5,20 7.5,12.5 22,12.5 M 25,12.5 L 22.5,10 V 15 Z "/>
-                            </Path.Data>
-                            <Path.RenderTransform>
-                                <ScaleTransform ScaleY="1.2"/>
-                            </Path.RenderTransform>
-                            <Path.Triggers>
-                                <EventTrigger RoutedEvent="Path.MouseEnter">
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <ColorAnimation Storyboard.TargetProperty="(Path.Stroke).(SolidColorBrush.Color)" To="Red" Duration="0:0:0.3"/>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger>
-                                <EventTrigger RoutedEvent="Path.MouseLeave">
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <ColorAnimation Storyboard.TargetProperty="(Path.Stroke).(SolidColorBrush.Color)" To="#ff8282" Duration="0:0:0.5"/>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger>
-                            </Path.Triggers>
-                        </Path>
-                        <!--Repeat button-->
-                        <Path x:Name="Repeat_btn" Width="40" Height="40" StrokeThickness="2" Stroke="#ff8282"  Margin="550,23,400,35">
-                            <Path.Data>
-                                <PathGeometry Figures="M 0,10 S 0,0 20,2.5 M 20,2.5 L 17.5,0 V 5 L 20,2.5 M 21.5,7.5 S 22.5,20 0,16.5 M 0,16.5 L 2.5,14 V 19 Z"/>
-                            </Path.Data>
-                            <Path.RenderTransform>
-                                <RotateTransform Angle="10"/>
-                            </Path.RenderTransform>
-                            <Path.Triggers>
-                                <EventTrigger RoutedEvent="Path.MouseEnter">
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <ColorAnimation Storyboard.TargetProperty="(Path.Stroke).(SolidColorBrush.Color)" To="Red" Duration="0:0:0.5"/>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger>
-                                <EventTrigger RoutedEvent="Path.MouseLeave">
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <ColorAnimation Storyboard.TargetProperty="(Path.Stroke).(SolidColorBrush.Color)" To="#ff8282" Duration="0:0:0.5"/>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger>
-                            </Path.Triggers>
-                        </Path>
-                        <Slider  Height="5" Style="{StaticResource Horizontal_Slider}" Margin="190,61,173,16"/>
-                        <TextBlock x:Name="CurrrentTimeText" HorizontalAlignment="Left" Margin="147,61,0,0" TextWrapping="Wrap" Text="0:00" VerticalAlignment="Top" Foreground="Red" FontSize="14"/>
-                        <TextBlock Margin="830,64,127,17" Text="3:42" FontSize="14" Foreground="Red"  />
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid Margin="0,20,0,0" VerticalAlignment="Center" Width="250" HorizontalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <!--Repeat button-->
+                            <Path x:Name="Repeat_btn" VerticalAlignment="Bottom" Width="30" Height="25" StrokeThickness="2" Stroke="#ff8282" Stretch="Fill">
+                                <Path.Data>
+                                    <PathGeometry Figures="M 0,10 S 0,0 20,2.5 M 20,2.5 L 17.5,0 V 5 L 20,2.5 M 21.5,7.5 S 22.5,20 0,16.5 M 0,16.5 L 2.5,14 V 19 Z"/>
+                                </Path.Data>
+
+                                <Path.Triggers>
+                                    <EventTrigger RoutedEvent="Path.MouseEnter">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <ColorAnimation Storyboard.TargetProperty="(Path.Stroke).(SolidColorBrush.Color)" To="Red" Duration="0:0:0.5"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                    <EventTrigger RoutedEvent="Path.MouseLeave">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <ColorAnimation Storyboard.TargetProperty="(Path.Stroke).(SolidColorBrush.Color)" To="#ff8282" Duration="0:0:0.5"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                </Path.Triggers>
+                            </Path>
+                            <!---Prev button setttings-->
+                            <Path x:Name="Prev_btn" StrokeThickness="0" VerticalAlignment="Bottom" Width="15" Height="30" RenderTransformOrigin="-0.25,-0.8" Grid.Column="1" Stretch="Fill">
+                                <Path.Data>
+                                    <PathGeometry Figures="M 20,0 L 10,10 V 1.5 H 2,5 V 18.5 H 10 V 10 L 20,20 Z"/>
+                                </Path.Data>
+                                <Path.Fill>
+                                    <SolidColorBrush Color="#ff8282"/>
+                                </Path.Fill>
+                                <Path.Triggers>
+                                    <EventTrigger RoutedEvent="Path.MouseEnter">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <ColorAnimation Storyboard.TargetName="Prev_btn" Storyboard.TargetProperty="(Path.Fill).(SolidColorBrush.Color)" To="Red" Duration="0:0:0.5"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                    <EventTrigger RoutedEvent="Path.MouseLeave">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <ColorAnimation Storyboard.TargetProperty="(Path.Fill).(SolidColorBrush.Color)" To="#ff8282" Duration="0:0:0.5"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                </Path.Triggers>
+                            </Path>
+                            <!--Play button-->
+                            <Path x:Name="Play_btn" VerticalAlignment="Bottom" Width="15" Height="30" StrokeThickness="0" Grid.Column="2" Stretch="Fill">
+                                <Path.Data>
+                                    <PathGeometry Figures="M 0,0 L20,15 L0,30 Z"/>
+                                </Path.Data>
+                                <Path.Fill>
+                                    <SolidColorBrush Color="#ff8282"/>
+                                </Path.Fill>
+                                <Path.Triggers>
+                                    <EventTrigger RoutedEvent="Path.MouseEnter">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <ColorAnimation Storyboard.TargetProperty="(Path.Fill).(SolidColorBrush.Color)" To="Red" Duration="0:0:0.5"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                    <EventTrigger RoutedEvent="Path.MouseLeave">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <ColorAnimation Storyboard.TargetProperty="(Path.Fill).(SolidColorBrush.Color)" To="#ff8282" Duration="0:0:0.5"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                </Path.Triggers>
+                            </Path>
+
+                            <!--Next button settings-->
+                            <Path x:Name="Next_btn" StrokeThickness="0" VerticalAlignment="Bottom" Width="15" Height="30" Grid.Column="3" Stretch="Fill">
+                                <Path.Data>
+                                    <PathGeometry Figures="M 0,0 L 10,10 V 1.5 H 15 V 18.5 H 10 V 10 L 0,20 Z"/>
+                                </Path.Data>
+                                <Path.Fill>
+                                    <SolidColorBrush Color="#ff8282"/>
+                                </Path.Fill>
+                                <Path.Triggers>
+                                    <EventTrigger RoutedEvent="Path.MouseEnter">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <ColorAnimation Storyboard.TargetProperty="(Path.Fill).(SolidColorBrush.Color)" To="Red" Duration="0:0:0.5"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                    <EventTrigger RoutedEvent="Path.MouseLeave">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <ColorAnimation Storyboard.TargetProperty="(Path.Fill).(SolidColorBrush.Color)" To="#ff8282" Duration="0:0:0.5"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                </Path.Triggers>
+                            </Path>
+                            <!--Shuffle button-->
+                            <Path x:Name="Shuffle_btn" VerticalAlignment="Center" Width="30" Height="20" StrokeThickness="2" Grid.Column="4" Stroke="#ff8282" Stretch="Fill">
+                                <Path.Data>
+                                    <PathGeometry Figures="M 5,12.5 C 20,12.5 5,20 22,20 M 25,20 L 22.5,17.5 V 22.5 Z M 5,20 C 17.5,20 7.5,12.5 22,12.5 M 25,12.5 L 22.5,10 V 15 Z "/>
+                                </Path.Data>
+                                <Path.RenderTransform>
+                                    <ScaleTransform ScaleY="1.2"/>
+                                </Path.RenderTransform>
+                                <Path.Triggers>
+                                    <EventTrigger RoutedEvent="Path.MouseEnter">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <ColorAnimation Storyboard.TargetProperty="(Path.Stroke).(SolidColorBrush.Color)" To="Red" Duration="0:0:0.3"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                    <EventTrigger RoutedEvent="Path.MouseLeave">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <ColorAnimation Storyboard.TargetProperty="(Path.Stroke).(SolidColorBrush.Color)" To="#ff8282" Duration="0:0:0.5"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                </Path.Triggers>
+                            </Path>
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="50"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock x:Name="CurrrentTimeText" HorizontalAlignment="Right" VerticalAlignment="Center" Text="0:00" Foreground="Red" FontSize="14" Grid.Column="0"/>
+                            <Slider  Height="5" HorizontalAlignment="Stretch" Margin="20,0,20,0" Style="{StaticResource Horizontal_Slider}" Grid.Column="1"/>
+                            <TextBlock Text="3:42" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="14" Foreground="Red" Grid.Column="2"/>
+                        </Grid>
                     </Grid>
                     <Grid Grid.Column="3">
                         <Slider Name="SoundSlider" Tag="true" Maximum="100" Minimum="0" HorizontalAlignment="Left" Margin="95,40,0,0" VerticalAlignment="Top" 

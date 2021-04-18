@@ -179,14 +179,14 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Resource Include="Assets\LowSoundPurple.png" />
-    <Resource Include="Assets\LowSoundRed.png" />
-    <Resource Include="Assets\MaxVolumePurple.png" />
-    <Resource Include="Assets\MaxVolumeRed.png" />
-    <Resource Include="Assets\MidSoundPurple.png" />
-    <Resource Include="Assets\MidSoundRed.png" />
-    <Resource Include="Assets\MutedPurple.png" />
-    <Resource Include="Assets\MutedRed.png" />
+    <EmbeddedResource Include="Assets\LowSoundPurple.png" />
+    <EmbeddedResource Include="Assets\LowSoundRed.png" />
+    <EmbeddedResource Include="Assets\MaxVolumePurple.png" />
+    <EmbeddedResource Include="Assets\MaxVolumeRed.png" />
+    <EmbeddedResource Include="Assets\MidSoundPurple.png" />
+    <EmbeddedResource Include="Assets\MidSoundRed.png" />
+    <EmbeddedResource Include="Assets\MutedPurple.png" />
+    <EmbeddedResource Include="Assets\MutedRed.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
