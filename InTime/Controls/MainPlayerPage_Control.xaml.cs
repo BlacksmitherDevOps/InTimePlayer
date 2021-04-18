@@ -61,16 +61,16 @@ namespace InTime.Controls
             switch (state.sound)
             {
                 case SoundState.LowSound:
-                    SoundIcon.Fill = new ImageBrush(new BitmapImage(new Uri(@"Assets/LowSoundRed.png",UriKind.Relative)));
+                    SoundIcon.Fill = new ImageBrush(new BitmapImage(new Uri("Assets/LowSoundRed.png",UriKind.RelativeOrAbsolute)));
                     break;
                 case SoundState.MidSound:
-                    SoundIcon.Fill = new ImageBrush(new BitmapImage(new Uri(@"Assets/MidSoundRed.png",UriKind.Relative)));
+                    SoundIcon.Fill = new ImageBrush(new BitmapImage(new Uri("Assets/MidSoundRed.png",UriKind.RelativeOrAbsolute)));
                     break;
                 case SoundState.HighSound:
-                    SoundIcon.Fill = new ImageBrush(new BitmapImage(new Uri(@"Assets/MaxVolumeRed.png",UriKind.Relative)));
+                    SoundIcon.Fill = new ImageBrush(new BitmapImage(new Uri("Assets/MaxVolumeRed.png",UriKind.RelativeOrAbsolute)));
                     break;
                 case SoundState.Muted:
-                    SoundIcon.Fill = new ImageBrush(new BitmapImage(new Uri(@"Assets/MutedRed.png",UriKind.Relative)));
+                    SoundIcon.Fill = new ImageBrush(new BitmapImage(new Uri("Assets/MutedRed.png",UriKind.RelativeOrAbsolute)));
                     break;
             }
         }
@@ -80,7 +80,7 @@ namespace InTime.Controls
             if (tag=="true")
             {
                 state.sound = SoundState.Muted;
-                SoundIcon.Fill=new ImageBrush(new BitmapImage(new Uri(@"Assets/MutedRed.png",UriKind.Relative)));
+                SoundIcon.Fill=new ImageBrush(new BitmapImage(new Uri("Assets/MutedRed.png",UriKind.RelativeOrAbsolute)));
                 SoundSlider.Tag = "false";
             }
             else
@@ -88,17 +88,17 @@ namespace InTime.Controls
                 if (SoundSlider.Value < 30)
                 {
                     state.sound = SoundState.LowSound;
-                    SoundIcon.Fill =new ImageBrush(new BitmapImage(new Uri(@"Assets/LowSoundRed.png",UriKind.Relative)));
+                    SoundIcon.Fill =new ImageBrush(new BitmapImage(new Uri("Assets/LowSoundRed.png",UriKind.RelativeOrAbsolute)));
                 }
                 else if (SoundSlider.Value >= 30 && SoundSlider.Value <= 70)
                 {
                     state.sound = SoundState.MidSound;
-                    SoundIcon.Fill = new ImageBrush(new BitmapImage(new Uri(@"Assets/MidSoundRed.png",UriKind.Relative)));
+                    SoundIcon.Fill = new ImageBrush(new BitmapImage(new Uri("Assets/MidSoundRed.png",UriKind.RelativeOrAbsolute)));
                 }
                 else if (SoundSlider.Value > 70)
                 {
                     state.sound = SoundState.HighSound;
-                    SoundIcon.Fill =new ImageBrush(new BitmapImage(new Uri(@"Assets/MaxVolumeRed.png",UriKind.Relative)));
+                    SoundIcon.Fill =new ImageBrush(new BitmapImage(new Uri("Assets/MaxVolumeRed.png",UriKind.RelativeOrAbsolute)));
                 }
                 SoundSlider.Tag = "true";
             }
@@ -108,16 +108,16 @@ namespace InTime.Controls
             switch (state.sound)
             {
                 case SoundState.LowSound:
-                    SoundIcon.Fill = new ImageBrush(new BitmapImage(new Uri(@"Assets/LowSoundPurple.png",UriKind.Relative)));
+                    SoundIcon.Fill = new ImageBrush(new BitmapImage(new Uri("Assets/LowSoundPurple.png",UriKind.RelativeOrAbsolute)));
                     break;
                 case SoundState.MidSound:
-                    SoundIcon.Fill = new ImageBrush(new BitmapImage(new Uri(@"Assets/MidSoundPurple.png",UriKind.Relative)));
+                    SoundIcon.Fill = new ImageBrush(new BitmapImage(new Uri("Assets/MidSoundPurple.png",UriKind.RelativeOrAbsolute)));
                     break;
                 case SoundState.HighSound:
-                    SoundIcon.Fill = new ImageBrush(new BitmapImage(new Uri(@"Assets/MaxVolumePurple.png",UriKind.Relative)));
+                    SoundIcon.Fill = new ImageBrush(new BitmapImage(new Uri("Assets/MaxVolumePurple.png",UriKind.RelativeOrAbsolute)));
                     break;
                 case SoundState.Muted:
-                    SoundIcon.Fill = new ImageBrush(new BitmapImage(new Uri(@"Assets/MutedPurple.png",UriKind.Relative)));
+                    SoundIcon.Fill = new ImageBrush(new BitmapImage(new Uri("Assets/MutedPurple.png",UriKind.RelativeOrAbsolute)));
                     break;
             }
         }
@@ -126,17 +126,17 @@ namespace InTime.Controls
                 if (SoundSlider.Value < 30)
                 {
                     state.sound = SoundState.LowSound;
-                    SoundIcon.Fill = new ImageBrush(new BitmapImage(new Uri(@"Assets/LowSoundPurple.png", UriKind.Relative)));
+                    SoundIcon.Fill = new ImageBrush(new BitmapImage(new Uri("Assets/LowSoundPurple.png", UriKind.RelativeOrAbsolute)));
                 }
                 else if (SoundSlider.Value >= 30 && SoundSlider.Value <= 70)
                 {
                     state.sound = SoundState.MidSound;
-                    SoundIcon.Fill = new ImageBrush(new BitmapImage(new Uri(@"Assets/MidSoundPurple.png", UriKind.Relative)));
+                    SoundIcon.Fill = new ImageBrush(new BitmapImage(new Uri("Assets/MidSoundPurple.png", UriKind.RelativeOrAbsolute)));
                 }
                 else if (SoundSlider.Value > 70)
                 {
                     state.sound = SoundState.HighSound;
-                    SoundIcon.Fill = new ImageBrush(new BitmapImage(new Uri(@"Assets/MaxVolumePurple.png", UriKind.Relative)));
+                    SoundIcon.Fill = new ImageBrush(new BitmapImage(new Uri("Assets/MaxVolumePurple.png", UriKind.RelativeOrAbsolute)));
                 }
         }
         private void ToggleButton_OnChecked(object sender, RoutedEventArgs e)
