@@ -7,135 +7,349 @@
              mc:Ignorable="d" 
              d:DesignHeight="900" d:DesignWidth="1550">
     <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Assets/icons.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Name="LeftTogleBtn" TargetType="{x:Type ToggleButton}">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Foreground" Value="#ff8282"/>
+                <Setter Property="Height" Value="40"></Setter>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ToggleButton}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="20"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Rectangle Name="ckecked" VerticalAlignment="Center"
+                                       Height="40" Width="7" Fill="White"
+                                       HorizontalAlignment="Left" Grid.Column="0"/>
+                                <TextBlock Grid.Column="1" VerticalAlignment="Center" 
+                                       Text="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}"
+                                       HorizontalAlignment="Left" FontSize="20"/>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsChecked" Value="True">
+                                    <Setter TargetName="ckecked" Property="Fill" Value="Red"/>
+                                    <Setter Property="Foreground" Value="Red"/>
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Foreground" Value="Red"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!--ScrollbarTemplate-->
+
+            <Style x:Key="ScrollBarPageButtonStyle" TargetType="{x:Type RepeatButton}">
+                <Setter Property="IsTabStop" Value="False"/>
+                <Setter Property="Focusable" Value="True"/>
+                <Setter Property="Width" Value="7"/>
+                <Setter Property="HorizontalAlignment" Value="Right" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type RepeatButton}">
+                            <Border Opacity="0.7" Background="#ff8282"></Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="ScrollBarThumbStyle" TargetType="{x:Type Thumb}">
+                <Setter Property="IsTabStop" Value="False"/>
+                <Setter Property="Focusable" Value="False"/>
+                <Setter Property="Width" Value="7" />
+                <Setter Property="HorizontalAlignment" Value="Right" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Thumb}">
+                            <Border Opacity="0.7" CornerRadius="3" Background="Red"/>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="White"></Setter>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="{x:Type ScrollViewer}" TargetType="{x:Type ScrollViewer}">
+                <Setter Property="HorizontalScrollBarVisibility" Value="Disabled"/>
+                <Setter Property="VerticalScrollBarVisibility" Value="Hidden"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                            <Grid>
+                                <Grid Background="{TemplateBinding Background}">
+                                    <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" Margin="{TemplateBinding Padding}"
+                                 Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"
+                                 CanContentScroll="{TemplateBinding CanContentScroll}"/>
+                                </Grid>
+                                <Grid Width="15" HorizontalAlignment="Right" Background="Transparent">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <ScrollBar
+                                     x:Name="PART_VerticalScrollBar"
+                                     Grid.Column="1"
+                                     Minimum="0.0"
+                                     Maximum="{TemplateBinding ScrollableHeight}"
+                                     ViewportSize="{TemplateBinding ViewportHeight}"
+                                     Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=VerticalOffset, Mode=OneWay}"
+                                     Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"        
+                                     Cursor="Arrow"
+                                     AutomationProperties.AutomationId="VerticalScrollBar">
+                                        <ScrollBar.Template>
+                                            <ControlTemplate>
+                                                <Grid>
+                                                    <Track Name="PART_Track"
+                                                 IsDirectionReversed="True">
+                                                        <Track.DecreaseRepeatButton>
+                                                            <RepeatButton Command="ScrollBar.PageUpCommand" Style="{StaticResource ScrollBarPageButtonStyle}">
+                                                            </RepeatButton>
+                                                        </Track.DecreaseRepeatButton>
+                                                        <Track.Thumb>
+                                                            <Thumb Style="{StaticResource ScrollBarThumbStyle}">
+                                                            </Thumb>
+                                                        </Track.Thumb>
+                                                        <Track.IncreaseRepeatButton>
+                                                            <RepeatButton Command="ScrollBar.PageDownCommand" Style="{StaticResource ScrollBarPageButtonStyle}">
+                                                            </RepeatButton>
+                                                        </Track.IncreaseRepeatButton>
+                                                    </Track>
+                                                </Grid>
+                                            </ControlTemplate>
+                                        </ScrollBar.Template>
+                                    </ScrollBar>
+                                </Grid>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <Trigger Property="IsEnabled" Value="false">
+                        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                    </Trigger>
+                    <Trigger Property="IsMouseOver" Value="true">
+                        <Setter Property="VerticalScrollBarVisibility" Value="Visible"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <!--PlaylistItems-->
+            <Style x:Key="PlaylistItem" TargetType="ListBoxItem" >
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Foreground" Value="#ff8282"></Setter>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="25"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Rectangle Name="ckecked" VerticalAlignment="Center"
+                                           Height="30" Width="7" Fill="White"
+                                           HorizontalAlignment="Left" Grid.Column="0"/>
+                                <TextBlock Grid.Column="1" VerticalAlignment="Center" 
+                                           Text="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}"
+                                           HorizontalAlignment="Left" FontSize="16"/>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Foreground" Value="Red"/>
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter TargetName="ckecked" Property="Fill" Value="Red"/>
+                                    <Setter Property="Foreground" Value="Red"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!--Add playlist button style-->
+            <Style x:Key="Add_btn" TargetType="{x:Type Button}">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="VerticalAlignment" Value="Stretch"/>
+                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="Foreground" Value="#ff8282"/>
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Name="brdr"  CornerRadius="20" Background="{TemplateBinding Background}"
+                            BorderThickness="{TemplateBinding BorderThickness}" Width="{TemplateBinding Width}"
+                            Height="{TemplateBinding Height}">
+                                <Grid >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="45"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Path Name="pth"  Grid.Column="0" Data="{TemplateBinding Tag}" 
+                                          Fill="#ff8282" Margin="20,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                     />
+                                    <ContentPresenter Grid.Column="1" TextBlock.TextAlignment="Left" Margin="10,0,0,0"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                                </Grid>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Path.Fill" TargetName="pth" Value="Red"/>
+                                    <Setter Property="Foreground" Value="Red"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- Стиль ползунка песни-->
+            <Style x:Key="Slider_repeat_btn1" TargetType="RepeatButton">
+                <Setter Property="SnapsToDevicePixels" Value="true" />
+                <Setter Property="OverridesDefaultStyle" Value="true" />
+                <Setter Property="IsTabStop" Value="false" />
+                <Setter Property="Focusable" Value="false" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="RepeatButton">
+                            <Border  BorderThickness="1" BorderBrush="#ff8282" Background="#ff8282" Height="3"/>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="Slider_repeat_btn2" TargetType="RepeatButton">
+                <Setter Property="SnapsToDevicePixels" Value="true" />
+                <Setter Property="OverridesDefaultStyle" Value="true" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="RepeatButton">
+                            <Border SnapsToDevicePixels="True" Background="#ff0000"  BorderThickness="1" BorderBrush="#ff0000" Height="3"/>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="SliderThumb" TargetType="Thumb" >
+                <Setter Property="SnapsToDevicePixels" Value="true" />
+                <Setter Property="Visibility" Value="Hidden"/>
+                <Setter Property="OverridesDefaultStyle" Value="true" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Thumb">
+                            <Ellipse x:Name="ThumbEllipse" Height="10" Width="10" Fill="#ff0000"></Ellipse>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <ControlTemplate x:Key="Slider" TargetType="Slider">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" MinHeight="{TemplateBinding MinHeight}" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Track Grid.Row="1" x:Name="PART_Track"   >
+                        <Track.DecreaseRepeatButton>
+                            <RepeatButton Style="{StaticResource Slider_repeat_btn2}"  Command="Slider.DecreaseLarge" />
+                        </Track.DecreaseRepeatButton>
+                        <Track.Thumb>
+                            <Thumb x:Name="Thumb1" Style="{StaticResource SliderThumb}"  />
+                        </Track.Thumb>
+                        <Track.IncreaseRepeatButton>
+                            <RepeatButton Style="{StaticResource Slider_repeat_btn1}" Command="Slider.IncreaseLarge" />
+                        </Track.IncreaseRepeatButton>
+                    </Track>
+                </Grid>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter TargetName="Thumb1" Property="Visibility" Value="Visible"/>
+                    </Trigger>
+                    <Trigger Property="IsMouseOver" Value="False">
+                        <Setter TargetName="Thumb1" Property="Visibility" Value="Collapsed"/>
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+            <Style x:Key="Horizontal_Slider" TargetType="Slider">
+                <Setter Property="Focusable" Value="False"/>
+                <Setter Property="SnapsToDevicePixels" Value="true" />
+                <Setter Property="IsMoveToPointEnabled" Value="True"/>
+                <Setter Property="OverridesDefaultStyle" Value="true" />
+                <Style.Triggers>
+                    <Trigger Property="Orientation" Value="Horizontal">
+                        <Setter Property="MinHeight" Value="21" />
+                        <Setter Property="MinWidth" Value="104" />
+                        <Setter Property="Template" Value="{StaticResource Slider}" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
 
 
-        <!-- Стиль ползунка песни-->
-        <Style x:Key="Slider_repeat_btn1" TargetType="RepeatButton">
-            <Setter Property="SnapsToDevicePixels" Value="true" />
-            <Setter Property="OverridesDefaultStyle" Value="true" />
-            <Setter Property="IsTabStop" Value="false" />
-            <Setter Property="Focusable" Value="false" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="RepeatButton">
-                        <Border  BorderThickness="1" BorderBrush="#ff8282" Background="#ff8282" Height="3"/>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="Slider_repeat_btn2" TargetType="RepeatButton">
-            <Setter Property="SnapsToDevicePixels" Value="true" />
-            <Setter Property="OverridesDefaultStyle" Value="true" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="RepeatButton">
-                        <Border SnapsToDevicePixels="True" Background="#ff0000"  BorderThickness="1" BorderBrush="#ff0000" Height="3"/>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="SliderThumb" TargetType="Thumb" >
-            <Setter Property="SnapsToDevicePixels" Value="true" />
-            <Setter Property="Visibility" Value="Hidden"/>
-            <Setter Property="OverridesDefaultStyle" Value="true" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Thumb">
-                        <Ellipse x:Name="ThumbEllipse" Height="10" Width="10" Fill="#ff0000"></Ellipse>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <ControlTemplate x:Key="Slider" TargetType="Slider">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" MinHeight="{TemplateBinding MinHeight}" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Track Grid.Row="1" x:Name="PART_Track"   >
-                    <Track.DecreaseRepeatButton>
-                        <RepeatButton Style="{StaticResource Slider_repeat_btn2}"  Command="Slider.DecreaseLarge" />
-                    </Track.DecreaseRepeatButton>
-                    <Track.Thumb>
-                        <Thumb x:Name="Thumb1" Style="{StaticResource SliderThumb}"  />
-                    </Track.Thumb>
-                    <Track.IncreaseRepeatButton>
-                        <RepeatButton Style="{StaticResource Slider_repeat_btn1}" Command="Slider.IncreaseLarge" />
-                    </Track.IncreaseRepeatButton>
-                </Track>
-            </Grid>
-            <ControlTemplate.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter TargetName="Thumb1" Property="Visibility" Value="Visible"/>
-                </Trigger>
-                <Trigger Property="IsMouseOver" Value="False">
-                    <Setter TargetName="Thumb1" Property="Visibility" Value="Collapsed"/>
-                </Trigger>
-            </ControlTemplate.Triggers>
-        </ControlTemplate>
-        <Style x:Key="Horizontal_Slider" TargetType="Slider">
-            <Setter Property="Focusable" Value="False"/>
-            <Setter Property="SnapsToDevicePixels" Value="true" />
-            <Setter Property="IsMoveToPointEnabled" Value="True"/>
-            <Setter Property="OverridesDefaultStyle" Value="true" />
-            <Style.Triggers>
-                <Trigger Property="Orientation" Value="Horizontal">
-                    <Setter Property="MinHeight" Value="21" />
-                    <Setter Property="MinWidth" Value="104" />
-                    <Setter Property="Template" Value="{StaticResource Slider}" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-        <Style x:Name="mainBtns_Style" x:Key="MainButton_Style" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="22"/>
-            <Setter Property="FontWeight" Value="DemiBold"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-        </Style>
-
-        <Style x:Name="ListboxPlaylist_Style" x:Key="ListboxPlaylist_Style" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="18"/>
-            <Setter Property="FontWeight" Value="Medium"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-        </Style>
-        <Style TargetType="ListBoxItem" x:Key="itemSong_Style">
-            <Setter Property="Padding" Value="5"/>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                        <Border x:Name="border" Background="{TemplateBinding Background}"
+            <Style x:Name="mainBtns_Style" x:Key="MainButton_Style" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="22"/>
+                <Setter Property="FontWeight" Value="DemiBold"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+            </Style>
+            <Style x:Name="ListboxPlaylist_Style" x:Key="ListboxPlaylist_Style" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="FontWeight" Value="Medium"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+            </Style>
+            <Style TargetType="ListBoxItem" x:Key="itemSong_Style">
+                <Setter Property="Padding" Value="5"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                            <Border x:Name="border" Background="{TemplateBinding Background}"
                                                     BorderBrush="{TemplateBinding BorderBrush}" 
                                                     CornerRadius="10"
                                                     BorderThickness="{TemplateBinding BorderThickness}">
-                            <ContentPresenter HorizontalAlignment="Left" Margin="{TemplateBinding Padding}"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsSelected" Value="True">
-                                <Setter Property="Background" Value="#FF6DF3ED"/>
-                                <Setter Property="BorderThickness" Value="1"/>
-                                <Setter Property="BorderBrush" Value="Black"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <DataTemplate x:Key="itemSong_Template">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="40"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Text="{Binding Title}" Style="{StaticResource ListboxPlaylist_Style}" Grid.Column="1"/>
-            </Grid>
-        </DataTemplate>
+                                <ContentPresenter HorizontalAlignment="Left" Margin="{TemplateBinding Padding}"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="#FF6DF3ED"/>
+                                    <Setter Property="BorderThickness" Value="1"/>
+                                    <Setter Property="BorderBrush" Value="Black"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <DataTemplate x:Key="itemSong_Template">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="{Binding Title}" Style="{StaticResource ListboxPlaylist_Style}" Grid.Column="1"/>
+                </Grid>
+            </DataTemplate>
+
+
+        </ResourceDictionary>
     </UserControl.Resources>
+
     <Grid Background="White">
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="151*"/>
             <ColumnDefinition Width="8*"/>
@@ -153,47 +367,96 @@
                     <ColumnDefinition/>
                     <ColumnDefinition Width="180"/>
                 </Grid.ColumnDefinitions>
-                <Grid>
-                    <!--left panel-->
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="110"/>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="200*"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                    </Grid.RowDefinitions>
-                    <StackPanel Grid.Row="1" Background="WhiteSmoke">
-                        <TextBlock Name="homePage_tb" Foreground="Red" Text="Home Page"
-                               Style="{StaticResource MainButton_Style}"/>
-                        <TextBlock Name="recomend_tb" Text="Recomendations"
-                               Foreground="Red" Style="{StaticResource MainButton_Style}" Margin="0,7,0,0"/>
-                        <TextBlock Name="liked_tb" Text="Liked songs"
-                               Foreground="Red" Style="{StaticResource MainButton_Style}" Margin="0,7,0,0"/>
-                    </StackPanel>
-                    <TextBlock Text="My playlists:" Grid.Row="2" Style="{StaticResource MainButton_Style}"
-                           Foreground="#FFE83B3B" FontWeight="Normal"/>
-                    <ListBox Name="myList_lb" Background="White" Grid.Row="3" 
-                         
-                         ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                        <ListBoxItem Content="Playlist" Foreground="Red" Margin="20,0,0,0" FontSize="25"/>
-                        <ListBoxItem Content="Playlist" Foreground="Red" Margin="20,0,0,0" FontSize="25"/>
-                        <ListBoxItem Content="Playlist" Foreground="Red" Margin="20,0,0,0" FontSize="25"/>
-                        <ListBoxItem Content="Playlist" Foreground="Red" Margin="20,0,0,0" FontSize="25"/>
-                    </ListBox>
-                    <Border Grid.Row="4" BorderThickness="2,0,2,2" BorderBrush="#FFE83B3B">
-                        <TextBlock Name="addPlaylist_btn" Text="+" Style="{StaticResource MainButton_Style}"
-                               Foreground="Red" FontSize="26" FontWeight="Bold" />
+                <Border BorderBrush="Red"  Grid.Column="0" BorderThickness="0,0,2,0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="60"/>
+                            <RowDefinition/>
+                            <RowDefinition Height="350"/>
+                            <RowDefinition Height="50"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="1">
+                            <StackPanel x:Name="RadioBtnsPanel">
+                                <RadioButton Style="{StaticResource {x:Type ToggleButton}}" Content="Favorites" GroupName="System" Checked="ToggleButton_OnChecked"/>
+                                <RadioButton Style="{StaticResource {x:Type ToggleButton}}" Content="Recomendations" GroupName="System" Checked="ToggleButton_OnChecked"/>
+                                <RadioButton Style="{StaticResource {x:Type ToggleButton}}" Content="Recently Listened" GroupName="System" Checked="ToggleButton_OnChecked"/>
+                                <RadioButton Style="{StaticResource {x:Type ToggleButton}}" Content="Albums" GroupName="System" Checked="ToggleButton_OnChecked"/>
+                            </StackPanel>
+                        </Grid>
+                        <!--Add button-->
+                        <Border x:Name="Brdr" Grid.Row="3" BorderThickness="0,2,0,0" BorderBrush="Red">
+                            <Button x:Name="AddPlaylistBtn" Style="{StaticResource Add_btn}" Tag="{StaticResource plus}" Content="Add playlist"/>
+                        </Border>
+                        <!--Playlist listbox-->
+                        <Grid  Grid.Row="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="35"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Label Content="Playlists" Grid.Row="0" VerticalAlignment="Top" Margin="15,0,0,0" FontSize="18"
+                                   Foreground="Red" FontFamily="MS Reference Sans Serif"/>
+                            <ListBox x:Name="PlaylistBox" VerticalAlignment="Stretch" Grid.Row="1" BorderBrush="Transparent" SelectionChanged="PlaylistBox_OnSelectionChanged">
+                                <ListBoxItem Content="TestElement" Style="{StaticResource PlaylistItem}"/>
+                                <ListBoxItem Content="TestElement" Style="{StaticResource PlaylistItem}"/>
+                                <ListBoxItem Content="TestElement" Style="{StaticResource PlaylistItem}"/>
+                                <ListBoxItem Content="TestElement" Style="{StaticResource PlaylistItem}"/>
+                                <ListBoxItem Content="TestElement" Style="{StaticResource PlaylistItem}"/>
+                                <ListBoxItem Content="TestElement" Style="{StaticResource PlaylistItem}"/>
+                                <ListBoxItem Content="TestElement" Style="{StaticResource PlaylistItem}"/>
+                                <ListBoxItem Content="TestElement" Style="{StaticResource PlaylistItem}"/>
+                                <ListBoxItem Content="TestElement" Style="{StaticResource PlaylistItem}"/>
+                                <ListBoxItem Content="TestElement" Style="{StaticResource PlaylistItem}"/>
+                                <ListBoxItem Content="TestElement" Style="{StaticResource PlaylistItem}"/>
+                                <ListBoxItem Content="TestElement" Style="{StaticResource PlaylistItem}"/>
+                                <ListBoxItem Content="TestElement" Style="{StaticResource PlaylistItem}"/>
+                                <ListBoxItem Content="TestElement" Style="{StaticResource PlaylistItem}"/>
+                                <ListBoxItem Content="TestElement" Style="{StaticResource PlaylistItem}"/>
+                                <ListBoxItem Content="TestElement" Style="{StaticResource PlaylistItem}"/>
+                                <ListBoxItem Content="TestElement" Style="{StaticResource PlaylistItem}"/>
+                                <ListBoxItem Content="TestElement" Style="{StaticResource PlaylistItem}"/>
+                            </ListBox>
+                        </Grid>
+                    </Grid>
+                </Border>
 
-                    </Border>
-                </Grid>
+
+
                 <Grid Grid.Column="1">
                     <!--central panel-->
                     <Grid.RowDefinitions>
                         <RowDefinition Height="40"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <TextBox Name="search_tb" Text="Search..." Width="250" Foreground="Red" FontSize="20"/>
+                    <Border Height="40" Grid.Column="0"
+                            CornerRadius="20" Background="White"
+                            HorizontalAlignment="Stretch"
+                            BorderThickness="2" Width="350" BorderBrush="Red">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Path Data="{StaticResource search}" Fill="#ff8282" Margin="12,10,17,7" Stretch="Fill" />
+                            <TextBox Grid.Column="1" Name="Search" VerticalContentAlignment="Bottom" 
+                                     HorizontalContentAlignment="Left" FontSize="16" 
+                                     Foreground="Red"
+                                     Background="White" BorderThickness="0" Margin="0,0,28,8"/>
+                            <TextBlock Grid.Column="1" HorizontalAlignment="Left" Width="60" 
+                                       Margin="3,0,0,0" Text="Search" VerticalAlignment="Center"
+                                       Foreground="#ff8282" FontSize="16">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text,ElementName=Search}" Value="">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
+                    </Border>
                     <Border Name="centralInfo_bord" Grid.Row="1">
                         <ScrollViewer>
                             <StackPanel Name="tape_panel" VerticalAlignment="Stretch">
@@ -259,7 +522,20 @@
                             <RowDefinition/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <TextBlock Text="Singer" Foreground="Red" FontSize="18" Margin="10,15,-6,10" FontWeight="Medium"/>
+                        <TextBlock Text="Singer" Foreground="Red" FontSize="18" Margin="10,15,-6,4" FontWeight="Medium">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="TextDecorations" Value="Underline"/>
+                                        </Trigger>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="TextDecorations" Value="BaseLine"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
                         <TextBlock Text="Track name" Foreground="Red" FontSize="18" Margin="10,45,-6,30" FontWeight="Medium" Grid.RowSpan="2"/>
                     </Grid>
                     <Grid Grid.Column="2">
@@ -388,7 +664,21 @@
                                 </EventTrigger>
                             </Path.Triggers>
                         </Path>
-                        <Slider Margin="185,59,185,18" Width="620" Height="5" Style="{StaticResource Horizontal_Slider}"/>
+                        <Slider  Height="5" Style="{StaticResource Horizontal_Slider}" Margin="190,61,173,16"/>
+                        <TextBlock x:Name="CurrrentTimeText" HorizontalAlignment="Left" Margin="147,61,0,0" TextWrapping="Wrap" Text="0:00" VerticalAlignment="Top" Foreground="Red" FontSize="14"/>
+                        <TextBlock Margin="830,64,127,17" Text="3:42" FontSize="14" Foreground="Red"  />
+                    </Grid>
+                    <Grid Grid.Column="3">
+                        <Slider Name="SoundSlider" Tag="true" Maximum="100" Minimum="0" HorizontalAlignment="Left" Margin="95,40,0,0" VerticalAlignment="Top" 
+                                Style="{StaticResource Horizontal_Slider}" Width="145"
+                                ValueChanged="SoundSlider_OnValueChanged"/>
+                        <Rectangle Name="SoundIcon" MouseEnter="SoundIcon_OnMouseEnter"  MouseLeave="SoundIcon_OnMouseLeave"
+                                   MouseDown="SoundIcon_OnMouseDown" HorizontalAlignment="Left" 
+                                   Height="50" Margin="49,26,0,0" VerticalAlignment="Top" Width="61">
+                            <Rectangle.Fill>
+                                <ImageBrush ImageSource="/Assets/MaxVolumePurple.png"/>
+                            </Rectangle.Fill>
+                        </Rectangle>
                     </Grid>
                 </Grid>
             </Border>

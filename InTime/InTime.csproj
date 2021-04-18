@@ -68,6 +68,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AdditionalResources.cs" />
+    <Compile Include="AppState.cs" />
     <Compile Include="Controls\PlaylistGrid.xaml.cs">
       <DependentUpon>PlaylistGrid.xaml</DependentUpon>
     </Compile>
@@ -79,6 +81,10 @@
     </Compile>
     <Compile Include="tempPlaylist.cs" />
     <Compile Include="tempSong.cs" />
+    <Page Include="Assets\icons.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\MainPlayerPage_Control.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -170,6 +176,17 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Controls\3E-zsSjyGLU.jpg" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Assets\LowSoundPurple.png" />
+    <Resource Include="Assets\LowSoundRed.png" />
+    <Resource Include="Assets\MaxVolumePurple.png" />
+    <Resource Include="Assets\MaxVolumeRed.png" />
+    <Resource Include="Assets\MidSoundPurple.png" />
+    <Resource Include="Assets\MidSoundRed.png" />
+    <Resource Include="Assets\MutedPurple.png" />
+    <Resource Include="Assets\MutedRed.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
