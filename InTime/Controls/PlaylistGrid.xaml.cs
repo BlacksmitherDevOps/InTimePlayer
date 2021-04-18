@@ -23,6 +23,7 @@ namespace InTime.Controls
         public PlaylistGrid()
         {
             InitializeComponent();
+
         }
 
 
@@ -72,20 +73,5 @@ namespace InTime.Controls
         // Using a DependencyProperty as the backing store for SongsCount.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SongsCountProperty =
             DependencyProperty.Register("SongsCount", typeof(int), typeof(PlaylistGrid));
-
-
-
-        public List<PlaylistItem> PlaylistItems
-        {
-            get { return (List<PlaylistItem>)GetValue(PlaylistItemsProperty); }
-            set { SetValue(PlaylistItemsProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for PlaylistItems.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty PlaylistItemsProperty =
-            DependencyProperty.Register("PlaylistItems", typeof(List<PlaylistItem>), typeof(PlaylistGrid));
-
-
-
     }
 }

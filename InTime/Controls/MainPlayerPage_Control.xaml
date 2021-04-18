@@ -12,6 +12,9 @@
                 <ResourceDictionary Source="/Assets/icons.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
+
+
+
             <Style x:Name="LeftTogleBtn" TargetType="{x:Type ToggleButton}">
                 <Setter Property="Background" Value="Transparent"/>
                 <Setter Property="Foreground" Value="#ff8282"/>

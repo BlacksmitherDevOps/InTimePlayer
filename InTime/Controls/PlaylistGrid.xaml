@@ -6,53 +6,136 @@
              xmlns:local="clr-namespace:InTime.Controls"
              mc:Ignorable="d" 
              Name="_Playlist"
-             d:DesignHeight="410" d:DesignWidth="440">
+             d:DesignHeight="410" d:DesignWidth="1190">
     <UserControl.Resources>
-        <Style x:Key="text" TargetType="{x:Type TextBlock}">
-            <Setter Property="Foreground" Value="Black"/>
-            <Setter Property="FontWeight" Value="24"/>
-        </Style>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Assets/icons.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <Style x:Key="text" TargetType="{x:Type TextBlock}">
+                <Setter Property="Height" Value="30"/>
+                <Setter Property="Width" Value="{Binding Path=Text.Lenght}"/>
+                <Setter Property="Foreground" Value="Red"/>
+                <Setter Property="FontSize" Value="22"/>
+            </Style>
+
+            <Style x:Key="Play_btn" TargetType="{x:Type Button}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Ellipse Width="30" Height="30">
+                                <Ellipse.Fill>
+                                    <ImageBrush ImageSource="/Assets/playbutton.png"></ImageBrush>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="SongMenu" TargetType="{x:Type Button}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Path Margin="0,3,0,0" Data="{StaticResource more}" Fill="Red"></Path>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="PlaylistItems" TargetType="{x:Type ListBoxItem}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Border BorderThickness="0,0,0,2" BorderBrush="Red" >
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="130"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="50"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border BorderBrush="Red" Height="33" Grid.ColumnSpan="7"/>
+                                    <Button x:Name="PlayBtn" Style="{StaticResource Play_btn}" Grid.Column="0"/>
+                                    <TextBlock Text="{Binding SongTitle,ElementName=_PlaylistItem}" Grid.Column="1" FontSize="10"
+                                       Margin="7,3,0,0"/>
+                                    <TextBlock Grid.Column="2" Text="{Binding SongArtist,ElementName=_PlaylistItem}" FontSize="10"
+                                       Margin="7,3,0,0"/>
+                                    <TextBlock Grid.Column="3" Text="{Binding SongAlbum,ElementName=_PlaylistItem}" FontSize="10"
+                                       Margin="7,3,0,0"/>
+                                    <TextBlock Grid.Column="4" Text="{Binding SongDuration,ElementName=_PlaylistItem,StringFormat=mm:ss}" FontSize="10"
+                                       Margin="7,3,0,0"/>
+                                    <Button Content="menu" Style="{StaticResource SongMenu}" Grid.Column="5"/>
+                                </Grid>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
     </UserControl.Resources>
     <Grid Background="White">
         <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="20"/>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="40"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <Rectangle Width="50" Height="50" Margin="22,20,368,68">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Rectangle Grid.Column="0" Width="100" Height="100">
                 <Rectangle.Fill>
                     <ImageBrush ImageSource="{Binding ImageSource,ElementName=_Playlist}"/>
                 </Rectangle.Fill>
             </Rectangle>
-            <TextBlock Text="Playlist :" Width="35" Height="20" Margin="77,20,328,60" Style="{StaticResource text}"/>
-            <TextBlock Text="{Binding PlaylistName,ElementName=_Playlist}" Height="20" Width="250" Style="{StaticResource text}" Margin="117,20,73,60"/>
-            <TextBlock Text="Playlist duration :" Height="20" Style="{StaticResource text}" Margin="76,45,273,35" />
-            <TextBlock Text="{Binding PlaylistDuration,ElementName=_Playlist,StringFormat=hh:mm:ss}" Height="20" Width="150" Margin="167,45,123,35" Style="{StaticResource text}"/>
-            <TextBlock Text="Songs count :" Height="20" Style="{StaticResource text}" Margin="77,70,288,10"/>
-            <TextBlock Text="{Binding SongsCount,ElementName=_Playlist}" Style="{StaticResource text}" Height="20" Width="100" Margin="152,70,188,10"/>
+            <Grid Grid.Column="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Playlist :" Style="{StaticResource text}" Grid.Row="0"
+                               HorizontalAlignment="Left"  VerticalAlignment="Bottom"/>
+                    <TextBlock Text="Playlist duration :" HorizontalAlignment="Left" VerticalAlignment="Center"  
+                               Foreground="Red"  Style="{StaticResource text}" 
+                               Grid.Row="1"/>
+                    <TextBlock Text="Songs count :" Foreground="Red"  HorizontalAlignment="Left" VerticalAlignment="Top" 
+                               Style="{StaticResource text}"  Grid.Row="2"/>
+            </Grid>
+            </Grid>
         </Grid>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="130"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="50"/>
             </Grid.ColumnDefinitions>
             <Border BorderBrush="Red"  BorderThickness="0,0.8,0,0.8" Grid.ColumnSpan="7"/>
-            <TextBlock Text="title" Grid.Column="1" FontSize="10"
-                        Margin="7,3,0,0"/>
-            <TextBlock Grid.Column="2" Text="artist" FontSize="10"
-                       Margin="7,3,0,0"/>
-            <TextBlock Grid.Column="3" Text="album" FontSize="10"
-                       Margin="7,3,0,0"/>
-            <TextBlock Grid.Column="4" Text="duration" FontSize="10"
-                       Margin="7,3,0,0"/>
+            <TextBlock Text="title" Grid.Column="1" FontSize="20"
+                        Margin="7,8,0,0" Foreground="Red"/>
+            <TextBlock Grid.Column="2" Text="artist" FontSize="20"
+                       Margin="7,8,0,0" Foreground="Red"/>
+            <TextBlock Grid.Column="3" Text="album" FontSize="20"
+                       Margin="7,8,0,0" Foreground="Red"/>
+            <TextBlock Grid.Column="4" Text="duration" FontSize="20"
+                       Margin="7,8,0,0" Foreground="Red"/>
         </Grid>
-        <ListBox  Grid.Row="2">
-            <local:PlaylistItem SongAlbum="test" SongTitle="test" SongArtist="bogdan"/>
+        <ListBox x:Name="SongList" Grid.Row="2">
+            <ListBoxItem Style="{StaticResource PlaylistItems}"></ListBoxItem>
         </ListBox>
     </Grid>
 </UserControl>

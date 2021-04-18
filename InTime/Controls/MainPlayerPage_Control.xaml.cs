@@ -28,10 +28,8 @@ namespace InTime.Controls
             InitializeComponent();
             state= new AppState();
             state.sound = SoundState.HighSound;
-            testAddPlaylist();
             testInfoBord();
-            testInfoBord();
-            testInfoBord();
+            
         }
         void testAddPlaylist()
         {
@@ -39,8 +37,14 @@ namespace InTime.Controls
         }
         void testInfoBord()
         {
-            Playlist_Control playlist_Control = new Playlist_Control();
-            tape_panel.Children.Add(playlist_Control);
+            PlaylistGrid grid = new PlaylistGrid();
+            grid.ImageSource =@"C:\Player\InTimePlayer\InTime\Controls\3E-zsSjyGLU.jpg";
+            grid.PlaylistDuration=DateTime.Now;
+            grid.PlaylistName = "Custom playlist";
+            grid.SongsCount = 322;
+            grid.SongList.Items.Add(new PlaylistItem
+                {SongAlbum = "Best Album", SongArtist = "Rammstein", SongDuration = DateTime.Now, SongTitle = "Sonne"});
+            tape_panel.Children.Add(grid);
         }
 
         /// <summary>
@@ -135,7 +139,6 @@ namespace InTime.Controls
                     SoundIcon.Fill = new ImageBrush(new BitmapImage(new Uri(@"Assets/MaxVolumePurple.png", UriKind.Relative)));
                 }
         }
-
         private void ToggleButton_OnChecked(object sender, RoutedEventArgs e)
         {
             if (PlaylistBox.SelectedIndex >= 0)
@@ -143,7 +146,6 @@ namespace InTime.Controls
                 PlaylistBox.SelectedIndex = -1;
             }
         }
-
         private void PlaylistBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             foreach (var child in RadioBtnsPanel.Children)

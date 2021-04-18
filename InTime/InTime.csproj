@@ -73,9 +73,6 @@
     <Compile Include="Controls\PlaylistGrid.xaml.cs">
       <DependentUpon>PlaylistGrid.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\PlaylistItem.xaml.cs">
-      <DependentUpon>PlaylistItem.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\Playlist_Control.xaml.cs">
       <DependentUpon>Playlist_Control.xaml</DependentUpon>
     </Compile>
@@ -90,10 +87,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\PlaylistGrid.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\PlaylistItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -177,7 +170,9 @@
   <ItemGroup>
     <Resource Include="Controls\3E-zsSjyGLU.jpg" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Assets\playbutton.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\LowSoundPurple.png" />
     <Resource Include="Assets\LowSoundRed.png" />

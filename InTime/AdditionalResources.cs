@@ -12,4 +12,12 @@ namespace InTime
         MidSound,
         HighSound
     }
+
+   public class PlaylistItem
+    {
+        public string SongTitle { get; set; }
+        public string SongArtist { get; set; }
+        public string SongAlbum { get; set; }
+        public DateTime SongDuration { get; set; }
+    }
 }
