@@ -63,18 +63,29 @@ namespace InTime.Controls
         void testSingerBord()
         {
             List<PlaylistItem> lst = new List<PlaylistItem>();
-            lst.Add(new PlaylistItem
-            { SongAlbum = "Best Album", SongArtist = "Rammstein", ID = 2, SongDuration = DateTime.Now, SongTitle = "Sonne" });
-            lst.Add(new PlaylistItem
-            { SongAlbum = "Best Album", SongArtist = "Rammstein", ID = 2, SongDuration = DateTime.Now, SongTitle = "Sonne" });
+            lst.Add(new PlaylistItem { SongAlbum = "Best Album", SongArtist = "Rammstein", ID = 2, SongDuration = DateTime.Now, SongTitle = "Sonne" });
+            lst.Add(new PlaylistItem { SongAlbum = "Best Album", SongArtist = "Rammstein", ID = 2, SongDuration = DateTime.Now, SongTitle = "Sonne" });
+            lst.Add(new PlaylistItem { SongAlbum = "Best Album", SongArtist = "Rammstein", ID = 2, SongDuration = DateTime.Now, SongTitle = "Sonne" });
+            lst.Add(new PlaylistItem { SongAlbum = "Best Album", SongArtist = "Rammstein", ID = 2, SongDuration = DateTime.Now, SongTitle = "Sonne" });
+            lst.Add(new PlaylistItem { SongAlbum = "Best Album", SongArtist = "Rammstein", ID = 2, SongDuration = DateTime.Now, SongTitle = "Sonne" });
 
 
             SingerItem _Singer = new SingerItem();
             _Singer.Name = "Rammstein";
+
             AlbumItem album = new AlbumItem();
             album.Title = "First album";
             album.Songs = lst;
-            _Singer.Albums = new List<AlbumItem>() { album };
+
+            AlbumItem album1 = new AlbumItem();
+            album1.Title = "Second album";
+            album1.Songs = lst;
+
+            AlbumItem album2 = new AlbumItem();
+            album2.Title = "Third album";
+            album2.Songs = lst;
+
+            _Singer.Albums = new List<AlbumItem>() { album, album1, album2 };
             SingerPage_Control list = new SingerPage_Control(_Singer);
             tape_panel.Children.Add(list);
         }

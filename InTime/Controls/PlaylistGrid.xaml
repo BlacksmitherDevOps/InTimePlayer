@@ -82,7 +82,7 @@
                             <Border x:Name="border" 
                                         Background="{TemplateBinding Background}"
                                         BorderBrush="{TemplateBinding BorderBrush}" 
-                                        CornerRadius="10,10,0,0"
+                                        CornerRadius="0"
                                         BorderThickness="{TemplateBinding BorderThickness}">
                                 <ContentPresenter HorizontalAlignment="Stretch" Margin="{TemplateBinding Padding}"/>
                             </Border>

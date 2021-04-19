@@ -18,29 +18,22 @@ using System.Windows.Shapes;
 namespace InTime.Controls
 {
     /// <summary>
-    /// Логика взаимодействия для Playlist_Control.xaml
+    /// Логика взаимодействия для AlbumGrid.xaml
     /// </summary>
-    public partial class SingerPage_Control : UserControl
+    public partial class AlbumGrid : UserControl
     {
-        public SingerPage_Control(SingerItem singer)
+        public AlbumGrid(AlbumItem album)
         {
-            InitializeComponent();
-            InitControl(singer);
+           InitializeComponent();
+           InitControl(album);
         }
-        void InitControl(SingerItem singer)
+        void InitControl(AlbumItem album)
         {
-            singerName_tb.Text = singer.Name;
-            foreach (var item in singer.Albums)
-            {
-                AddAlbum(item);
-            }
+            albumName_tb.Text = album.Title;
+            songs_lb.ItemsSource = album.Songs;
         }
-        void AddAlbum(AlbumItem album)
-        {
-            AlbumGrid albumGrid = new AlbumGrid(album);
-            albumGrid.Margin = new Thickness(0, 0, 0, 50);
-            albums_panel.Children.Add(albumGrid);
-        }
+
+
         #region listBoxAnimations
         private void ListBoxItem_MouseEnter(object sender, MouseEventArgs e)
         {
