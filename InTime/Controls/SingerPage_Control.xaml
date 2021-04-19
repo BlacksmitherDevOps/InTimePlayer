@@ -1,0 +1,187 @@
+﻿<UserControl x:Class="InTime.Controls.SingerPage_Control"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:InTime.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="1190">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Assets/icons.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <Style x:Name="columnNames_Style" x:Key="columnNames_Style" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="22"/>
+                <Setter Property="FontWeight" Value="DemiBold"/>
+                <Setter Property="Foreground" Value="Red"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+            </Style>
+            <Style x:Name="albumTitle_Style" x:Key="albumTitle_Style" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="24"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="Foreground" Value="Red"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+            </Style>
+            <Style x:Name="songItem_Style" x:Key="songItem_Style" TargetType="TextBlock">
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="FontSize" Value="16"/>
+            </Style>
+            <Style x:Name="columnBorder_Style" x:Key="columnBorder_Style" TargetType="Border">
+                <Setter Property="VerticalAlignment" Value="Stretch"/>
+                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="BorderBrush" Value="Red"/>
+            </Style>
+            <Storyboard x:Key="Selected_Animation" FillBehavior="HoldEnd">
+                <ColorAnimation
+                       Duration="0:0:0.1" 
+                       To="#FFE83B3B"
+                       Storyboard.TargetProperty ="Background.Color"/>
+                <ColorAnimation
+                       Duration="0:0:0.1" 
+                       To="White"
+                       Storyboard.TargetProperty ="Foreground.Color"/>
+            </Storyboard>
+
+            <Storyboard x:Key="Unselected_Animation" FillBehavior="HoldEnd">
+                <ColorAnimation
+                       Duration="0:0:0.1" 
+                       To="#FFFFCECE"
+                       Storyboard.TargetProperty ="Background.Color"/>
+                <ColorAnimation
+                       Duration="0:0:0.1" 
+                       To="Black"
+                       Storyboard.TargetProperty ="Foreground.Color"/>
+            </Storyboard>
+            <Style x:Key="SongMenu" TargetType="{x:Type Button}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Path Margin="0,3,0,0" Data="{StaticResource more}" Fill="Red"></Path>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            
+            <ControlTemplate x:Key="listBox_Template" TargetType="ListBox">
+                <Border BorderBrush="Red" BorderThickness="0,2,0,0" CornerRadius="0" >
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Border Grid.Row="1" BorderThickness="0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="50"/>
+                                </Grid.ColumnDefinitions>
+                                <Border x:Name="PlayBord" Visibility="Visible"  Grid.Column="0">
+                                    <materialDesign:PackIcon x:Name="PlayBtn" Visibility="Hidden" Kind="PlayCircleOutline" Width="35" Height="35"
+                                                     VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                     Foreground="White"/>
+                                </Border>
+                                <TextBlock Text="Song" Grid.Column="1" Style="{StaticResource columnNames_Style}"/>
+                                <TextBlock Text="Duration" Grid.Column="2" Style="{StaticResource columnNames_Style}"/>
+                                <TextBlock Text="Total listens" Grid.Column="3" Style="{StaticResource columnNames_Style}"/>
+                            </Grid>
+                        </Border>
+                        <ScrollViewer Grid.Row="2" CanContentScroll="False" >
+                            <ItemsPresenter/>
+                        </ScrollViewer>
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+
+            <Style x:Key="item_Container" TargetType="{x:Type ListBoxItem}">
+                <Setter Property="Background" Value="#FFFFCECE"/>
+                <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                <Setter Property="BorderBrush" Value="Red"/>
+                <EventSetter Event="MouseEnter" Handler="ListBoxItem_MouseEnter"/>
+                <EventSetter Event="MouseLeave" Handler="ListBoxItem_MouseLeave"/>
+                <EventSetter Event="Unselected" Handler="ListBoxItem_Unselected"/>
+                <EventSetter Event="Selected" Handler="ListBoxItem_Selected"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                            <Border x:Name="border" 
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}" 
+                                        CornerRadius="10,10,0,0"
+                                        BorderThickness="{TemplateBinding BorderThickness}">
+                                <ContentPresenter HorizontalAlignment="Stretch" Margin="{TemplateBinding Padding}"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="#FFB8FF8F"/>
+                                    <Setter Property="BorderThickness" Value="1"/>
+                                    <Setter Property="BorderBrush" Value="Black"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            
+            <DataTemplate x:Key="item_Template">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="50"/>
+                    </Grid.ColumnDefinitions>
+                    <Border x:Name="PlayBord" Visibility="Visible"  Grid.Column="0">
+                        <materialDesign:PackIcon x:Name="PlayBtn" Visibility="Hidden" Kind="PlayCircleOutline" Width="35" Height="35"
+                                                     VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                     Foreground="White"/>
+                    </Border>
+                    <TextBlock Text="{Binding SongTitle}" Grid.Column="1" FontSize="20"
+                                       HorizontalAlignment="Center"/>
+                    <TextBlock Grid.Column="2" Text="{Binding SongDuration,StringFormat=mm:ss}" FontSize="20"
+                                       HorizontalAlignment="Center"/>
+                    <TextBlock Grid.Column="3" Text="{Binding SongListens}" FontSize="20"
+                                       HorizontalAlignment="Center"/>
+                    <Button Content="menu" Style="{StaticResource SongMenu}" Grid.Column="4"/>
+                </Grid>
+            </DataTemplate>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Image Width="120" Height="120" VerticalAlignment="Center" HorizontalAlignment="Center" Source="3E-zsSjyGLU.jpg"/>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock Name="singerName_tb" Text="Playlist Name" FontSize="24" VerticalAlignment="Center"/>
+            </Grid>
+        </Grid>
+        <StackPanel Name="albums_panel" Grid.Row="1">
+            <!--<ListBox x:Name="songs_lb" Background="Transparent" ItemTemplate="{StaticResource item_Template}" 
+                 ItemsSource="{Binding}" Template="{StaticResource listBox_Template}"  ItemContainerStyle="{StaticResource item_Container}"
+                 BorderThickness="0">
+            </ListBox>-->
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -1,4 +1,5 @@
 ﻿<UserControl x:Class="InTime.Controls.MainPlayerPage_Control"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -11,10 +12,44 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Assets/icons.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-
-
-
-
+            
+            <!--RadioButton selection animations-->
+            <Storyboard x:Key="ckecked_Selected_Animation" FillBehavior="HoldEnd">
+                <ColorAnimation
+                       Duration="0:0:0.1" 
+                       To="Red"
+                    Storyboard.TargetName="ckecked"
+                       Storyboard.TargetProperty ="Fill.Color"/>
+                <ColorAnimation
+                       Duration="0:0:0.1" 
+                       To="Red"
+                       Storyboard.TargetProperty ="Foreground.Color"/>
+            </Storyboard>
+            <Storyboard x:Key="ckecked_Unselected_Animation" FillBehavior="HoldEnd">
+                <ColorAnimation
+                       Duration="0:0:0.1" 
+                       To="White"
+                       Storyboard.TargetName="ckecked"
+                       Storyboard.TargetProperty ="Fill.Color"/>
+                <ColorAnimation
+                       Duration="0:0:0.1" 
+                       To="#ff8282"
+                       Storyboard.TargetProperty ="Foreground.Color"/>
+            </Storyboard>
+            <Storyboard x:Key="Text_Selected_Animation" FillBehavior="HoldEnd">
+                <ColorAnimation
+                       Duration="0:0:0.1" 
+                       To="Red"
+                       Storyboard.TargetProperty ="Foreground.Color"/>
+            </Storyboard>
+            <Storyboard x:Key="Text_Unselected_Animation" FillBehavior="HoldEnd">
+                <ColorAnimation
+                       Duration="0:0:0.1" 
+                       To="#ff8282"
+                       Storyboard.TargetProperty ="Foreground.Color"/>
+            </Storyboard>
+            <!--RadioButton selection animations-->
+            
             <Style x:Name="LeftTogleBtn" TargetType="{x:Type ToggleButton}">
                 <Setter Property="Background" Value="Transparent"/>
                 <Setter Property="Foreground" Value="#ff8282"/>
@@ -30,17 +65,25 @@
                                 <Rectangle Name="ckecked" VerticalAlignment="Center"
                                        Height="40" Width="7" Fill="White"
                                        HorizontalAlignment="Left" Grid.Column="0"/>
-                                <TextBlock Grid.Column="1" VerticalAlignment="Center" 
-                                       Text="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}"
-                                       HorizontalAlignment="Left" FontSize="20"/>
+                                <TextBlock Grid.Column="1" FontSize="20"
+                                       Text="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}"/>
                             </Grid>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsChecked" Value="True">
-                                    <Setter TargetName="ckecked" Property="Fill" Value="Red"/>
-                                    <Setter Property="Foreground" Value="Red"/>
+                                    <Trigger.EnterActions>
+                                        <BeginStoryboard Storyboard="{StaticResource ckecked_Selected_Animation}"/>
+                                    </Trigger.EnterActions>
+                                    <Trigger.ExitActions>
+                                        <BeginStoryboard Storyboard="{StaticResource ckecked_Unselected_Animation}"/>
+                                    </Trigger.ExitActions>
                                 </Trigger>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Foreground" Value="Red"/>
+                                    <Trigger.EnterActions>
+                                        <BeginStoryboard Storyboard="{StaticResource Text_Selected_Animation}"/>
+                                    </Trigger.EnterActions>
+                                    <Trigger.ExitActions>
+                                        <BeginStoryboard Storyboard="{StaticResource Text_Unselected_Animation}"/>
+                                    </Trigger.ExitActions>
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
@@ -164,17 +207,26 @@
                                 <Rectangle Name="ckecked" VerticalAlignment="Center"
                                            Height="30" Width="7" Fill="White"
                                            HorizontalAlignment="Left" Grid.Column="0"/>
-                                <TextBlock Grid.Column="1" VerticalAlignment="Center" 
+                                <TextBlock Grid.Column="1"
                                            Text="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}"
-                                           HorizontalAlignment="Left" FontSize="16"/>
+                                           FontSize="16"/>
                             </Grid>
                             <ControlTemplate.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Foreground" Value="Red"/>
-                                </Trigger>
                                 <Trigger Property="IsSelected" Value="True">
-                                    <Setter TargetName="ckecked" Property="Fill" Value="Red"/>
-                                    <Setter Property="Foreground" Value="Red"/>
+                                    <Trigger.EnterActions>
+                                        <BeginStoryboard Storyboard="{StaticResource ckecked_Selected_Animation}"/>
+                                    </Trigger.EnterActions>
+                                    <Trigger.ExitActions>
+                                        <BeginStoryboard Storyboard="{StaticResource ckecked_Unselected_Animation}"/>
+                                    </Trigger.ExitActions>
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Trigger.EnterActions>
+                                        <BeginStoryboard Storyboard="{StaticResource Text_Selected_Animation}"/>
+                                    </Trigger.EnterActions>
+                                    <Trigger.ExitActions>
+                                        <BeginStoryboard Storyboard="{StaticResource Text_Unselected_Animation}"/>
+                                    </Trigger.ExitActions>
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
@@ -352,13 +404,7 @@
     </UserControl.Resources>
 
     <Grid Background="White">
-
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="151*"/>
-            <ColumnDefinition Width="8*"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <Grid Grid.ColumnSpan="3">
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="0"/>
                 <RowDefinition/>
@@ -375,7 +421,7 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="60"/>
                             <RowDefinition/>
-                            <RowDefinition Height="350"/>
+                            <RowDefinition />
                             <RowDefinition Height="50"/>
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="1">
@@ -421,8 +467,6 @@
                         </Grid>
                     </Grid>
                 </Border>
-
-
 
                 <Grid Grid.Column="1">
                     <!--central panel-->

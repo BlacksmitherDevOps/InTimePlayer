@@ -1,4 +1,5 @@
 ﻿<UserControl x:Class="InTime.Controls.PlaylistGrid"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,7 +7,7 @@
              xmlns:local="clr-namespace:InTime.Controls"
              mc:Ignorable="d" 
              Name="_Playlist"
-             d:DesignHeight="410" d:DesignWidth="1190">
+             d:DesignHeight="500" d:DesignWidth="1190">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -18,6 +19,7 @@
                 <Setter Property="Foreground" Value="Red"/>
                 <Setter Property="FontSize" Value="22"/>
             </Style>
+
 
             <Style x:Key="Play_btn" TargetType="{x:Type Button}">
                 <Setter Property="Template">
@@ -33,6 +35,7 @@
                 </Setter>
             </Style>
 
+
             <Style x:Key="SongMenu" TargetType="{x:Type Button}">
                 <Setter Property="Template">
                     <Setter.Value>
@@ -43,10 +46,36 @@
                 </Setter>
             </Style>
 
+            <Storyboard x:Key="Selected_Animation" FillBehavior="HoldEnd">
+                <ColorAnimation
+                       Duration="0:0:0.1" 
+                       To="#FFE83B3B"
+                       Storyboard.TargetProperty ="Background.Color"/>
+                <ColorAnimation
+                       Duration="0:0:0.1" 
+                       To="White"
+                       Storyboard.TargetProperty ="Foreground.Color"/>
+            </Storyboard>
+
+            <Storyboard x:Key="Unselected_Animation" FillBehavior="HoldEnd">
+                <ColorAnimation
+                       Duration="0:0:0.1" 
+                       To="#FFFFCECE"
+                       Storyboard.TargetProperty ="Background.Color"/>
+                <ColorAnimation
+                       Duration="0:0:0.1" 
+                       To="Black"
+                       Storyboard.TargetProperty ="Foreground.Color"/>
+            </Storyboard>
+
             <Style x:Key="item_Container" TargetType="{x:Type ListBoxItem}">
-                <Setter Property="Background" Value="White"/>
+                <Setter Property="Background" Value="#FFFFCECE"/>
                 <Setter Property="BorderThickness" Value="0,0,0,2"/>
                 <Setter Property="BorderBrush" Value="Red"/>
+                <EventSetter Event="MouseEnter" Handler="ListBoxItem_MouseEnter"/>
+                <EventSetter Event="MouseLeave" Handler="ListBoxItem_MouseLeave"/>
+                <EventSetter Event="Unselected" Handler="ListBoxItem_Unselected"/>
+                <EventSetter Event="Selected" Handler="ListBoxItem_Selected"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type ListBoxItem}">
@@ -78,8 +107,11 @@
                         <ColumnDefinition Width="100"/>
                         <ColumnDefinition Width="50"/>
                     </Grid.ColumnDefinitions>
-                    <Border BorderBrush="Red" Height="33" Grid.ColumnSpan="7"/>
-                    <Button x:Name="PlayBtn" Style="{StaticResource Play_btn}" Grid.Column="0"/>
+                    <Border x:Name="PlayBord" Visibility="Visible"  Grid.Column="0">
+                        <materialDesign:PackIcon x:Name="PlayBtn" Visibility="Hidden" Kind="PlayCircleOutline" Width="35" Height="35"
+                                                     VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                     Foreground="White"/>
+                    </Border>
                     <TextBlock Text="{Binding SongTitle}" Grid.Column="1" FontSize="20"
                                        Margin="7,3,0,0"/>
                     <TextBlock Grid.Column="2" Text="{Binding SongArtist}" FontSize="20"
@@ -128,6 +160,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="150"/>
             <RowDefinition Height="40"/>
+            <RowDefinition MinHeight="230"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
@@ -177,8 +210,20 @@
             <TextBlock Grid.Column="4" Text="duration" FontSize="20"
                        Margin="7,8,0,0" Foreground="Red"/>
         </Grid>
-        <ListBox x:Name="SongList" ItemContainerStyle="{StaticResource item_Container}" ItemTemplate="{StaticResource item_Template}" Grid.Row="2">
-            
-        </ListBox>
+        <ListBox x:Name="SongList" ItemsSource="{Binding}" ItemContainerStyle="{StaticResource item_Container}"
+                 ItemTemplate="{StaticResource item_Template}" Grid.Row="2"/>
+        <Expander
+            HorizontalAlignment="Stretch"
+            Header="Simular Songs" BorderThickness="0,1,0,1" 
+            Foreground="Red"
+            BorderBrush="Red" Grid.Row="3" FontFamily="Microsoft YaHei">
+        <StackPanel
+            Orientation="Vertical"
+            TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
+                <ListBox x:Name="SimularSongList" ItemContainerStyle="{StaticResource item_Container}"
+                 ItemTemplate="{StaticResource item_Template}" Grid.Row="2"/>
+                <TextBlock />
+        </StackPanel>
+        </Expander>
     </Grid>
 </UserControl>

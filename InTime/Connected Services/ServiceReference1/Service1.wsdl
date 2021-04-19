@@ -1,47 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Service1" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="PlayerServer" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
     <xs:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
       <xs:import namespace="http://schemas.datacontract.org/2004/07/PlayerService" />
-      <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
-      <xs:element name="GetData">
+      <xs:import namespace="http://schemas.microsoft.com/Message" />
+      <xs:element name="AddNewSinger">
         <xs:complexType>
           <xs:sequence>
-            <xs:element minOccurs="0" name="value" type="xs:int" />
+            <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="NewSinger" nillable="true" type="q1:Song_Singer" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
-      <xs:element name="GetDataResponse">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element minOccurs="0" name="GetDataResult" nillable="true" type="xs:string" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="GetDataUsingDataContract">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="composite" nillable="true" type="q1:CompositeType" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="GetDataUsingDataContractResponse">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="GetDataUsingDataContractResult" nillable="true" type="q2:CompositeType" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="BogdanLox">
+      <xs:element name="AddNewSingerResponse">
         <xs:complexType>
           <xs:sequence />
         </xs:complexType>
       </xs:element>
-      <xs:element name="BogdanLoxResponse">
+      <xs:element name="AddNewTrack">
         <xs:complexType>
           <xs:sequence>
-            <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="BogdanLoxResult" nillable="true" type="q3:ArrayOfstring" />
+            <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="NewSong" nillable="true" type="q2:Song" />
           </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="AddNewTrackResponse">
+        <xs:complexType>
+          <xs:sequence />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetAlbum">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="ID" type="xs:int" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetAlbumResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="GetAlbumResult" nillable="true" type="q3:Singer_Album" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="TempAlbum">
+        <xs:complexType>
+          <xs:sequence />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="TempAlbumResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="TempAlbumResult" nillable="true" type="q4:Singer_Album" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetTrackStream">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="ID" type="xs:int" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetTrackStreamResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q5="http://schemas.microsoft.com/Message" name="GetTrackStreamResult" type="q5:StreamBody" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="AddNewAlbum">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="NewAlbum" nillable="true" type="q6:Singer_Album" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="AddNewAlbumResponse">
+        <xs:complexType>
+          <xs:sequence />
         </xs:complexType>
       </xs:element>
       <xs:element name="GetFile">
@@ -111,40 +147,100 @@
       <xs:attribute name="Ref" type="xs:IDREF" />
     </xs:schema>
     <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/PlayerService" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/PlayerService" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-      <xs:complexType name="CompositeType">
+      <xs:complexType name="Song_Singer">
         <xs:sequence>
-          <xs:element minOccurs="0" name="BoolValue" type="xs:boolean" />
-          <xs:element minOccurs="0" name="StringValue" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Albums" nillable="true" type="tns:ArrayOfSinger_Album" />
+          <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ID" type="xs:int" />
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
         </xs:sequence>
       </xs:complexType>
-      <xs:element name="CompositeType" nillable="true" type="tns:CompositeType" />
+      <xs:element name="Song_Singer" nillable="true" type="tns:Song_Singer" />
+      <xs:complexType name="ArrayOfSinger_Album">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Singer_Album" nillable="true" type="tns:Singer_Album" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfSinger_Album" nillable="true" type="tns:ArrayOfSinger_Album" />
+      <xs:complexType name="Singer_Album">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ID" type="xs:int" />
+          <xs:element minOccurs="0" name="Image" nillable="true" type="xs:base64Binary" />
+          <xs:element minOccurs="0" name="ImagePath" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Singer" nillable="true" type="tns:Song_Singer" />
+          <xs:element minOccurs="0" name="Songs" nillable="true" type="tns:ArrayOfSong" />
+          <xs:element minOccurs="0" name="Title" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="Singer_Album" nillable="true" type="tns:Singer_Album" />
+      <xs:complexType name="ArrayOfSong">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Song" nillable="true" type="tns:Song" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfSong" nillable="true" type="tns:ArrayOfSong" />
+      <xs:complexType name="Song">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Album_ID" type="xs:int" />
+          <xs:element minOccurs="0" name="Genre" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ID" type="xs:int" />
+          <xs:element minOccurs="0" name="Music" nillable="true" type="xs:base64Binary" />
+          <xs:element minOccurs="0" name="Path" type="xs:int" />
+          <xs:element minOccurs="0" name="Singers" nillable="true" type="tns:ArrayOfSong_Singer" />
+          <xs:element minOccurs="0" name="Title" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="TotalListens" type="xs:int" />
+          <xs:element minOccurs="0" name="Verification" type="xs:boolean" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="Song" nillable="true" type="tns:Song" />
+      <xs:complexType name="ArrayOfSong_Singer">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Song_Singer" nillable="true" type="tns:Song_Singer" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfSong_Singer" nillable="true" type="tns:ArrayOfSong_Singer" />
     </xs:schema>
-    <xs:schema xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/Arrays" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-      <xs:complexType name="ArrayOfstring">
-        <xs:sequence>
-          <xs:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="xs:string" />
-        </xs:sequence>
-      </xs:complexType>
-      <xs:element name="ArrayOfstring" nillable="true" type="tns:ArrayOfstring" />
+    <xs:schema xmlns:tns="http://schemas.microsoft.com/Message" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/Message" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:simpleType name="StreamBody">
+        <xs:restriction base="xs:base64Binary" />
+      </xs:simpleType>
     </xs:schema>
   </wsdl:types>
-  <wsdl:message name="IService1_GetData_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetData" />
+  <wsdl:message name="IService1_AddNewSinger_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddNewSinger" />
   </wsdl:message>
-  <wsdl:message name="IService1_GetData_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetDataResponse" />
+  <wsdl:message name="IService1_AddNewSinger_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddNewSingerResponse" />
   </wsdl:message>
-  <wsdl:message name="IService1_GetDataUsingDataContract_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetDataUsingDataContract" />
+  <wsdl:message name="IService1_AddNewTrack_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddNewTrack" />
   </wsdl:message>
-  <wsdl:message name="IService1_GetDataUsingDataContract_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetDataUsingDataContractResponse" />
+  <wsdl:message name="IService1_AddNewTrack_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddNewTrackResponse" />
   </wsdl:message>
-  <wsdl:message name="IService1_BogdanLox_InputMessage">
-    <wsdl:part name="parameters" element="tns:BogdanLox" />
+  <wsdl:message name="IService1_GetAlbum_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAlbum" />
   </wsdl:message>
-  <wsdl:message name="IService1_BogdanLox_OutputMessage">
-    <wsdl:part name="parameters" element="tns:BogdanLoxResponse" />
+  <wsdl:message name="IService1_GetAlbum_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAlbumResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_TempAlbum_InputMessage">
+    <wsdl:part name="parameters" element="tns:TempAlbum" />
+  </wsdl:message>
+  <wsdl:message name="IService1_TempAlbum_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TempAlbumResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GetTrackStream_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTrackStream" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GetTrackStream_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTrackStreamResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_AddNewAlbum_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddNewAlbum" />
+  </wsdl:message>
+  <wsdl:message name="IService1_AddNewAlbum_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddNewAlbumResponse" />
   </wsdl:message>
   <wsdl:message name="IService1_GetFile_InputMessage">
     <wsdl:part name="parameters" element="tns:GetFile" />
@@ -159,17 +255,29 @@
     <wsdl:part name="parameters" element="tns:DownloadFileResponse" />
   </wsdl:message>
   <wsdl:portType name="IService1">
-    <wsdl:operation name="GetData">
-      <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetData" message="tns:IService1_GetData_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetDataResponse" message="tns:IService1_GetData_OutputMessage" />
+    <wsdl:operation name="AddNewSinger">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/AddNewSinger" message="tns:IService1_AddNewSinger_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/AddNewSingerResponse" message="tns:IService1_AddNewSinger_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetDataUsingDataContract">
-      <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetDataUsingDataContract" message="tns:IService1_GetDataUsingDataContract_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetDataUsingDataContractResponse" message="tns:IService1_GetDataUsingDataContract_OutputMessage" />
+    <wsdl:operation name="AddNewTrack">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/AddNewTrack" message="tns:IService1_AddNewTrack_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/AddNewTrackResponse" message="tns:IService1_AddNewTrack_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="BogdanLox">
-      <wsdl:input wsaw:Action="http://tempuri.org/IService1/BogdanLox" message="tns:IService1_BogdanLox_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IService1/BogdanLoxResponse" message="tns:IService1_BogdanLox_OutputMessage" />
+    <wsdl:operation name="GetAlbum">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetAlbum" message="tns:IService1_GetAlbum_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetAlbumResponse" message="tns:IService1_GetAlbum_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="TempAlbum">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/TempAlbum" message="tns:IService1_TempAlbum_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/TempAlbumResponse" message="tns:IService1_TempAlbum_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTrackStream">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetTrackStream" message="tns:IService1_GetTrackStream_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetTrackStreamResponse" message="tns:IService1_GetTrackStream_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddNewAlbum">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/AddNewAlbum" message="tns:IService1_AddNewAlbum_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/AddNewAlbumResponse" message="tns:IService1_AddNewAlbum_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetFile">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetFile" message="tns:IService1_GetFile_InputMessage" />
@@ -182,8 +290,8 @@
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IService1" type="tns:IService1">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="GetData">
-      <soap:operation soapAction="http://tempuri.org/IService1/GetData" style="document" />
+    <wsdl:operation name="AddNewSinger">
+      <soap:operation soapAction="http://tempuri.org/IService1/AddNewSinger" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -191,8 +299,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetDataUsingDataContract">
-      <soap:operation soapAction="http://tempuri.org/IService1/GetDataUsingDataContract" style="document" />
+    <wsdl:operation name="AddNewTrack">
+      <soap:operation soapAction="http://tempuri.org/IService1/AddNewTrack" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -200,8 +308,35 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="BogdanLox">
-      <soap:operation soapAction="http://tempuri.org/IService1/BogdanLox" style="document" />
+    <wsdl:operation name="GetAlbum">
+      <soap:operation soapAction="http://tempuri.org/IService1/GetAlbum" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TempAlbum">
+      <soap:operation soapAction="http://tempuri.org/IService1/TempAlbum" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTrackStream">
+      <soap:operation soapAction="http://tempuri.org/IService1/GetTrackStream" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddNewAlbum">
+      <soap:operation soapAction="http://tempuri.org/IService1/AddNewAlbum" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -228,7 +363,7 @@
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
-  <wsdl:service name="Service1">
+  <wsdl:service name="PlayerServer">
     <wsdl:port name="BasicHttpBinding_IService1" binding="tns:BasicHttpBinding_IService1">
       <soap:address location="http://uh1294526.ukrdomen.com/Service1.svc" />
     </wsdl:port>

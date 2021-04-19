@@ -18,62 +18,41 @@ using System.Windows.Shapes;
 namespace InTime.Controls
 {
     /// <summary>
-    /// Логика взаимодействия для PlaylistGrid.xaml
+    /// Логика взаимодействия для Playlist_Control.xaml
     /// </summary>
-    public partial class PlaylistGrid : UserControl
+    public partial class SingerPage_Control : UserControl
     {
-        public PlaylistGrid()
+        public SingerPage_Control(SingerItem singer)
         {
             InitializeComponent();
-
+            InitControl(singer);
         }
-
-        public string ImageSource
+        void InitControl(SingerItem singer)
         {
-            get { return (string)GetValue(ImageSourceProperty); }
-            set { SetValue(ImageSourceProperty, value); }
+            singerName_tb.Text = singer.Name;
+            foreach (var item in singer.Albums)
+            {
+                AddAlbum(item);
+            }
         }
-
-        // Using a DependencyProperty as the backing store for ImageSource.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ImageSourceProperty =
-            DependencyProperty.Register("ImageSource", typeof(string), typeof(PlaylistGrid));
-
-
-        public string PlaylistName
+        void AddAlbum(AlbumItem album)
         {
-            get { return (string)GetValue(PlaylistNameProperty); }
-            set { SetValue(PlaylistNameProperty, value); }
+            TextBlock textBlock = new TextBlock();
+            textBlock.Text = album.Title;
+            textBlock.Style = FindResource("albumTitle_Style") as Style;
+            albums_panel.Children.Add(textBlock);
+            ListBox list = new ListBox();
+            list.Template = FindResource("listBox_Template") as ControlTemplate;
+            list.ItemContainerStyle = FindResource("item_Container") as Style;
+            list.ItemTemplate = FindResource("item_Template") as DataTemplate;
+            list.ItemsSource = album.Songs;
+            albums_panel.Children.Add(list);
         }
-
-        // Using a DependencyProperty as the backing store for Playlistame.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty PlaylistNameProperty =
-            DependencyProperty.Register("PlaylistName", typeof(string), typeof(PlaylistGrid));
+            DependencyProperty.Register("Name", typeof(string), typeof(SingerPage_Control));
 
-
-
-        public DateTime PlaylistDuration
-        {
-            get { return (DateTime)GetValue(PlaylistDurationProperty); }
-            set { SetValue(PlaylistDurationProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for PlaylistDuration.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty PlaylistDurationProperty =
-            DependencyProperty.Register("PlaylistDuration", typeof(DateTime), typeof(PlaylistGrid));
-
-
-
-        public int SongsCount
-        {
-            get { return (int)GetValue(SongsCountProperty); }
-            set { SetValue(SongsCountProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for SongsCount.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty SongsCountProperty =
-            DependencyProperty.Register("SongsCount", typeof(int), typeof(PlaylistGrid));
-
-
+        public static readonly DependencyProperty AllbumTitle =
+            DependencyProperty.Register("Title", typeof(string), typeof(SingerPage_Control));
         private void ListBoxItem_MouseEnter(object sender, MouseEventArgs e)
         {
             if (((ListBoxItem)sender).IsSelected)
@@ -143,6 +122,5 @@ namespace InTime.Controls
             var parentT = parent as T;
             return parentT ?? FindParent<T>(parent);
         }
-
     }
 }

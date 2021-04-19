@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InTime.ServiceReference1;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -28,8 +29,9 @@ namespace InTime.Controls
             InitializeComponent();
             state= new AppState();
             state.sound = SoundState.HighSound;
-            testInfoBord();
-            
+            testSingerBord();
+
+
         }
         void testAddPlaylist()
         {
@@ -42,11 +44,41 @@ namespace InTime.Controls
             grid.PlaylistDuration=DateTime.Now;
             grid.PlaylistName = "Custom playlist";
             grid.SongsCount = 322;
-            grid.SongList.Items.Add(new PlaylistItem
-                {SongAlbum = "Best Album", SongArtist = "Rammstein", SongDuration = DateTime.Now, SongTitle = "Sonne"});
+            List<PlaylistItem> lst = new List<PlaylistItem>();
+            lst.Add(new PlaylistItem
+            { SongAlbum = "Best Album", SongArtist = "Rammstein", ID = 2, SongDuration = DateTime.Now, SongTitle = "Sonne" });
+            lst.Add(new PlaylistItem
+            { SongAlbum = "Best Album", SongArtist = "Rammstein", ID = 2, SongDuration = DateTime.Now, SongTitle = "Sonne" });
+
+            grid.SongList.ItemsSource = lst;
+
+            grid.SimularSongList.Items.Add(new PlaylistItem
+            { SongAlbum = "Wahrheit Oder Pflicht", SongArtist = "Oomph!", ID = 2, SongDuration = DateTime.Now, SongTitle = "Augen Auf!" });
+            grid.SimularSongList.Items.Add(new PlaylistItem
+            { SongAlbum = "Wahrheit Oder Pflicht", SongArtist = "Oomph!", ID = 2, SongDuration = DateTime.Now, SongTitle = "Burn Your Eyes" });
+            grid.SimularSongList.Items.Add(new PlaylistItem
+            { SongAlbum = "Wahrheit Oder Pflicht", SongArtist = "Oomph!", ID = 2, SongDuration = DateTime.Now, SongTitle = "Dein Weg" });
             tape_panel.Children.Add(grid);
         }
+        void testSingerBord()
+        {
+            List<PlaylistItem> lst = new List<PlaylistItem>();
+            lst.Add(new PlaylistItem
+            { SongAlbum = "Best Album", SongArtist = "Rammstein", ID = 2, SongDuration = DateTime.Now, SongTitle = "Sonne" });
+            lst.Add(new PlaylistItem
+            { SongAlbum = "Best Album", SongArtist = "Rammstein", ID = 2, SongDuration = DateTime.Now, SongTitle = "Sonne" });
 
+
+            SingerItem _Singer = new SingerItem();
+            _Singer.Name = "Rammstein";
+            AlbumItem album = new AlbumItem();
+            album.Title = "First album";
+            album.Songs = lst;
+            _Singer.Albums = new List<AlbumItem>() { album };
+            SingerPage_Control list = new SingerPage_Control(_Singer);
+            tape_panel.Children.Add(list);
+        }
+        #region Sound
         /// <summary>
         /// Изменение состояния картинки громкости
         /// SoundIcon_OnMouseEnter - при наведении на иконку
@@ -139,12 +171,14 @@ namespace InTime.Controls
                     SoundIcon.Fill = new ImageBrush(new BitmapImage(new Uri("Assets/MaxVolumePurple.png", UriKind.RelativeOrAbsolute)));
                 }
         }
+        #endregion
         private void ToggleButton_OnChecked(object sender, RoutedEventArgs e)
         {
             if (PlaylistBox.SelectedIndex >= 0)
             {
                 PlaylistBox.SelectedIndex = -1;
             }
+            ((RadioButton)sender).IsChecked = true;
         }
         private void PlaylistBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
