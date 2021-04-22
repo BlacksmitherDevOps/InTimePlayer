@@ -12,23 +12,24 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Assets/icons.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            
+
             <!--RadioButton selection animations-->
             <Storyboard x:Key="ckecked_Selected_Animation" FillBehavior="HoldEnd">
                 <ColorAnimation
                        Duration="0:0:0.1" 
-                       To="Red"
+                       To="#FFFF5656"
                     Storyboard.TargetName="ckecked"
                        Storyboard.TargetProperty ="Fill.Color"/>
                 <ColorAnimation
                        Duration="0:0:0.1" 
-                       To="Red"
+                       To="White"
                        Storyboard.TargetProperty ="Foreground.Color"/>
             </Storyboard>
+            
             <Storyboard x:Key="ckecked_Unselected_Animation" FillBehavior="HoldEnd">
                 <ColorAnimation
                        Duration="0:0:0.1" 
-                       To="White"
+                       To="#FF1D1D1D"
                        Storyboard.TargetName="ckecked"
                        Storyboard.TargetProperty ="Fill.Color"/>
                 <ColorAnimation
@@ -36,36 +37,52 @@
                        To="#ff8282"
                        Storyboard.TargetProperty ="Foreground.Color"/>
             </Storyboard>
+            
             <Storyboard x:Key="Text_Selected_Animation" FillBehavior="HoldEnd">
                 <ColorAnimation
                        Duration="0:0:0.1" 
-                       To="Red"
+                       To="White"
                        Storyboard.TargetProperty ="Foreground.Color"/>
+                <DoubleAnimation
+                    Duration="0:0:0.1"
+                    To="22"
+                    Storyboard.TargetProperty="FontSize"/>
             </Storyboard>
             <Storyboard x:Key="Text_Unselected_Animation" FillBehavior="HoldEnd">
                 <ColorAnimation
                        Duration="0:0:0.1" 
-                       To="#ff8282"
+                       To="#FFFF5656"
                        Storyboard.TargetProperty ="Foreground.Color"/>
+                <DoubleAnimation
+                    Duration="0:0:0.1"
+                    To="20"
+                    Storyboard.TargetProperty="FontSize"/>
             </Storyboard>
+
+            <Style x:Key="BottomButtonsBorder_Style" TargetType="Border">
+                <Setter Property="Background" Value="Transparent"/>
+                <EventSetter Event="MouseEnter" Handler="BottomButtonsBorder_MouseEnter"/>
+                <EventSetter Event="MouseLeave" Handler="BottomButtonsBorder_MouseLeave"/>
+            </Style>
             <!--RadioButton selection animations-->
-            
+
             <Style x:Name="LeftTogleBtn" TargetType="{x:Type ToggleButton}">
                 <Setter Property="Background" Value="Transparent"/>
-                <Setter Property="Foreground" Value="#ff8282"/>
+                <Setter Property="Foreground" Value="#FFFF5656"/>
+                <Setter Property="FontSize" Value="20"/>
                 <Setter Property="Height" Value="40"></Setter>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type ToggleButton}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="20"/>
+                                    <ColumnDefinition Width="10"/>
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
-                                <Rectangle Name="ckecked" VerticalAlignment="Center"
-                                       Height="40" Width="7" Fill="White"
+                                <Rectangle Name="ckecked" VerticalAlignment="Stretch"
+                                       Width="7" Fill="#FF1D1D1D"
                                        HorizontalAlignment="Left" Grid.Column="0"/>
-                                <TextBlock Grid.Column="1" FontSize="20"
+                                <TextBlock Grid.Column="1" FontSize="{TemplateBinding FontSize}"
                                        Text="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}"/>
                             </Grid>
                             <ControlTemplate.Triggers>
@@ -101,7 +118,7 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type RepeatButton}">
-                            <Border Opacity="0.7" Background="#ff8282"></Border>
+                            <Border Opacity="0.7" Background="#FF8B6969"></Border>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
@@ -114,7 +131,7 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type Thumb}">
-                            <Border Opacity="0.7" CornerRadius="3" Background="Red"/>
+                            <Border Opacity="0.7" CornerRadius="3" Background="#FFFF5656"/>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter Property="Background" Value="White"></Setter>
@@ -195,7 +212,7 @@
             <!--PlaylistItems-->
             <Style x:Key="PlaylistItem" TargetType="ListBoxItem" >
                 <Setter Property="Background" Value="Transparent"/>
-                <Setter Property="Foreground" Value="#ff8282"></Setter>
+                <Setter Property="Foreground" Value="#FFFF5656"></Setter>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type ListBoxItem}">
@@ -205,7 +222,7 @@
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
                                 <Rectangle Name="ckecked" VerticalAlignment="Center"
-                                           Height="30" Width="7" Fill="White"
+                                           Height="30" Width="7" Fill="#FF1D1D1D"
                                            HorizontalAlignment="Left" Grid.Column="0"/>
                                 <TextBlock Grid.Column="1"
                                            Text="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}"
@@ -240,7 +257,7 @@
                 <Setter Property="VerticalAlignment" Value="Stretch"/>
                 <Setter Property="HorizontalContentAlignment" Value="Left"/>
                 <Setter Property="VerticalContentAlignment" Value="Center"/>
-                <Setter Property="Foreground" Value="#ff8282"/>
+                <Setter Property="Foreground" Value="#FFFF5656"/>
                 <Setter Property="FontSize" Value="18"/>
                 <Setter Property="Template">
                     <Setter.Value>
@@ -281,7 +298,7 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="RepeatButton">
-                            <Border  BorderThickness="1" BorderBrush="#ff8282" Background="#ff8282" Height="3"/>
+                            <Border Background="#FF515151" Height="4"/>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
@@ -292,7 +309,7 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="RepeatButton">
-                            <Border SnapsToDevicePixels="True" Background="#ff0000"  BorderThickness="1" BorderBrush="#ff0000" Height="3"/>
+                            <Border SnapsToDevicePixels="True" Background="#FFFF5656" Height="4"/>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
@@ -304,7 +321,7 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Thumb">
-                            <Ellipse x:Name="ThumbEllipse" Height="10" Width="10" Fill="#ff0000"></Ellipse>
+                            <Ellipse x:Name="ThumbEllipse" Height="10" Width="10" Fill="#FFFF5656"></Ellipse>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
@@ -403,12 +420,12 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid Background="White">
+    <Grid Background="#FF2E2A2A">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="0"/>
                 <RowDefinition/>
-                <RowDefinition Height="100"/>
+                <RowDefinition Height="80"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
@@ -416,8 +433,8 @@
                     <ColumnDefinition/>
                     <ColumnDefinition Width="180"/>
                 </Grid.ColumnDefinitions>
-                <Border BorderBrush="Red"  Grid.Column="0" BorderThickness="0,0,2,0">
-                    <Grid>
+                <Border BorderBrush="#FF696087" Grid.Column="0" BorderThickness="0,0,2,0">
+                    <Grid Background="#FF1D1D1D">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="60"/>
                             <RowDefinition/>
@@ -426,14 +443,14 @@
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="1">
                             <StackPanel x:Name="RadioBtnsPanel">
-                                <RadioButton Style="{StaticResource {x:Type ToggleButton}}" Content="Favorites" GroupName="System" Checked="ToggleButton_OnChecked"/>
+                                <RadioButton Style="{StaticResource {x:Type ToggleButton}}" Content="Favorites" GroupName="System" Checked="ToggleButton_OnChecked" Background="{x:Null}"/>
                                 <RadioButton Style="{StaticResource {x:Type ToggleButton}}" Content="Recomendations" GroupName="System" Checked="ToggleButton_OnChecked"/>
                                 <RadioButton Style="{StaticResource {x:Type ToggleButton}}" Content="Recently Listened" GroupName="System" Checked="ToggleButton_OnChecked"/>
                                 <RadioButton Style="{StaticResource {x:Type ToggleButton}}" Content="Albums" GroupName="System" Checked="ToggleButton_OnChecked"/>
                             </StackPanel>
                         </Grid>
                         <!--Add button-->
-                        <Border x:Name="Brdr" Grid.Row="3" BorderThickness="0,2,0,0" BorderBrush="Red">
+                        <Border x:Name="Brdr" Grid.Row="3" BorderThickness="0,2,0,0">
                             <Button x:Name="AddPlaylistBtn" Style="{StaticResource Add_btn}" Tag="{StaticResource plus}" Content="Add playlist"/>
                         </Border>
                         <!--Playlist listbox-->
@@ -443,7 +460,7 @@
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
                             <Label Content="Playlists" Grid.Row="0" VerticalAlignment="Top" Margin="15,0,0,0" FontSize="18"
-                                   Foreground="Red" FontFamily="MS Reference Sans Serif"/>
+                                   Foreground="White" FontFamily="Segoe UI Semibold" FontStyle="Italic"/>
                             <ListBox x:Name="PlaylistBox" VerticalAlignment="Stretch" Grid.Row="1" BorderBrush="Transparent" SelectionChanged="PlaylistBox_OnSelectionChanged">
                                 <ListBoxItem Content="TestElement" Style="{StaticResource PlaylistItem}"/>
                                 <ListBoxItem Content="TestElement" Style="{StaticResource PlaylistItem}"/>
@@ -475,9 +492,9 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Border Height="40" Grid.Column="0"
-                            CornerRadius="20" Background="White"
+                            CornerRadius="20" Background="Transparent"
                             HorizontalAlignment="Stretch"
-                            BorderThickness="2" Width="350" BorderBrush="Red">
+                            BorderThickness="2" Width="350" BorderBrush="#FFFF5656">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="50"/>
@@ -485,12 +502,12 @@
                             </Grid.ColumnDefinitions>
                             <Path Data="{StaticResource search}" Fill="#ff8282" Margin="12,10,17,7" Stretch="Fill" />
                             <TextBox Grid.Column="1" Panel.ZIndex="10" Name="Search" Height="35" VerticalContentAlignment="Bottom" 
-                                     HorizontalContentAlignment="Left" FontSize="16" 
-                                     Foreground="Red"
+                                     HorizontalContentAlignment="Stretch" FontSize="16" 
+                                     Foreground="#FFFF5656"
                                      Background="Transparent" BorderThickness="0" Margin="0,0,28,8"/>
                             <TextBlock Grid.Column="1" HorizontalAlignment="Left" Width="60" 
                                        Margin="3,0,0,0" Text="Search" VerticalAlignment="Center"
-                                       Foreground="#ff8282" FontSize="16">
+                                       Foreground="#FFFF5656" FontSize="16">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -543,38 +560,34 @@
                         </Border>
                         <!--Profile-->
                         <TextBlock Name="Profile_tb" Text="Profile"
-                                   FontSize="22" Foreground="#FFE83B3B" FontWeight="Medium"
+                                   FontSize="22" Foreground="#FFFF5656" FontWeight="Medium"
                                    VerticalAlignment="Center" Margin="10,0,0,0"/>
                     </StackPanel>
-                    <ListBox Name="friendst_lb" Background="#FFE83B3B" Margin="0,0,0,30" Grid.Row="3" ItemsSource="{Binding}" 
-                         ItemContainerStyle="{StaticResource itemSong_Style}"
-                         ItemTemplate="{StaticResource itemSong_Template}"
-                         ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                    </ListBox>
                 </Grid>
             </Grid>
-            <Border Grid.Row="2" BorderThickness="0,2,0,0" BorderBrush="Red">
-
-
-                <Grid>
+            <Border Grid.Row="2" BorderThickness="0,2,0,0" Background="#FF474343">
+                <Grid Background="#FF27263C">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="60"/>
                         <ColumnDefinition MinWidth="100" MaxWidth="200"/>
                         <ColumnDefinition />
                         <ColumnDefinition Width="300"/>
                     </Grid.ColumnDefinitions>
-                    <Image Margin="5,0,0,15" Source="3E-zsSjyGLU.jpg" Grid.Column="0"/>
+                    <Image Source="3E-zsSjyGLU.jpg" Margin="5" Grid.Column="0"/>
                     <Grid Grid.Column="1">
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <TextBlock Text="Singer" Foreground="Red" FontSize="18" HorizontalAlignment="Left" Margin="10,15,0,4" FontWeight="Medium">
+                        <TextBlock Text="Singer" Foreground="White" FontSize="18" Margin="10,0,0,0" 
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   FontWeight="Medium">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Style.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
                                             <Setter Property="TextDecorations" Value="Underline"/>
+
                                         </Trigger>
                                         <Trigger Property="IsMouseOver" Value="True">
                                             <Setter Property="TextDecorations" Value="BaseLine"/>
@@ -583,7 +596,8 @@
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
-                        <TextBlock Text="Track name" Foreground="Red" FontSize="18" HorizontalAlignment="Left" Margin="10,45,-6,30" FontWeight="Medium" Grid.RowSpan="2"/>
+                        <TextBlock Text="Track name" Foreground="White" FontSize="18" Margin="10,0,0,0"
+                                   VerticalAlignment="Top" HorizontalAlignment="Left" FontWeight="Medium" Grid.Row="2"/>
                     </Grid>
                     <Grid Grid.Column="2">
                         <Grid.RowDefinitions>
@@ -599,129 +613,31 @@
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <!--Repeat button-->
-                            <Path x:Name="Repeat_btn" VerticalAlignment="Bottom" Width="30" Height="25" StrokeThickness="2" Stroke="#ff8282" Stretch="Fill">
-                                <Path.Data>
-                                    <PathGeometry Figures="M 0,10 S 0,0 20,2.5 M 20,2.5 L 17.5,0 V 5 L 20,2.5 M 21.5,7.5 S 22.5,20 0,16.5 M 0,16.5 L 2.5,14 V 19 Z"/>
-                                </Path.Data>
-
-                                <Path.Triggers>
-                                    <EventTrigger RoutedEvent="Path.MouseEnter">
-                                        <BeginStoryboard>
-                                            <Storyboard>
-                                                <ColorAnimation Storyboard.TargetProperty="(Path.Stroke).(SolidColorBrush.Color)" To="Red" Duration="0:0:0.5"/>
-                                            </Storyboard>
-                                        </BeginStoryboard>
-                                    </EventTrigger>
-                                    <EventTrigger RoutedEvent="Path.MouseLeave">
-                                        <BeginStoryboard>
-                                            <Storyboard>
-                                                <ColorAnimation Storyboard.TargetProperty="(Path.Stroke).(SolidColorBrush.Color)" To="#ff8282" Duration="0:0:0.5"/>
-                                            </Storyboard>
-                                        </BeginStoryboard>
-                                    </EventTrigger>
-                                </Path.Triggers>
-                            </Path>
+                            <Border x:Name="Repeat_btn" Style="{StaticResource BottomButtonsBorder_Style}">
+                                <materialDesign:PackIcon Kind="RepeatVariant" Foreground="#FF784242" Width="30" Height="30"
+                                                         VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            </Border>
                             <!---Prev button setttings-->
-                            <Path x:Name="Prev_btn" StrokeThickness="0" VerticalAlignment="Bottom" Width="15" Height="30" RenderTransformOrigin="-0.25,-0.8" Grid.Column="1" Stretch="Fill">
-                                <Path.Data>
-                                    <PathGeometry Figures="M 20,0 L 10,10 V 1.5 H 2,5 V 18.5 H 10 V 10 L 20,20 Z"/>
-                                </Path.Data>
-                                <Path.Fill>
-                                    <SolidColorBrush Color="#ff8282"/>
-                                </Path.Fill>
-                                <Path.Triggers>
-                                    <EventTrigger RoutedEvent="Path.MouseEnter">
-                                        <BeginStoryboard>
-                                            <Storyboard>
-                                                <ColorAnimation Storyboard.TargetName="Prev_btn" Storyboard.TargetProperty="(Path.Fill).(SolidColorBrush.Color)" To="Red" Duration="0:0:0.5"/>
-                                            </Storyboard>
-                                        </BeginStoryboard>
-                                    </EventTrigger>
-                                    <EventTrigger RoutedEvent="Path.MouseLeave">
-                                        <BeginStoryboard>
-                                            <Storyboard>
-                                                <ColorAnimation Storyboard.TargetProperty="(Path.Fill).(SolidColorBrush.Color)" To="#ff8282" Duration="0:0:0.5"/>
-                                            </Storyboard>
-                                        </BeginStoryboard>
-                                    </EventTrigger>
-                                </Path.Triggers>
-                            </Path>
+                            <Border x:Name="Prev_btn" Grid.Column="1" Style="{StaticResource BottomButtonsBorder_Style}">
+                                <materialDesign:PackIcon Kind="SkipPrevious" Foreground="#FF784242" Width="30" Height="30"
+                                                         VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            </Border>
                             <!--Play button-->
-                            <Path x:Name="Play_btn" VerticalAlignment="Bottom" Width="15" Height="30" StrokeThickness="0" Grid.Column="2" Stretch="Fill">
-                                <Path.Data>
-                                    <PathGeometry Figures="M 0,0 L20,15 L0,30 Z"/>
-                                </Path.Data>
-                                <Path.Fill>
-                                    <SolidColorBrush Color="#ff8282"/>
-                                </Path.Fill>
-                                <Path.Triggers>
-                                    <EventTrigger RoutedEvent="Path.MouseEnter">
-                                        <BeginStoryboard>
-                                            <Storyboard>
-                                                <ColorAnimation Storyboard.TargetProperty="(Path.Fill).(SolidColorBrush.Color)" To="Red" Duration="0:0:0.5"/>
-                                            </Storyboard>
-                                        </BeginStoryboard>
-                                    </EventTrigger>
-                                    <EventTrigger RoutedEvent="Path.MouseLeave">
-                                        <BeginStoryboard>
-                                            <Storyboard>
-                                                <ColorAnimation Storyboard.TargetProperty="(Path.Fill).(SolidColorBrush.Color)" To="#ff8282" Duration="0:0:0.5"/>
-                                            </Storyboard>
-                                        </BeginStoryboard>
-                                    </EventTrigger>
-                                </Path.Triggers>
-                            </Path>
+                            <Border x:Name="Play_btn" Grid.Column="2" Style="{StaticResource BottomButtonsBorder_Style}">
+                                <materialDesign:PackIcon Kind="Play" Foreground="#FF784242" Width="30" Height="30"
+                                                         VerticalAlignment="Center" HorizontalAlignment="Center" materialDesign:ShadowAssist.ShadowDepth="Depth2"/>
+                            </Border>
 
                             <!--Next button settings-->
-                            <Path x:Name="Next_btn" StrokeThickness="0" VerticalAlignment="Bottom" Width="15" Height="30" Grid.Column="3" Stretch="Fill">
-                                <Path.Data>
-                                    <PathGeometry Figures="M 0,0 L 10,10 V 1.5 H 15 V 18.5 H 10 V 10 L 0,20 Z"/>
-                                </Path.Data>
-                                <Path.Fill>
-                                    <SolidColorBrush Color="#ff8282"/>
-                                </Path.Fill>
-                                <Path.Triggers>
-                                    <EventTrigger RoutedEvent="Path.MouseEnter">
-                                        <BeginStoryboard>
-                                            <Storyboard>
-                                                <ColorAnimation Storyboard.TargetProperty="(Path.Fill).(SolidColorBrush.Color)" To="Red" Duration="0:0:0.5"/>
-                                            </Storyboard>
-                                        </BeginStoryboard>
-                                    </EventTrigger>
-                                    <EventTrigger RoutedEvent="Path.MouseLeave">
-                                        <BeginStoryboard>
-                                            <Storyboard>
-                                                <ColorAnimation Storyboard.TargetProperty="(Path.Fill).(SolidColorBrush.Color)" To="#ff8282" Duration="0:0:0.5"/>
-                                            </Storyboard>
-                                        </BeginStoryboard>
-                                    </EventTrigger>
-                                </Path.Triggers>
-                            </Path>
+                            <Border x:Name="Next_btn" Grid.Column="3" Style="{StaticResource BottomButtonsBorder_Style}">
+                                <materialDesign:PackIcon Kind="SkipNext" Foreground="#FF784242" Width="30" Height="30"
+                                                         VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            </Border>
                             <!--Shuffle button-->
-                            <Path x:Name="Shuffle_btn" VerticalAlignment="Center" Width="30" Height="20" StrokeThickness="2" Grid.Column="4" Stroke="#ff8282" Stretch="Fill">
-                                <Path.Data>
-                                    <PathGeometry Figures="M 5,12.5 C 20,12.5 5,20 22,20 M 25,20 L 22.5,17.5 V 22.5 Z M 5,20 C 17.5,20 7.5,12.5 22,12.5 M 25,12.5 L 22.5,10 V 15 Z "/>
-                                </Path.Data>
-                                <Path.RenderTransform>
-                                    <ScaleTransform ScaleY="1.2"/>
-                                </Path.RenderTransform>
-                                <Path.Triggers>
-                                    <EventTrigger RoutedEvent="Path.MouseEnter">
-                                        <BeginStoryboard>
-                                            <Storyboard>
-                                                <ColorAnimation Storyboard.TargetProperty="(Path.Stroke).(SolidColorBrush.Color)" To="Red" Duration="0:0:0.3"/>
-                                            </Storyboard>
-                                        </BeginStoryboard>
-                                    </EventTrigger>
-                                    <EventTrigger RoutedEvent="Path.MouseLeave">
-                                        <BeginStoryboard>
-                                            <Storyboard>
-                                                <ColorAnimation Storyboard.TargetProperty="(Path.Stroke).(SolidColorBrush.Color)" To="#ff8282" Duration="0:0:0.5"/>
-                                            </Storyboard>
-                                        </BeginStoryboard>
-                                    </EventTrigger>
-                                </Path.Triggers>
-                            </Path>
+                            <Border x:Name="Shuffle_btn" Grid.Column="4" Style="{StaticResource BottomButtonsBorder_Style}">
+                                <materialDesign:PackIcon Kind="ShuffleVariant" Foreground="#FF784242" Width="25" Height="25"
+                                                         VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            </Border>
                         </Grid>
                         <Grid Grid.Row="1">
                             <Grid.ColumnDefinitions>
@@ -729,22 +645,21 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition Width="50"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock x:Name="CurrrentTimeText" HorizontalAlignment="Right" VerticalAlignment="Center" Text="0:00" Foreground="Red" FontSize="14" Grid.Column="0"/>
+                            <TextBlock x:Name="CurrrentTimeText" HorizontalAlignment="Right" VerticalAlignment="Center" Text="0:00" Foreground="#FFFF5656" FontSize="14" Grid.Column="0"/>
                             <Slider  Height="5" HorizontalAlignment="Stretch" Margin="20,0,20,0" Style="{StaticResource Horizontal_Slider}" Grid.Column="1"/>
-                            <TextBlock Text="3:42" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="14" Foreground="Red" Grid.Column="2"/>
+                            <TextBlock Text="3:42" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="14" Foreground="#FFFF5656" Grid.Column="2"/>
                         </Grid>
                     </Grid>
                     <Grid Grid.Column="3">
-                        <Slider Name="SoundSlider" Tag="true" Maximum="100" Minimum="0" HorizontalAlignment="Left" Margin="95,40,0,0" VerticalAlignment="Top" 
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="0,0,0,10" HorizontalAlignment="Center">
+                            <Border x:Name="Sound_Border" VerticalAlignment="Top" HorizontalAlignment="Left"
+                                MouseLeftButtonUp="SoundIcon_OnMouseDown">
+                                <materialDesign:PackIcon Name="sound_icon"  Width="25" Height="25" Kind="VolumeMedium" Foreground="#FFFF5656"/>
+                            </Border>
+                            <Slider Name="SoundSlider" Tag="true" Maximum="100" Minimum="0" HorizontalAlignment="Left" VerticalAlignment="Center" 
                                 Style="{StaticResource Horizontal_Slider}" Width="145"
                                 ValueChanged="SoundSlider_OnValueChanged"/>
-                        <Rectangle Name="SoundIcon" MouseEnter="SoundIcon_OnMouseEnter"  MouseLeave="SoundIcon_OnMouseLeave"
-                                   MouseDown="SoundIcon_OnMouseDown" HorizontalAlignment="Left" 
-                                   Height="50" Margin="49,26,0,0" VerticalAlignment="Top" Width="61">
-                            <Rectangle.Fill>
-                                <ImageBrush ImageSource="/Assets/MaxVolumePurple.png"/>
-                            </Rectangle.Fill>
-                        </Rectangle>
+                        </StackPanel>
                     </Grid>
                 </Grid>
             </Border>

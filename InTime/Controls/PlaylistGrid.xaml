@@ -49,7 +49,7 @@
             <Storyboard x:Key="Selected_Animation" FillBehavior="HoldEnd">
                 <ColorAnimation
                        Duration="0:0:0.1" 
-                       To="#FFE83B3B"
+                       To="#FF746767"
                        Storyboard.TargetProperty ="Background.Color"/>
                 <ColorAnimation
                        Duration="0:0:0.1" 
@@ -60,18 +60,19 @@
             <Storyboard x:Key="Unselected_Animation" FillBehavior="HoldEnd">
                 <ColorAnimation
                        Duration="0:0:0.1" 
-                       To="#FFFFCECE"
+                       To="#FF2E2A2A"
                        Storyboard.TargetProperty ="Background.Color"/>
                 <ColorAnimation
                        Duration="0:0:0.1" 
-                       To="Black"
+                       To="White"
                        Storyboard.TargetProperty ="Foreground.Color"/>
             </Storyboard>
 
             <Style x:Key="item_Container" TargetType="{x:Type ListBoxItem}">
-                <Setter Property="Background" Value="#FFFFCECE"/>
-                <Setter Property="BorderThickness" Value="0,0,0,2"/>
-                <Setter Property="BorderBrush" Value="Red"/>
+                <Setter Property="Background" Value="#FF2E2A2A"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                <Setter Property="BorderBrush" Value="#FFFF5656"/>
                 <EventSetter Event="MouseEnter" Handler="ListBoxItem_MouseEnter"/>
                 <EventSetter Event="MouseLeave" Handler="ListBoxItem_MouseLeave"/>
                 <EventSetter Event="Unselected" Handler="ListBoxItem_Unselected"/>
@@ -86,13 +87,6 @@
                                         BorderThickness="{TemplateBinding BorderThickness}">
                                 <ContentPresenter HorizontalAlignment="Stretch" Margin="{TemplateBinding Padding}"/>
                             </Border>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="Background" Value="#FFB8FF8F"/>
-                                    <Setter Property="BorderThickness" Value="1"/>
-                                    <Setter Property="BorderBrush" Value="Black"/>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
@@ -100,15 +94,15 @@
             <DataTemplate x:Key="item_Template">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="130"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="2*"/>
                         <ColumnDefinition Width="100"/>
                         <ColumnDefinition Width="50"/>
                     </Grid.ColumnDefinitions>
                     <Border x:Name="PlayBord" Visibility="Visible"  Grid.Column="0">
-                        <materialDesign:PackIcon x:Name="PlayBtn" Visibility="Hidden" Kind="PlayCircleOutline" Width="35" Height="35"
+                        <materialDesign:PackIcon x:Name="PlayBtn" Visibility="Hidden" Kind="PlayCircleOutline" Width="30" Height="30"
                                                      VerticalAlignment="Center" HorizontalAlignment="Center"
                                                      Foreground="White"/>
                     </Border>
@@ -120,7 +114,9 @@
                                        Margin="7,3,0,0"/>
                     <TextBlock Grid.Column="4" Text="{Binding SongDuration,StringFormat=mm:ss}" FontSize="20"
                                        Margin="7,3,0,0"/>
-                    <Button Content="menu" Style="{StaticResource SongMenu}" Grid.Column="5"/>
+                    <Border Name="more_Bord" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <materialDesign:PackIcon Visibility="Hidden" Kind="DotsHorizontal" Width="25" Height="25"/>
+                    </Border>
                 </Grid>
             </DataTemplate>
             <Style x:Key="PlaylistItems" TargetType="{x:Type ListBoxItem}">
@@ -156,7 +152,7 @@
             </Style>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid Background="White">
+    <Grid Background="#FF2E2A2A">
         <Grid.RowDefinitions>
             <RowDefinition Height="150"/>
             <RowDefinition Height="40"/>
@@ -182,41 +178,42 @@
 
                     </Grid.RowDefinitions>
                     <TextBlock Text="Playlist :" Style="{StaticResource text}" Grid.Row="0"
-                               HorizontalAlignment="Left"  VerticalAlignment="Bottom"/>
+                               HorizontalAlignment="Left"  VerticalAlignment="Bottom" Foreground="White"/>
                     <TextBlock Text="Playlist duration :" HorizontalAlignment="Left" VerticalAlignment="Center"  
-                               Foreground="Red"  Style="{StaticResource text}" 
+                               Foreground="White"  Style="{StaticResource text}" 
                                Grid.Row="1"/>
-                    <TextBlock Text="Songs count :" Foreground="Red"  HorizontalAlignment="Left" VerticalAlignment="Top" 
+                    <TextBlock Text="Songs count :" Foreground="White"  HorizontalAlignment="Left" VerticalAlignment="Top" 
                                Style="{StaticResource text}"  Grid.Row="2"/>
             </Grid>
             </Grid>
         </Grid>
-        <Grid Grid.Row="1">
+        <Grid  Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="130"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="100"/>
                 <ColumnDefinition Width="50"/>
             </Grid.ColumnDefinitions>
-            <Border BorderBrush="Red"  BorderThickness="0,0.8,0,0.8" Grid.ColumnSpan="7"/>
-            <TextBlock Text="title" Grid.Column="1" FontSize="20"
-                        Margin="7,8,0,0" Foreground="Red"/>
-            <TextBlock Grid.Column="2" Text="artist" FontSize="20"
-                       Margin="7,8,0,0" Foreground="Red"/>
-            <TextBlock Grid.Column="3" Text="album" FontSize="20"
-                       Margin="7,8,0,0" Foreground="Red"/>
-            <TextBlock Grid.Column="4" Text="duration" FontSize="20"
-                       Margin="7,8,0,0" Foreground="Red"/>
+            <Border BorderBrush="#FFFF5656"  BorderThickness="0,0.8,0,0.8" Grid.ColumnSpan="7"/>
+            <TextBlock Text="Title" Grid.Column="1" FontSize="20"
+                        Margin="7,8,0,0" Foreground="#FFE6DDDD"/>
+            <TextBlock Grid.Column="2" Text="Artist" FontSize="20"
+                       Margin="7,8,0,0" Foreground="#FFE6DDDD"/>
+            <TextBlock Grid.Column="3" Text="Album" FontSize="20"
+                       Margin="7,8,0,0" Foreground="#FFE6DDDD"/>
+            <TextBlock Grid.Column="4" Text="Duration" FontSize="20"
+                       Margin="7,8,0,0" Foreground="#FFE6DDDD"/>
         </Grid>
         <ListBox x:Name="SongList" ItemsSource="{Binding}" ItemContainerStyle="{StaticResource item_Container}"
                  ItemTemplate="{StaticResource item_Template}" Grid.Row="2"/>
         <Expander
             HorizontalAlignment="Stretch"
-            Header="Simular Songs" BorderThickness="0,1,0,1" 
-            Foreground="Red"
-            BorderBrush="Red" Grid.Row="3" FontFamily="Microsoft YaHei">
+            Header="Simular Songs" BorderThickness="0,1,0,0" 
+            Background="{Binding}"
+            Foreground="#FFE6DDDD"
+            BorderBrush="#FFFF5656" Grid.Row="3" FontFamily="Microsoft YaHei">
         <StackPanel
             Orientation="Vertical"
             TextBlock.Foreground="{DynamicResource MaterialDesignBody}">

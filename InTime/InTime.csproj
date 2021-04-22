@@ -198,6 +198,9 @@
     <Resource Include="Assets\MutedPurple.png" />
     <Resource Include="Assets\MutedRed.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Controls\64eb0176b8ec007e2c0ffa65a92c8dc0.gif" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.4.0.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.0.0\build\MaterialDesignThemes.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

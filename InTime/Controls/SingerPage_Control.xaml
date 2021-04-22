@@ -67,7 +67,7 @@
                     </Setter.Value>
                 </Setter>
             </Style>
-            
+
             <ControlTemplate x:Key="listBox_Template" TargetType="ListBox">
                 <Border BorderBrush="Red" BorderThickness="0,2,0,0" CornerRadius="0" >
                     <Grid>
@@ -157,7 +157,13 @@
             </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid Background="White">
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FF8B3434"/>
+                <GradientStop Color="#FF272525" Offset="0.225"/>
+            </LinearGradientBrush>
+        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="150"/>
             <RowDefinition/>
@@ -173,13 +179,17 @@
                     <RowDefinition Height="50"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <TextBlock Text="Artist" FontSize="36" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,2"/>
-                <TextBlock Name="singerName_tb" Text="Singer Name" FontSize="48" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe UI Black" Margin="10,0,0,0"/>
+                <TextBlock Text="Artist" FontSize="36" Foreground="White"
+                           VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,2"/>
+                <TextBlock Name="singerName_tb" Text="Singer Name" FontSize="48" Grid.Row="1" Foreground="White"
+                           HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe UI Black" Margin="10,0,0,0"/>
             </Grid>
         </Grid>
         <StackPanel Name="tape_panel" Grid.Row="1">
-            <TextBlock Text="Albums" VerticalAlignment="Top" Margin="50,50,0,10" HorizontalAlignment="Left" FontSize="48" FontFamily="Segoe UI Semibold"/>
-            <Border VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="50,0,50,0" BorderBrush="Red" BorderThickness="0,2,0,0">
+            <TextBlock Text="Albums" Foreground="White" Margin="50,50,0,10"
+                       VerticalAlignment="Top"  HorizontalAlignment="Left"
+                       FontSize="48" FontFamily="Segoe UI Semibold"/>
+            <Border VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="50,0,50,0" BorderBrush="#FFFF5656" BorderThickness="0,2,0,0">
                 <StackPanel x:Name="albums_panel"/>
             </Border>
             <!--<ListBox x:Name="songs_lb" Background="Transparent" ItemTemplate="{StaticResource item_Template}" 

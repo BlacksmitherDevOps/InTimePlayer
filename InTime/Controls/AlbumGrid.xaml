@@ -15,14 +15,14 @@
             <Style x:Name="columnNames_Style" x:Key="columnNames_Style" TargetType="TextBlock">
                 <Setter Property="FontSize" Value="22"/>
                 <Setter Property="FontWeight" Value="DemiBold"/>
-                <Setter Property="Foreground" Value="Red"/>
+                <Setter Property="Foreground" Value="#FFFF5656"/>
                 <Setter Property="VerticalAlignment" Value="Center"/>
                 <Setter Property="HorizontalAlignment" Value="Center"/>
             </Style>
             <Style x:Name="albumTitle_Style" x:Key="albumTitle_Style" TargetType="TextBlock">
                 <Setter Property="FontSize" Value="24"/>
                 <Setter Property="FontWeight" Value="Bold"/>
-                <Setter Property="Foreground" Value="Red"/>
+                <Setter Property="Foreground" Value="#FFFF5656"/>
                 <Setter Property="VerticalAlignment" Value="Center"/>
                 <Setter Property="HorizontalAlignment" Value="Center"/>
             </Style>
@@ -35,12 +35,12 @@
                 <Setter Property="VerticalAlignment" Value="Stretch"/>
                 <Setter Property="HorizontalAlignment" Value="Stretch"/>
                 <Setter Property="BorderThickness" Value="0"/>
-                <Setter Property="BorderBrush" Value="Red"/>
+                <Setter Property="BorderBrush" Value="#FFFF5656"/>
             </Style>
             <Storyboard x:Key="Selected_Animation" FillBehavior="HoldEnd">
                 <ColorAnimation
                        Duration="0:0:0.1" 
-                       To="#FFE83B3B"
+                       To="#FF746767"
                        Storyboard.TargetProperty ="Background.Color"/>
                 <ColorAnimation
                        Duration="0:0:0.1" 
@@ -51,25 +51,25 @@
             <Storyboard x:Key="Unselected_Animation" FillBehavior="HoldEnd">
                 <ColorAnimation
                        Duration="0:0:0.1" 
-                       To="#FFFFCECE"
+                       To="#FF2E2A2A"
                        Storyboard.TargetProperty ="Background.Color"/>
                 <ColorAnimation
                        Duration="0:0:0.1" 
-                       To="Black"
+                       To="White"
                        Storyboard.TargetProperty ="Foreground.Color"/>
             </Storyboard>
             <Style x:Key="SongMenu" TargetType="{x:Type Button}">
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate>
-                            <Path Margin="0,3,0,0" Data="{StaticResource more}" Fill="Red"></Path>
+                            <Path Margin="0,3,0,0" Data="{StaticResource more}" Fill="#FFFF5656"></Path>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
             </Style>
 
             <ControlTemplate x:Key="listBox_Template" TargetType="ListBox">
-                <Border BorderBrush="Red" BorderThickness="0,1,0,0" CornerRadius="0" >
+                <Border BorderBrush="#FFFF5656" BorderThickness="0,1,0,0" CornerRadius="0" >
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="40"/>
@@ -102,9 +102,10 @@
             </ControlTemplate>
 
             <Style x:Key="item_Container" TargetType="{x:Type ListBoxItem}">
-                <Setter Property="Background" Value="#FFFFCECE"/>
+                <Setter Property="Background" Value="#FF2E2A2A"/>
+                <Setter Property="Foreground" Value="White"/>
                 <Setter Property="BorderThickness" Value="0,0,0,1"/>
-                <Setter Property="BorderBrush" Value="Red"/>
+                <Setter Property="BorderBrush" Value="#FFFF5656"/>
                 <EventSetter Event="MouseEnter" Handler="ListBoxItem_MouseEnter"/>
                 <EventSetter Event="MouseLeave" Handler="ListBoxItem_MouseLeave"/>
                 <EventSetter Event="Unselected" Handler="ListBoxItem_Unselected"/>
@@ -119,13 +120,6 @@
                                         BorderThickness="{TemplateBinding BorderThickness}">
                                 <ContentPresenter HorizontalAlignment="Stretch" Margin="{TemplateBinding Padding}"/>
                             </Border>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="Background" Value="#FFB8FF8F"/>
-                                    <Setter Property="BorderThickness" Value="1"/>
-                                    <Setter Property="BorderBrush" Value="Black"/>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
@@ -151,12 +145,15 @@
                                        HorizontalAlignment="Left"/>
                     <TextBlock Grid.Column="3" Text="{Binding SongListens}" FontSize="20"
                                        HorizontalAlignment="Left"/>
-                    <Button Content="menu" Style="{StaticResource SongMenu}" Grid.Column="4"/>
+                    <Border Name="more_Bord" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <materialDesign:PackIcon Visibility="Hidden" Kind="DotsHorizontal" Width="25" Height="25"/>
+                    </Border>
                 </Grid>
             </DataTemplate>
+
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid Background="White">
+    <Grid Background="#FF2E2A2A">
         <Grid.RowDefinitions>
             <RowDefinition Height="150"/>
             <RowDefinition/>
@@ -172,9 +169,11 @@
                     <RowDefinition Height="40"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <TextBlock x:Name="albumYear_tb" Text="Year" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,2"/>
+                <TextBlock x:Name="albumYear_tb" Text="Year" FontSize="24" Foreground="White"
+                           VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,2"/>
                 <TextBlock Name="albumName_tb" Text="Singer Name" FontSize="48" Grid.Row="1" HorizontalAlignment="Left"
-                           VerticalAlignment="Top" FontFamily="Segoe UI Semibold" Margin="10,0,0,0" TextDecorations="{x:Null}"/>
+                           VerticalAlignment="Top" FontFamily="Segoe UI Semibold" Margin="10,0,0,0" TextDecorations="{x:Null}"
+                           Foreground="White"/>
             </Grid>
         </Grid>
         <ListBox x:Name="songs_lb" Grid.Row="1" Background="Transparent" ItemTemplate="{StaticResource item_Template}" 

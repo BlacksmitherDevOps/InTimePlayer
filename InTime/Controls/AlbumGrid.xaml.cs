@@ -42,21 +42,32 @@ namespace InTime.Controls
             Storyboard storyboard = FindResource("Selected_Animation") as Storyboard;
             ((ListBoxItem)sender).BeginStoryboard(storyboard);
             Border playBord = GetPlayBorder((ListBoxItem)sender);
+            Border moreBord = GetMoreBorder((ListBoxItem)sender);
             if (playBord != null)
+            {
                 playBord.Child.Visibility = Visibility.Visible;
+                moreBord.Child.Visibility = Visibility.Visible;
+            }
         }
         private void ListBoxItem_MouseLeave(object sender, MouseEventArgs e)
         {
             if (((ListBoxItem)sender).IsSelected)
                 return;
             if (((ListBoxItem)sender).Background.IsFrozen)
-                ((ListBoxItem)sender).Background = Brushes.Red;
+            {
+                ((ListBoxItem)sender).Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB8FF8F"));
+                ((ListBoxItem)sender).Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF746767"));
+            }
             Storyboard storyboard = FindResource("Unselected_Animation") as Storyboard;
             ((ListBoxItem)sender).BeginStoryboard(storyboard);
 
             Border playBord = GetPlayBorder((ListBoxItem)sender);
+            Border moreBord = GetMoreBorder((ListBoxItem)sender);
             if (playBord != null)
+            {
                 playBord.Child.Visibility = Visibility.Hidden;
+                moreBord.Child.Visibility = Visibility.Hidden;
+            }
         }
         private void ListBoxItem_Unselected(object sender, RoutedEventArgs e)
         {
@@ -67,7 +78,7 @@ namespace InTime.Controls
         }
         private void ListBoxItem_Selected(object sender, RoutedEventArgs e)
         {
-            ((ListBoxItem)sender).Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB8FF8F"));
+            ((ListBoxItem)sender).Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB8FF8F"));
             Border playBord = GetPlayBorder((ListBoxItem)sender);
             if (playBord != null)
                 ((PackIcon)playBord.Child).Kind = PackIconKind.PauseCircleOutline;
@@ -79,6 +90,14 @@ namespace InTime.Controls
             ContentPresenter myContentPresenter = FindVisualChild<ContentPresenter>(myListBoxItem);
             DataTemplate myDataTemplate = myContentPresenter.ContentTemplate;
             return (Border)myDataTemplate.FindName("PlayBord", myContentPresenter);
+        }
+        Border GetMoreBorder(ListBoxItem item)
+        {
+            ListBox lb = FindParent<ListBox>(item);
+            ListBoxItem myListBoxItem = (ListBoxItem)lb.ContainerFromElement(item);
+            ContentPresenter myContentPresenter = FindVisualChild<ContentPresenter>(myListBoxItem);
+            DataTemplate myDataTemplate = myContentPresenter.ContentTemplate;
+            return (Border)myDataTemplate.FindName("more_Bord", myContentPresenter);
         }
         private childItem FindVisualChild<childItem>(DependencyObject obj)
         where childItem : DependencyObject
