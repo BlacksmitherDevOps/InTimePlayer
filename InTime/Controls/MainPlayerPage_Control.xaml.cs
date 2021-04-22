@@ -31,10 +31,16 @@ namespace InTime.Controls
             InitializeComponent();
             state= new AppState();
             state.sound = SoundState.HighSound;
-            testInfoBord();
+            TestSearchResults();
             //testSingerBord();
 
 
+        }
+
+        void TestSearchResults()
+        {
+            SearchPanel panel = new SearchPanel();
+            tape_panel.Children.Add(panel);
         }
         void testAddPlaylist()
         {

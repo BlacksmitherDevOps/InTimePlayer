@@ -41,7 +41,7 @@
             <Storyboard x:Key="Text_Selected_Animation" FillBehavior="HoldEnd">
                 <ColorAnimation
                        Duration="0:0:0.1" 
-                       To="White"
+                       To="#eb0031"
                        Storyboard.TargetProperty ="Foreground.Color"/>
                 <DoubleAnimation
                     Duration="0:0:0.1"
@@ -639,7 +639,7 @@
                                                          VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </Border>
                         </Grid>
-                        <Grid Grid.Row="1">
+                        <Grid Grid.Row="1" Margin="100,0,100,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="50"/>
                                 <ColumnDefinition/>

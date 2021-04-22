@@ -84,8 +84,17 @@
     <Compile Include="Controls\PlaylistGrid.xaml.cs">
       <DependentUpon>PlaylistGrid.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SearchItem.xaml.cs">
+      <DependentUpon>SearchItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SearchPanel.xaml.cs">
+      <DependentUpon>SearchPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SingerPage_Control.xaml.cs">
       <DependentUpon>SingerPage_Control.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SingleSearcItem.xaml.cs">
+      <DependentUpon>SingleSearcItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="tempPlaylist.cs" />
     <Compile Include="tempSong.cs" />
@@ -105,7 +114,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\SearchItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SearchPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\SingerPage_Control.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SingleSearcItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

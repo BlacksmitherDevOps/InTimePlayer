@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="InTime.Controls.SingleSearchItem"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:InTime.Controls"
+             mc:Ignorable="d"
+             Name="singleitem">
+ 
+        <Grid Name="Main_Grid" Background="#FF2E2A2A" MouseEnter="Main_Grid_OnMouseEnter"
+              MouseLeave="Main_Grid_OnMouseLeave">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="105"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <materialDesign:PackIcon Kind="PlayCircleOutline" Grid.Row="0" Visibility="Hidden"
+                                     HorizontalAlignment="Center" Foreground="White"
+                                     Width="40" Height="40" Panel.ZIndex="2"
+                                     Grid.Column="0" VerticalAlignment="Center"
+                                     MouseEnter="PlayIco_OnMouseEnter"
+                                     Name="PlayIco"/>
+            <Rectangle Grid.Column="0" StrokeThickness="0" Stroke="Transparent"
+                       MouseEnter="ImageRect_OnMouseEnter" MouseLeave="ImageRect_OnMouseLeave"
+                        Name="ImageRect" Margin="10,0,10,0"
+                       Panel.ZIndex="1" >
+                <Rectangle.Fill>
+                <ImageBrush ImageSource="{Binding Path=Image,ElementName=singleitem}"/>
+                </Rectangle.Fill>
+            </Rectangle>
+            <Grid Name="TextGrid" Grid.Column="1">
+                <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Text="{Binding Path=Title,ElementName=singleitem}" VerticalAlignment="Center"
+                           Foreground="White" HorizontalAlignment="Left" Margin="4,0,0,0"
+                           FontSize="18" ToolTip="{Binding Path=Title,ElementName=singleitem}" TextTrimming="WordEllipsis"/>
+        </Grid>
+        </Grid>
+</UserControl>
