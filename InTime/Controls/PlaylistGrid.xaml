@@ -154,13 +154,17 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid Background="#FF2E2A2A">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="233*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="150"/>
             <RowDefinition Height="40"/>
             <RowDefinition MinHeight="230"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
+        <Grid Grid.Row="0" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="150"/>
                 <ColumnDefinition/>
@@ -185,10 +189,10 @@
                                Grid.Row="1"/>
                     <TextBlock Text="Songs count :" Foreground="White"  HorizontalAlignment="Left" VerticalAlignment="Top" 
                                Style="{StaticResource text}"  Grid.Row="2"/>
-            </Grid>
+                </Grid>
             </Grid>
         </Grid>
-        <Grid  Grid.Row="1">
+        <Grid  Grid.Row="1" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100"/>
                 <ColumnDefinition Width="3*"/>
@@ -208,20 +212,20 @@
                        Margin="7,8,0,0" Foreground="#FFE6DDDD"/>
         </Grid>
         <ListBox x:Name="SongList" ItemsSource="{Binding}" ItemContainerStyle="{StaticResource item_Container}"
-                 ItemTemplate="{StaticResource item_Template}" Grid.Row="2"/>
+                 ItemTemplate="{StaticResource item_Template}" Grid.Row="2" Grid.ColumnSpan="2"/>
         <Expander
             HorizontalAlignment="Stretch"
             Header="Simular Songs" BorderThickness="0,1,0,0" 
             Background="{Binding}"
             Foreground="#FFE6DDDD"
-            BorderBrush="#FFFF5656" Grid.Row="3" FontFamily="Microsoft YaHei">
-        <StackPanel
+            BorderBrush="#FFFF5656" Grid.Row="3" FontFamily="Microsoft YaHei" Grid.ColumnSpan="2">
+            <StackPanel
             Orientation="Vertical"
             TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
                 <ListBox x:Name="SimularSongList" ItemContainerStyle="{StaticResource item_Container}"
                  ItemTemplate="{StaticResource item_Template}" Grid.Row="2"/>
                 <TextBlock />
-        </StackPanel>
+            </StackPanel>
         </Expander>
     </Grid>
 </UserControl>

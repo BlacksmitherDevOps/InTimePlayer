@@ -31,8 +31,16 @@ namespace InTime.Controls
             InitializeComponent();
             state= new AppState();
             state.sound = SoundState.HighSound;
+            TestSearchResults();
+            //testSingerBord();
+
+
             //testInfoBord();
             testSingerBord();
+        }
+        void testAddPlaylist()
+        {
+           
         }
         void testInfoBord()
         {
