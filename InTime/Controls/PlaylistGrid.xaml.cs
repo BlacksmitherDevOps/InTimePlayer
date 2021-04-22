@@ -22,12 +22,12 @@ namespace InTime.Controls
     /// </summary>
     public partial class PlaylistGrid : UserControl
     {
+        public event ScrollCall ScrollCall;
         public PlaylistGrid()
         {
             InitializeComponent();
 
         }
-
         public string ImageSource
         {
             get { return (string)GetValue(ImageSourceProperty); }
@@ -162,6 +162,16 @@ namespace InTime.Controls
             var parentT = parent as T;
             return parentT ?? FindParent<T>(parent);
         }
-
+        private void ListBoxItem_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (e.Delta < 0)
+            {
+                ScrollCall?.Invoke(true);
+            }
+            else
+            {
+                ScrollCall?.Invoke(false);
+            }
+        }
     }
 }

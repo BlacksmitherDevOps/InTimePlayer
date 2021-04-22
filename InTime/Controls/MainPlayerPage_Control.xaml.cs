@@ -31,25 +31,29 @@ namespace InTime.Controls
             InitializeComponent();
             state= new AppState();
             state.sound = SoundState.HighSound;
-            testInfoBord();
-            //testSingerBord();
-
-
-        }
-        void testAddPlaylist()
-        {
-           
+            //testInfoBord();
+            testSingerBord();
         }
         void testInfoBord()
         {
             PlaylistGrid grid = new PlaylistGrid();
+            grid.ScrollCall += Grid_ScrollCall;
             grid.ImageSource =@"C:\Player\InTimePlayer\InTime\Controls\3E-zsSjyGLU.jpg";
             grid.PlaylistDuration=DateTime.Now;
             grid.PlaylistName = "Custom playlist";
             grid.SongsCount = 322;
             List<PlaylistItem> lst = new List<PlaylistItem>();
-            lst.Add(new PlaylistItem
-            { SongAlbum = "Best Album", SongArtist = "Rammstein", ID = 2, SongDuration = DateTime.Now, SongTitle = "Sonne" });
+            lst.Add(new PlaylistItem { SongAlbum = "Best Album", SongArtist = "Rammstein", ID = 2, SongDuration = DateTime.Now, SongTitle = "Sonne" });
+            lst.Add(new PlaylistItem { SongAlbum = "Best Album", SongArtist = "Rammstein", ID = 2, SongDuration = DateTime.Now, SongTitle = "Sonne" });
+            lst.Add(new PlaylistItem { SongAlbum = "Best Album", SongArtist = "Rammstein", ID = 2, SongDuration = DateTime.Now, SongTitle = "Sonne" });
+            lst.Add(new PlaylistItem { SongAlbum = "Best Album", SongArtist = "Rammstein", ID = 2, SongDuration = DateTime.Now, SongTitle = "Sonne" });
+            lst.Add(new PlaylistItem { SongAlbum = "Best Album", SongArtist = "Rammstein", ID = 2, SongDuration = DateTime.Now, SongTitle = "Sonne" });
+            lst.Add(new PlaylistItem { SongAlbum = "Best Album", SongArtist = "Rammstein", ID = 2, SongDuration = DateTime.Now, SongTitle = "Sonne" });
+            lst.Add(new PlaylistItem { SongAlbum = "Best Album", SongArtist = "Rammstein", ID = 2, SongDuration = DateTime.Now, SongTitle = "Sonne" });
+            lst.Add(new PlaylistItem { SongAlbum = "Best Album", SongArtist = "Rammstein", ID = 2, SongDuration = DateTime.Now, SongTitle = "Sonne" });
+            lst.Add(new PlaylistItem { SongAlbum = "Best Album", SongArtist = "Rammstein", ID = 2, SongDuration = DateTime.Now, SongTitle = "Sonne" });
+            lst.Add(new PlaylistItem { SongAlbum = "Best Album", SongArtist = "Rammstein", ID = 2, SongDuration = DateTime.Now, SongTitle = "Sonne" });
+            lst.Add(new PlaylistItem { SongAlbum = "Best Album", SongArtist = "Rammstein", ID = 2, SongDuration = DateTime.Now, SongTitle = "Sonne" });
             lst.Add(new PlaylistItem
             { SongAlbum = "Best Album", SongArtist = "Rammstein", ID = 2, SongDuration = DateTime.Now, SongTitle = "Sonne" });
 
@@ -63,6 +67,15 @@ namespace InTime.Controls
             { SongAlbum = "Wahrheit Oder Pflicht", SongArtist = "Oomph!", ID = 2, SongDuration = DateTime.Now, SongTitle = "Dein Weg" });
             tape_panel.Children.Add(grid);
         }
+
+        private void Grid_ScrollCall(bool flag)
+        {
+            if (!flag)
+                main_Viewer.LineUp();
+            else
+                main_Viewer.LineDown();
+        }
+
         void testSingerBord()
         {
             List<PlaylistItem> lst = new List<PlaylistItem>();
@@ -90,6 +103,7 @@ namespace InTime.Controls
 
             _Singer.Albums = new List<AlbumItem>() { album, album1, album2 };
             SingerPage_Control list = new SingerPage_Control(_Singer);
+            list.ScrollCall += Grid_ScrollCall;
             tape_panel.Children.Add(list);
         }
         #region Sound

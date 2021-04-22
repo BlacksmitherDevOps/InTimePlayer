@@ -16,8 +16,10 @@ using System.Windows.Shapes;
 using InTime.Controls;
 using InTime.ServiceReference1;
 
+
 namespace InTime
 {
+    public delegate void ScrollCall(bool flag);
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>

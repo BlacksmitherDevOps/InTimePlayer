@@ -22,6 +22,7 @@ namespace InTime.Controls
     /// </summary>
     public partial class AlbumGrid : UserControl
     {
+        public event ScrollCall ScrollCall;
         public AlbumGrid(AlbumItem album)
         {
            InitializeComponent();
@@ -124,5 +125,17 @@ namespace InTime.Controls
             return parentT ?? FindParent<T>(parent);
         }
         #endregion
+
+        private void ListBoxItem_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (e.Delta < 0)
+            {
+                ScrollCall?.Invoke(true);
+            }
+            else
+            {
+                ScrollCall?.Invoke(false);
+            }
+        }
     }
 }

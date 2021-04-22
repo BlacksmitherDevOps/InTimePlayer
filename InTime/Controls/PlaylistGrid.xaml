@@ -77,6 +77,7 @@
                 <EventSetter Event="MouseLeave" Handler="ListBoxItem_MouseLeave"/>
                 <EventSetter Event="Unselected" Handler="ListBoxItem_Unselected"/>
                 <EventSetter Event="Selected" Handler="ListBoxItem_Selected"/>
+                <EventSetter Event="PreviewMouseWheel" Handler="ListBoxItem_PreviewMouseWheel"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type ListBoxItem}">

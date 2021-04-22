@@ -22,6 +22,7 @@ namespace InTime.Controls
     /// </summary>
     public partial class SingerPage_Control : UserControl
     {
+        public event ScrollCall ScrollCall;
         public SingerPage_Control(SingerItem singer)
         {
             InitializeComponent();
@@ -38,8 +39,14 @@ namespace InTime.Controls
         void AddAlbum(AlbumItem album)
         {
             AlbumGrid albumGrid = new AlbumGrid(album);
+            albumGrid.ScrollCall += AlbumGrid_ScrollCall;
             albumGrid.Margin = new Thickness(0, 0, 0, 50);
             albums_panel.Children.Add(albumGrid);
+        }
+
+        private void AlbumGrid_ScrollCall(bool flag)
+        {
+            ScrollCall?.Invoke(flag);
         }
         #region listBoxAnimations
         private void ListBoxItem_MouseEnter(object sender, MouseEventArgs e)
