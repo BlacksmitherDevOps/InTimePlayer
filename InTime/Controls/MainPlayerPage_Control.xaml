@@ -41,7 +41,7 @@
             <Storyboard x:Key="Text_Selected_Animation" FillBehavior="HoldEnd">
                 <ColorAnimation
                        Duration="0:0:0.1" 
-                       To="#eb0031"
+                       To="White"
                        Storyboard.TargetProperty ="Foreground.Color"/>
                 <DoubleAnimation
                     Duration="0:0:0.1"
@@ -51,7 +51,7 @@
             <Storyboard x:Key="Text_Unselected_Animation" FillBehavior="HoldEnd">
                 <ColorAnimation
                        Duration="0:0:0.1" 
-                       To="#FFFF5656"
+                       To="#FFFF0051"
                        Storyboard.TargetProperty ="Foreground.Color"/>
                 <DoubleAnimation
                     Duration="0:0:0.1"
@@ -64,11 +64,18 @@
                 <EventSetter Event="MouseEnter" Handler="BottomButtonsBorder_MouseEnter"/>
                 <EventSetter Event="MouseLeave" Handler="BottomButtonsBorder_MouseLeave"/>
             </Style>
+            
+            <Style x:Key="WindowControlButtons_Style" TargetType="materialDesign:PackIcon">
+                <Setter Property="Foreground" Value="#FFFF0051"/>
+                <Setter Property="Width" Value="20"/>
+                <Setter Property="Height" Value="20"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+            
             <!--RadioButton selection animations-->
-
             <Style x:Name="LeftTogleBtn" TargetType="{x:Type ToggleButton}">
                 <Setter Property="Background" Value="Transparent"/>
-                <Setter Property="Foreground" Value="#FFFF5656"/>
+                <Setter Property="Foreground" Value="#FFFF0051"/>
                 <Setter Property="FontSize" Value="20"/>
                 <Setter Property="Height" Value="40"></Setter>
                 <Setter Property="Template">
@@ -131,7 +138,7 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type Thumb}">
-                            <Border Opacity="0.7" CornerRadius="3" Background="#FFFF5656"/>
+                            <Border Opacity="0.7" CornerRadius="3" Background="#FFFF0051"/>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter Property="Background" Value="White"></Setter>
@@ -212,7 +219,7 @@
             <!--PlaylistItems-->
             <Style x:Key="PlaylistItem" TargetType="ListBoxItem" >
                 <Setter Property="Background" Value="Transparent"/>
-                <Setter Property="Foreground" Value="#FFFF5656"></Setter>
+                <Setter Property="Foreground" Value="#FFFF0051"></Setter>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type ListBoxItem}">
@@ -257,7 +264,7 @@
                 <Setter Property="VerticalAlignment" Value="Stretch"/>
                 <Setter Property="HorizontalContentAlignment" Value="Left"/>
                 <Setter Property="VerticalContentAlignment" Value="Center"/>
-                <Setter Property="Foreground" Value="#FFFF5656"/>
+                <Setter Property="Foreground" Value="#FFFF0051"/>
                 <Setter Property="FontSize" Value="18"/>
                 <Setter Property="Template">
                     <Setter.Value>
@@ -271,7 +278,7 @@
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
                                     <Path Name="pth"  Grid.Column="0" Data="{TemplateBinding Tag}" 
-                                          Fill="#ff8282" Margin="20,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                          Fill="#FFFF0051" Margin="20,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"
                                      />
                                     <ContentPresenter Grid.Column="1" TextBlock.TextAlignment="Left" Margin="10,0,0,0"
                                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
@@ -280,8 +287,8 @@
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Path.Fill" TargetName="pth" Value="Red"/>
-                                    <Setter Property="Foreground" Value="Red"/>
+                                    <Setter Property="Path.Fill" TargetName="pth" Value="White"/>
+                                    <Setter Property="Foreground" Value="White"/>
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
@@ -309,7 +316,7 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="RepeatButton">
-                            <Border SnapsToDevicePixels="True" Background="#FFFF5656" Height="4"/>
+                            <Border SnapsToDevicePixels="True" Background="#FFFF0051" Height="4"/>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
@@ -321,7 +328,7 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Thumb">
-                            <Ellipse x:Name="ThumbEllipse" Height="10" Width="10" Fill="#FFFF5656"></Ellipse>
+                            <Ellipse x:Name="ThumbEllipse" Height="10" Width="10" Fill="#FFFF0051"></Ellipse>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
@@ -420,7 +427,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid Background="#FF2E2A2A">
+    <Grid Background="#FF272626">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="0"/>
@@ -431,7 +438,6 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="180"/>
                     <ColumnDefinition/>
-                    <ColumnDefinition Width="180"/>
                 </Grid.ColumnDefinitions>
                 <Border BorderBrush="#FF696087" Grid.Column="0" BorderThickness="0,0,2,0">
                     <Grid Background="#FF1D1D1D">
@@ -441,6 +447,10 @@
                             <RowDefinition />
                             <RowDefinition Height="50"/>
                         </Grid.RowDefinitions>
+                        <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                            <TextBlock Text="In" FontSize="36" Foreground="#FFFF0051" FontFamily="Cooper Black"/>
+                            <TextBlock Text="Time" FontSize="36" Foreground="White" FontFamily="Cooper Black"/>
+                        </StackPanel>
                         <Grid Grid.Row="1">
                             <StackPanel x:Name="RadioBtnsPanel">
                                 <RadioButton Style="{StaticResource {x:Type ToggleButton}}" Content="Favorites" GroupName="System" Checked="ToggleButton_OnChecked" Background="{x:Null}"/>
@@ -491,55 +501,45 @@
                         <RowDefinition Height="40"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Border Height="40" Grid.Column="0"
+                    <Border Name="upper_bord" Background="Transparent" MouseDown="upper_bord_MouseDown"
+                            MouseLeave="upper_bord_MouseLeave" MouseMove="upper_bord_MouseMove"
+                            MouseUp="upper_bord_MouseUp">
+                        <Border Height="40" Grid.Column="0"
                             CornerRadius="20" Background="Transparent"
                             HorizontalAlignment="Stretch"
-                            BorderThickness="2" Width="350" BorderBrush="#FFFF5656">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="50"/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <Path Data="{StaticResource search}" Fill="#ff8282" Margin="12,10,17,7" Stretch="Fill" />
-                            <TextBox Grid.Column="1" Panel.ZIndex="10" Name="Search" Height="35" VerticalContentAlignment="Bottom" 
+                            BorderThickness="2" Width="350" BorderBrush="#FFFF0051">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Path Data="{StaticResource search}" Fill="#FFFF0051" Margin="12,10,17,7" Stretch="Fill" />
+                                <TextBox Grid.Column="1" Panel.ZIndex="10" Name="Search" Height="35" VerticalContentAlignment="Bottom" 
                                      HorizontalContentAlignment="Stretch" FontSize="16" 
-                                     Foreground="#FFFF5656"
+                                     Foreground="#FFFF0051"
                                      Background="Transparent" BorderThickness="0" Margin="0,0,28,8"/>
-                            <TextBlock Grid.Column="1" HorizontalAlignment="Left" Width="60" 
+                                <TextBlock Grid.Column="1" HorizontalAlignment="Left" Width="60" 
                                        Margin="3,0,0,0" Text="Search" VerticalAlignment="Center"
-                                       Foreground="#FFFF5656" FontSize="16">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text,ElementName=Search}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
+                                       Foreground="#FFFF0051" FontSize="16">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text,ElementName=Search}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                        </Border>
                     </Border>
-                    <Border Name="centralInfo_bord" Grid.Row="1">
-                        <ScrollViewer x:Name="main_Viewer">
-                            <StackPanel Name="tape_panel" VerticalAlignment="Stretch">
-
-                            </StackPanel>
-                        </ScrollViewer>
-                    </Border>
-                </Grid>
-                <Grid Grid.Column="2">
-                    <!--right panel-->
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel HorizontalAlignment="Right" Margin="0,0,150,0"  Orientation="Horizontal">
                         <!--Avatar-->
                         <Border BorderThickness="0"
                              HorizontalAlignment="Left"
-                             Width="40" Height="40"
+                             Width="30" Height="30"
                              CornerRadius="100" Cursor="Hand">
                             <Grid>
                                 <Border Name="Mask"
@@ -560,9 +560,32 @@
                         </Border>
                         <!--Profile-->
                         <TextBlock Name="Profile_tb" Text="Profile"
-                                   FontSize="22" Foreground="#FFFF5656" FontWeight="Medium"
+                                   FontSize="22" Foreground="#FFFF0051" FontWeight="Medium"
                                    VerticalAlignment="Center" Margin="10,0,0,0"/>
                     </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Border x:Name="WindowControlButton_Hide" Background="Transparent" MouseLeftButtonUp="WindowControlButton_Hide_MouseLeftButtonUp"
+                                MouseEnter="WindowControlButton_MouseEnter" MouseLeave="WindowControlButton_MouseLeave">
+                            <materialDesign:PackIcon Kind="WindowMinimize" Style="{StaticResource WindowControlButtons_Style}"/>
+                        </Border>
+                        <Border x:Name="WindowControlButton_Maximize" Margin="10,0,0,0" Background="Transparent"
+                                MouseLeftButtonUp="WindowControlButton_Maximize_MouseLeftButtonUp"
+                                MouseEnter="WindowControlButton_MouseEnter" MouseLeave="WindowControlButton_MouseLeave">
+                            <materialDesign:PackIcon x:Name="MaximizeRestor_Icon" Kind="WindowMaximize" Style="{StaticResource WindowControlButtons_Style}"/>
+                        </Border>
+                        <Border x:Name="WindowControlButton_Close" Margin="10,0,10,0" Background="Transparent"
+                                MouseEnter="WindowControlButton_MouseEnter" MouseLeave="WindowControlButton_MouseLeave"
+                                MouseLeftButtonUp="WindowControlButton_Close_MouseLeftButtonUp">
+                            <materialDesign:PackIcon Kind="WindowClose" Style="{StaticResource WindowControlButtons_Style}"/>
+                        </Border>
+                    </StackPanel>
+                    <Border Name="centralInfo_bord" Grid.Row="1">
+                        <ScrollViewer x:Name="main_Viewer">
+                            <StackPanel Name="tape_panel" VerticalAlignment="Stretch">
+
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Border>
                 </Grid>
             </Grid>
             <Border Grid.Row="2" BorderThickness="0,2,0,0" Background="#FF474343">
@@ -645,16 +668,16 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition Width="50"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock x:Name="CurrrentTimeText" HorizontalAlignment="Right" VerticalAlignment="Center" Text="0:00" Foreground="#FFFF5656" FontSize="14" Grid.Column="0"/>
+                            <TextBlock x:Name="CurrrentTimeText" HorizontalAlignment="Right" VerticalAlignment="Center" Text="0:00" Foreground="#FFFF0051" FontSize="14" Grid.Column="0"/>
                             <Slider  Height="5" HorizontalAlignment="Stretch" Margin="20,0,20,0" Style="{StaticResource Horizontal_Slider}" Grid.Column="1"/>
-                            <TextBlock Text="3:42" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="14" Foreground="#FFFF5656" Grid.Column="2"/>
+                            <TextBlock Text="3:42" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="14" Foreground="#FFFF0051" Grid.Column="2"/>
                         </Grid>
                     </Grid>
                     <Grid Grid.Column="3">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="0,0,0,10" HorizontalAlignment="Center">
                             <Border x:Name="Sound_Border" VerticalAlignment="Top" HorizontalAlignment="Left"
                                 MouseLeftButtonUp="SoundIcon_OnMouseDown">
-                                <materialDesign:PackIcon Name="sound_icon"  Width="25" Height="25" Kind="VolumeMedium" Foreground="#FFFF5656"/>
+                                <materialDesign:PackIcon Name="sound_icon"  Width="25" Height="25" Kind="VolumeMedium" Foreground="#FFFF0051"/>
                             </Border>
                             <Slider Name="SoundSlider" Tag="true" Maximum="100" Minimum="0" HorizontalAlignment="Left" VerticalAlignment="Center" 
                                 Style="{StaticResource Horizontal_Slider}" Width="145"

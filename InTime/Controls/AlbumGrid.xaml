@@ -15,14 +15,14 @@
             <Style x:Name="columnNames_Style" x:Key="columnNames_Style" TargetType="TextBlock">
                 <Setter Property="FontSize" Value="22"/>
                 <Setter Property="FontWeight" Value="DemiBold"/>
-                <Setter Property="Foreground" Value="#FFFF5656"/>
+                <Setter Property="Foreground" Value="#FFB0B0B0"/>
                 <Setter Property="VerticalAlignment" Value="Center"/>
                 <Setter Property="HorizontalAlignment" Value="Center"/>
             </Style>
             <Style x:Name="albumTitle_Style" x:Key="albumTitle_Style" TargetType="TextBlock">
                 <Setter Property="FontSize" Value="24"/>
                 <Setter Property="FontWeight" Value="Bold"/>
-                <Setter Property="Foreground" Value="#FFFF5656"/>
+                <Setter Property="Foreground" Value="#FFFF0051"/>
                 <Setter Property="VerticalAlignment" Value="Center"/>
                 <Setter Property="HorizontalAlignment" Value="Center"/>
             </Style>
@@ -35,7 +35,7 @@
                 <Setter Property="VerticalAlignment" Value="Stretch"/>
                 <Setter Property="HorizontalAlignment" Value="Stretch"/>
                 <Setter Property="BorderThickness" Value="0"/>
-                <Setter Property="BorderBrush" Value="#FFFF5656"/>
+                <Setter Property="BorderBrush" Value="#FFFF0051"/>
             </Style>
             <Storyboard x:Key="Selected_Animation" FillBehavior="HoldEnd">
                 <ColorAnimation
@@ -62,14 +62,14 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate>
-                            <Path Margin="0,3,0,0" Data="{StaticResource more}" Fill="#FFFF5656"></Path>
+                            <Path Margin="0,3,0,0" Data="{StaticResource more}" Fill="#FFFF0051"></Path>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
             </Style>
 
             <ControlTemplate x:Key="listBox_Template" TargetType="ListBox">
-                <Border BorderBrush="#FFFF5656" BorderThickness="0,1,0,0" CornerRadius="0" >
+                <Border BorderBrush="#FFFF0051" BorderThickness="0,0,0,1">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="40"/>
@@ -105,7 +105,7 @@
                 <Setter Property="Background" Value="#FF2E2A2A"/>
                 <Setter Property="Foreground" Value="White"/>
                 <Setter Property="BorderThickness" Value="0,0,0,1"/>
-                <Setter Property="BorderBrush" Value="#FFFF5656"/>
+                <Setter Property="BorderBrush" Value="#FFFF0051"/>
                 <EventSetter Event="MouseEnter" Handler="ListBoxItem_MouseEnter"/>
                 <EventSetter Event="MouseLeave" Handler="ListBoxItem_MouseLeave"/>
                 <EventSetter Event="Unselected" Handler="ListBoxItem_Unselected"/>
@@ -154,7 +154,7 @@
 
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid Background="#FF2E2A2A">
+    <Grid Background="#FF272626">
         <Grid.RowDefinitions>
             <RowDefinition Height="150"/>
             <RowDefinition/>

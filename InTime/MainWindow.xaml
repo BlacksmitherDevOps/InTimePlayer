@@ -5,10 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InTime"
         mc:Ignorable="d"
-        Title="MainWindow" Height="798" Width="1419" WindowStyle="None">
-
+        Title="MainWindow" Height="798" Width="1419" WindowStartupLocation="CenterScreen"
+        ResizeMode="CanResize" WindowStyle="None" Background="#FF272626">
+    <WindowChrome.WindowChrome>
+        <WindowChrome
+            CaptionHeight="0"
+            ResizeBorderThickness="5"/>
+    </WindowChrome.WindowChrome>
     <Grid>
-        <Border Name="Control_Bord" Background="Cornsilk">
+        <Border Name="Control_Bord">
 
         </Border>
     </Grid>

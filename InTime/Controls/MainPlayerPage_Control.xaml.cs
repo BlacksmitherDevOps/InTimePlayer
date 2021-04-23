@@ -26,21 +26,21 @@ namespace InTime.Controls
     public partial class MainPlayerPage_Control : UserControl
     {
         private AppState state;
-        public MainPlayerPage_Control()
+        Window mainWindow;
+        public MainPlayerPage_Control(Window window)
         {
             InitializeComponent();
             state= new AppState();
             state.sound = SoundState.HighSound;
-            TestSearchResults();
-            //testSingerBord();
-
-
+            mainWindow = window;
+            testAddPlaylist();
             //testInfoBord();
-            testSingerBord();
+            //testSingerBord();
         }
         void testAddPlaylist()
         {
-           
+            SearchPanel searchPanel = new SearchPanel();
+            tape_panel.Children.Add(searchPanel);
         }
         void testInfoBord()
         {
@@ -181,7 +181,74 @@ namespace InTime.Controls
 
         private void BottomButtonsBorder_MouseEnter(object sender, MouseEventArgs e)
         {
-            ((PackIcon)((Border)sender).Child).Foreground.BeginAnimation(SolidColorBrush.ColorProperty, new ColorAnimation((Color)ColorConverter.ConvertFromString("#FFFF5656"), TimeSpan.FromSeconds(0.1)));
+            ((PackIcon)((Border)sender).Child).Foreground.BeginAnimation(SolidColorBrush.ColorProperty, new ColorAnimation((Color)ColorConverter.ConvertFromString("#FFFF0051"), TimeSpan.FromSeconds(0.1)));
+        }
+        bool upperPanelClick;
+        Point coord;
+        private void upper_bord_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            upperPanelClick = true;
+            coord = e.GetPosition(mainWindow);
+        }
+
+        private void upper_bord_MouseMove(object sender, MouseEventArgs e)
+        {
+            if(upperPanelClick && coord != e.GetPosition(mainWindow))
+            {
+                if (coord.Y < e.GetPosition(mainWindow).Y)
+                    mainWindow.Top += e.GetPosition(mainWindow).Y - coord.Y;
+                else if(coord.Y > e.GetPosition(mainWindow).Y)
+                    mainWindow.Top -=  coord.Y - e.GetPosition(mainWindow).Y;
+                if (coord.X < e.GetPosition(mainWindow).X)
+                    mainWindow.Left += e.GetPosition(mainWindow).X - coord.X;
+                else if (coord.X > e.GetPosition(mainWindow).X)
+                    mainWindow.Left -= coord.X - e.GetPosition(mainWindow).X;
+            }
+        }
+
+        private void upper_bord_MouseLeave(object sender, MouseEventArgs e)
+        {
+            upperPanelClick = false;
+        }
+
+        private void upper_bord_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            upperPanelClick = false;
+        }
+
+        private void WindowControlButton_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ((PackIcon)((Border)sender).Child).Foreground = Brushes.White;
+        }
+
+        private void WindowControlButton_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ((PackIcon)((Border)sender).Child).Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF0051"));
+        }
+
+        private void WindowControlButton_Hide_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            mainWindow.WindowState = WindowState.Minimized;
+        }
+
+        private void WindowControlButton_Close_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            mainWindow.Close();
+        }
+        bool maximized = false;
+        private void WindowControlButton_Maximize_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (!maximized)
+            {
+                mainWindow.WindowState = WindowState.Maximized;
+                MaximizeRestor_Icon.Kind = PackIconKind.WindowRestore;
+            }
+            else
+            {
+                mainWindow.WindowState = WindowState.Normal;
+                MaximizeRestor_Icon.Kind = PackIconKind.WindowMaximize;
+            }
+            maximized = !maximized;
         }
     }
 }

@@ -28,7 +28,7 @@ namespace InTime
         public MainWindow()
         {
             InitializeComponent();
-            Control_Bord.Child = new MainPlayerPage_Control();
+            Control_Bord.Child = new MainPlayerPage_Control(this);
         }
     }
 }
