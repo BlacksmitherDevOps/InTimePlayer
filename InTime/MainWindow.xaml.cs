@@ -30,5 +30,13 @@ namespace InTime
             InitializeComponent();
             Control_Bord.Child = new MainPlayerPage_Control(this);
         }
+
+        private void Window_StateChanged(object sender, EventArgs e)
+        {
+            if (this.WindowState == WindowState.Maximized)
+                Control_Bord.Padding = new Thickness(10);
+            if (this.WindowState == WindowState.Normal)
+                Control_Bord.Padding = new Thickness(0);
+        }
     }
 }

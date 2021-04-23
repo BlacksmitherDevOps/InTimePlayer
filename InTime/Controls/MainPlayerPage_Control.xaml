@@ -25,6 +25,17 @@
                        To="White"
                        Storyboard.TargetProperty ="Foreground.Color"/>
             </Storyboard>
+
+            <Storyboard x:Key="Maximized_Animation" FillBehavior="Stop">
+                <DoubleAnimation
+                       Duration="0:0:0.2" 
+                       To="0"
+                       Storyboard.TargetProperty ="(Window.Top)"/>
+                <DoubleAnimation
+                       Duration="0:0:0.2" 
+                       To="0"
+                       Storyboard.TargetProperty ="(Window.Left)"/>
+            </Storyboard>
             
             <Storyboard x:Key="ckecked_Unselected_Animation" FillBehavior="HoldEnd">
                 <ColorAnimation

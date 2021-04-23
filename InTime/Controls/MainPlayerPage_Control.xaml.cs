@@ -236,19 +236,69 @@ namespace InTime.Controls
             mainWindow.Close();
         }
         bool maximized = false;
+        Point RestoreCoord;
+        Point RestoreSize;
         private void WindowControlButton_Maximize_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
+            
             if (!maximized)
             {
-                mainWindow.WindowState = WindowState.Maximized;
-                MaximizeRestor_Icon.Kind = PackIconKind.WindowRestore;
+                RestoreCoord = new Point(mainWindow.Left, mainWindow.Top);
+                RestoreSize = new Point(mainWindow.Width, mainWindow.Height);
+                MaximizedAnimation();
             }
             else
             {
                 mainWindow.WindowState = WindowState.Normal;
-                MaximizeRestor_Icon.Kind = PackIconKind.WindowMaximize;
+                RestoreAnimation();
             }
             maximized = !maximized;
         }
+        #region Restore
+        void RestoreAnimation()
+        {
+            DoubleAnimation moveX = new DoubleAnimation(RestoreCoord.X, TimeSpan.FromSeconds(0.3), FillBehavior.Stop);
+            DoubleAnimation moveY = new DoubleAnimation(RestoreCoord.Y, TimeSpan.FromSeconds(0.3), FillBehavior.Stop);
+            DoubleAnimation Width = new DoubleAnimation(RestoreSize.X, TimeSpan.FromSeconds(0.3), FillBehavior.Stop);
+            Width.Completed += HeightOff_Completed;
+            mainWindow.BeginAnimation(Window.TopProperty, moveY);
+            mainWindow.BeginAnimation(Window.LeftProperty, moveX); 
+            mainWindow.BeginAnimation(Window.WidthProperty, Width);
+            
+        }
+
+        private void HeightOff_Completed(object sender, EventArgs e)
+        {
+            DoubleAnimation Height = new DoubleAnimation(RestoreSize.Y, TimeSpan.FromSeconds(0.3), FillBehavior.Stop);
+            mainWindow.BeginAnimation(Window.HeightProperty, Height);
+            MaximizeRestor_Icon.Kind = PackIconKind.WindowMaximize;
+        }
+        #endregion
+        #region Maximized
+        void MaximizedAnimation()
+        { 
+            DoubleAnimation move = new DoubleAnimation(0, TimeSpan.FromSeconds(0.2), FillBehavior.Stop);
+            DoubleAnimation Width = new DoubleAnimation(System.Windows.SystemParameters.PrimaryScreenWidth, TimeSpan.FromSeconds(0.2), FillBehavior.Stop);
+            mainWindow.Height = 60;
+            Width.Completed += WidthOn_Completed;
+            mainWindow.BeginAnimation(Window.TopProperty, move);
+            mainWindow.BeginAnimation(Window.LeftProperty, move);
+            mainWindow.BeginAnimation(Window.WidthProperty, Width);
+        }
+
+        private void WidthOn_Completed(object sender, EventArgs e)
+        {
+            //Console.WriteLine(mainWindow.Top);
+            DoubleAnimation Height = new DoubleAnimation(System.Windows.SystemParameters.PrimaryScreenHeight, TimeSpan.FromSeconds(0.4), FillBehavior.Stop);
+            Height.Completed += HeightOn_Completed;
+            mainWindow.BeginAnimation(Window.HeightProperty, Height);
+        }
+
+        private void HeightOn_Completed(object sender, EventArgs e)
+        {
+            mainWindow.WindowState = WindowState.Maximized;
+            MaximizeRestor_Icon.Kind = PackIconKind.WindowRestore;
+        }
+        #endregion
     }
 }
