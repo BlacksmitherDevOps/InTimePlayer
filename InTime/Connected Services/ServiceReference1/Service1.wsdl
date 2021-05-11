@@ -42,15 +42,15 @@
           </xs:sequence>
         </xs:complexType>
       </xs:element>
-      <xs:element name="TempAlbum">
+      <xs:element name="GetAllSingers">
         <xs:complexType>
           <xs:sequence />
         </xs:complexType>
       </xs:element>
-      <xs:element name="TempAlbumResponse">
+      <xs:element name="GetAllSingersResponse">
         <xs:complexType>
           <xs:sequence>
-            <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="TempAlbumResult" nillable="true" type="q4:Singer_Album" />
+            <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="GetAllSingersResult" nillable="true" type="q4:ArrayOfSong_Singer" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -87,9 +87,7 @@
       </xs:element>
       <xs:element name="GetFileResponse">
         <xs:complexType>
-          <xs:sequence>
-            <xs:element minOccurs="0" name="GetFileResult" nillable="true" type="xs:base64Binary" />
-          </xs:sequence>
+          <xs:sequence />
         </xs:complexType>
       </xs:element>
       <xs:element name="DownloadFile">
@@ -102,6 +100,20 @@
       <xs:element name="DownloadFileResponse">
         <xs:complexType>
           <xs:sequence />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Search">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="searchStr" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SearchResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="SearchResult" nillable="true" type="q7:SearchResult" />
+          </xs:sequence>
         </xs:complexType>
       </xs:element>
     </xs:schema>
@@ -146,12 +158,15 @@
       <xs:attribute name="Id" type="xs:ID" />
       <xs:attribute name="Ref" type="xs:IDREF" />
     </xs:schema>
-    <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/PlayerService" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/PlayerService" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/PlayerService" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/PlayerService" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xs:complexType name="Song_Singer">
         <xs:sequence>
           <xs:element minOccurs="0" name="Albums" nillable="true" type="tns:ArrayOfSinger_Album" />
           <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="ID" type="xs:int" />
+          <xs:element minOccurs="0" name="Image" nillable="true" type="xs:base64Binary" />
+          <xs:element minOccurs="0" name="ImagePath" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
         </xs:sequence>
       </xs:complexType>
@@ -182,11 +197,13 @@
       <xs:complexType name="Song">
         <xs:sequence>
           <xs:element minOccurs="0" name="Album_ID" type="xs:int" />
+          <xs:element minOccurs="0" name="Duration" type="ser:duration" />
           <xs:element minOccurs="0" name="Genre" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="ID" type="xs:int" />
           <xs:element minOccurs="0" name="Music" nillable="true" type="xs:base64Binary" />
           <xs:element minOccurs="0" name="Path" type="xs:int" />
           <xs:element minOccurs="0" name="Singers" nillable="true" type="tns:ArrayOfSong_Singer" />
+          <xs:element minOccurs="0" name="Songs" nillable="true" type="tns:ArrayOfSong" />
           <xs:element minOccurs="0" name="Title" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="TotalListens" type="xs:int" />
           <xs:element minOccurs="0" name="Verification" type="xs:boolean" />
@@ -199,6 +216,15 @@
         </xs:sequence>
       </xs:complexType>
       <xs:element name="ArrayOfSong_Singer" nillable="true" type="tns:ArrayOfSong_Singer" />
+      <xs:complexType name="SearchResult">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Albums" nillable="true" type="tns:ArrayOfSinger_Album" />
+          <xs:element minOccurs="0" name="GenreSongs" nillable="true" type="tns:ArrayOfSong" />
+          <xs:element minOccurs="0" name="Singers" nillable="true" type="tns:ArrayOfSong_Singer" />
+          <xs:element minOccurs="0" name="Songs" nillable="true" type="tns:ArrayOfSong" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="SearchResult" nillable="true" type="tns:SearchResult" />
     </xs:schema>
     <xs:schema xmlns:tns="http://schemas.microsoft.com/Message" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/Message" xmlns:xs="http://www.w3.org/2001/XMLSchema">
       <xs:simpleType name="StreamBody">
@@ -224,11 +250,11 @@
   <wsdl:message name="IService1_GetAlbum_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetAlbumResponse" />
   </wsdl:message>
-  <wsdl:message name="IService1_TempAlbum_InputMessage">
-    <wsdl:part name="parameters" element="tns:TempAlbum" />
+  <wsdl:message name="IService1_GetAllSingers_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllSingers" />
   </wsdl:message>
-  <wsdl:message name="IService1_TempAlbum_OutputMessage">
-    <wsdl:part name="parameters" element="tns:TempAlbumResponse" />
+  <wsdl:message name="IService1_GetAllSingers_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllSingersResponse" />
   </wsdl:message>
   <wsdl:message name="IService1_GetTrackStream_InputMessage">
     <wsdl:part name="parameters" element="tns:GetTrackStream" />
@@ -254,6 +280,12 @@
   <wsdl:message name="IService1_DownloadFile_OutputMessage">
     <wsdl:part name="parameters" element="tns:DownloadFileResponse" />
   </wsdl:message>
+  <wsdl:message name="IService1_Search_InputMessage">
+    <wsdl:part name="parameters" element="tns:Search" />
+  </wsdl:message>
+  <wsdl:message name="IService1_Search_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SearchResponse" />
+  </wsdl:message>
   <wsdl:portType name="IService1">
     <wsdl:operation name="AddNewSinger">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/AddNewSinger" message="tns:IService1_AddNewSinger_InputMessage" />
@@ -267,9 +299,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetAlbum" message="tns:IService1_GetAlbum_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetAlbumResponse" message="tns:IService1_GetAlbum_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="TempAlbum">
-      <wsdl:input wsaw:Action="http://tempuri.org/IService1/TempAlbum" message="tns:IService1_TempAlbum_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IService1/TempAlbumResponse" message="tns:IService1_TempAlbum_OutputMessage" />
+    <wsdl:operation name="GetAllSingers">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetAllSingers" message="tns:IService1_GetAllSingers_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetAllSingersResponse" message="tns:IService1_GetAllSingers_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetTrackStream">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetTrackStream" message="tns:IService1_GetTrackStream_InputMessage" />
@@ -286,6 +318,10 @@
     <wsdl:operation name="DownloadFile">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/DownloadFile" message="tns:IService1_DownloadFile_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/DownloadFileResponse" message="tns:IService1_DownloadFile_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Search">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/Search" message="tns:IService1_Search_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/SearchResponse" message="tns:IService1_Search_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IService1" type="tns:IService1">
@@ -317,8 +353,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="TempAlbum">
-      <soap:operation soapAction="http://tempuri.org/IService1/TempAlbum" style="document" />
+    <wsdl:operation name="GetAllSingers">
+      <soap:operation soapAction="http://tempuri.org/IService1/GetAllSingers" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -355,6 +391,15 @@
     </wsdl:operation>
     <wsdl:operation name="DownloadFile">
       <soap:operation soapAction="http://tempuri.org/IService1/DownloadFile" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Search">
+      <soap:operation soapAction="http://tempuri.org/IService1/Search" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

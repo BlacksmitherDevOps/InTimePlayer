@@ -33,14 +33,9 @@ namespace InTime.Controls
             state= new AppState();
             state.sound = SoundState.HighSound;
             mainWindow = window;
-            testAddPlaylist();
+            //testAddPlaylist();
             //testInfoBord();
-            //testSingerBord();
-        }
-        void testAddPlaylist()
-        {
-            SearchPanel searchPanel = new SearchPanel();
-            tape_panel.Children.Add(searchPanel);
+            testSingerBord();
         }
         void testInfoBord()
         {
@@ -73,7 +68,7 @@ namespace InTime.Controls
             { SongAlbum = "Wahrheit Oder Pflicht", SongArtist = "Oomph!", ID = 2, SongDuration = DateTime.Now, SongTitle = "Burn Your Eyes" });
             grid.SimularSongList.Items.Add(new PlaylistItem
             { SongAlbum = "Wahrheit Oder Pflicht", SongArtist = "Oomph!", ID = 2, SongDuration = DateTime.Now, SongTitle = "Dein Weg" });
-            tape_panel.Children.Add(grid);
+            tape_panel.Child = grid;
         }
 
         private void Grid_ScrollCall(bool flag)
@@ -112,7 +107,7 @@ namespace InTime.Controls
             _Singer.Albums = new List<AlbumItem>() { album, album1, album2 };
             SingerPage_Control list = new SingerPage_Control(_Singer);
             list.ScrollCall += Grid_ScrollCall;
-            tape_panel.Children.Add(list);
+            tape_panel.Child = list;
         }
         #region Sound
         /// <summary>
@@ -300,5 +295,39 @@ namespace InTime.Controls
             MaximizeRestor_Icon.Kind = PackIconKind.WindowRestore;
         }
         #endregion
+
+        private async void Search_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (Search.Text.Length < 1)
+                return;
+            if(e.Key == Key.Enter)
+            {
+                LoadingScreen();
+                SearchPanel searchPanel = new SearchPanel();
+                Service1Client client = new Service1Client();
+                SearchResult searchResult = await client.SearchAsync(Search.Text);
+                client.Close();
+                searchPanel.AddSongs(searchResult.Songs);
+                searchPanel.AddArtists(searchResult.Singers);
+                searchPanel.AddGenres(searchResult.GenreSongs);
+                searchPanel.AddAlbums(searchResult.Albums);
+                tape_panel.Child = null;
+                tape_panel.Child = searchPanel;
+            }
+        }
+        void LoadingScreen()
+        {
+            tape_panel.Child = null;
+            ProgressBar progressBar = new ProgressBar();
+            progressBar.Style = FindResource("MaterialDesignCircularProgressBar") as Style;
+            progressBar.Value = 0;
+            progressBar.Foreground = Brushes.White;
+            progressBar.Width = 50;
+            progressBar.Height = 50;
+            progressBar.VerticalAlignment = VerticalAlignment.Center;
+            progressBar.HorizontalAlignment = HorizontalAlignment.Center;
+            progressBar.IsIndeterminate = true;
+            tape_panel.Child = progressBar;
+        }
     }
 }

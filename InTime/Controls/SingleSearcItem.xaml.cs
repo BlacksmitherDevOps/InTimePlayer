@@ -26,15 +26,15 @@ namespace InTime.Controls
         }
 
 
-        public string Image
+        public byte[] Image
         {
-            get { return (string)GetValue(ImageProperty); }
+            get { return (byte[])GetValue(ImageProperty); }
             set { SetValue(ImageProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for Image.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ImageProperty =
-            DependencyProperty.Register("Image", typeof(string), typeof(SingleSearchItem));
+            DependencyProperty.Register("Image", typeof(byte[]), typeof(SingleSearchItem));
 
 
 
