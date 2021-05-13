@@ -31,12 +31,28 @@ namespace InTime.Controls
         {
             InitializeComponent();
             state= new AppState();
+            
+            
             state.sound = SoundState.HighSound;
             mainWindow = window;
             //testAddPlaylist();
             //testInfoBord();
             testSingerBord();
         }
+        /* Service methods
+
+        AddNewSinger - добавить нового исполнителя
+        AddNewTrack - добавить новый трек
+        AddNewAlbum - добавить новый альбом
+        GetAlbum - сервис возвращает альбом С треками и С автором
+        GetAllSingers - возвращает всех авторов с их альбомами(альбомы без песен)
+        GetTrackStream - возвращает файловый поток MP3 файла
+        (Системная)TempFunc - темп функция, используется для правок в бд и на сервере
+        (Системная)DownloadFile - темп функция, используется для правок на сервере(загружает файл)
+        Search - возвращает результат поиска
+        GetSingerFull - врзвращает полную информацию об исполнителе со всеми альбомами и песнями
+
+        */
         void testInfoBord()
         {
             PlaylistGrid grid = new PlaylistGrid();
