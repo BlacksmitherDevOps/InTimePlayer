@@ -36,7 +36,7 @@
                        To="0"
                        Storyboard.TargetProperty ="(Window.Left)"/>
             </Storyboard>
-            
+
             <Storyboard x:Key="ckecked_Unselected_Animation" FillBehavior="HoldEnd">
                 <ColorAnimation
                        Duration="0:0:0.1" 
@@ -48,7 +48,7 @@
                        To="#ff8282"
                        Storyboard.TargetProperty ="Foreground.Color"/>
             </Storyboard>
-            
+
             <Storyboard x:Key="Text_Selected_Animation" FillBehavior="HoldEnd">
                 <ColorAnimation
                        Duration="0:0:0.1" 
@@ -75,14 +75,14 @@
                 <EventSetter Event="MouseEnter" Handler="BottomButtonsBorder_MouseEnter"/>
                 <EventSetter Event="MouseLeave" Handler="BottomButtonsBorder_MouseLeave"/>
             </Style>
-            
+
             <Style x:Key="WindowControlButtons_Style" TargetType="materialDesign:PackIcon">
                 <Setter Property="Foreground" Value="#FFFF0051"/>
                 <Setter Property="Width" Value="20"/>
                 <Setter Property="Height" Value="20"/>
                 <Setter Property="VerticalAlignment" Value="Center"/>
             </Style>
-            
+
             <!--RadioButton selection animations-->
             <Style x:Name="LeftTogleBtn" TargetType="{x:Type ToggleButton}">
                 <Setter Property="Background" Value="Transparent"/>
@@ -546,34 +546,40 @@
                             </Grid>
                         </Border>
                     </Border>
-                    <StackPanel HorizontalAlignment="Right" Margin="0,0,150,0"  Orientation="Horizontal">
-                        <!--Avatar-->
-                        <Border BorderThickness="0"
-                             HorizontalAlignment="Left"
-                             Width="30" Height="30"
-                             CornerRadius="100" Cursor="Hand">
-                            <Grid>
-                                <Border Name="Mask"
-                                    Background="White"
-                                    BorderBrush="#FF3B5998"
-                                    BorderThickness="1"
-                                    CornerRadius="100" 
-                                    >
-                                </Border>
-                                <StackPanel>
-                                    <Image Name="Avatar"
-                                Source="{Binding Image}" />
-                                    <StackPanel.OpacityMask>
-                                        <VisualBrush Visual="{Binding ElementName=Mask}" />
-                                    </StackPanel.OpacityMask>
-                                </StackPanel>
-                            </Grid>
-                        </Border>
-                        <!--Profile-->
-                        <TextBlock Name="Profile_tb" Text="Profile"
+                    <Border HorizontalAlignment="Right" CornerRadius="20" BorderBrush="#FFFF0051"
+                            BorderThickness="1" Width="135" Margin="0,0,145,0" Name="Profileborder"
+                            MouseLeftButtonDown="ProfileBorderMouseLeftButtonDown">
+
+                        <Grid>
+                            <Menu Background="Transparent" Panel.ZIndex="10">
+                                <MenuItem Width="133" Height="38" >
+                                    <MenuItem Header="Friends" Margin="30,0,0,0" Background="#8d0d26" Foreground="White"/>
+                                    <MenuItem Header="Profile" Margin="30,0,0,0" Background="#8d0d26" Foreground="White"/>
+                                    <MenuItem Header="Settings" Margin="30,0,0,0" Background="#8d0d26" Foreground="White"/>
+                                    <MenuItem Header="Log out" Margin="30,0,0,0" Background="#8d0d26" Foreground="White"/>
+                                </MenuItem>
+                            </Menu>
+                            <!--Avatar-->
+                            <Ellipse Width="40" Margin="0,0,93,0">
+                                <Ellipse.Fill>
+                                    <ImageBrush ImageSource="../Assets/profile.jpg"></ImageBrush>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                            <!--Profile-->
+                            <TextBlock Name="Profile_tb" Text="Profile" TextTrimming="WordEllipsis"
                                    FontSize="22" Foreground="#FFFF0051" FontWeight="Medium"
-                                   VerticalAlignment="Center" Margin="10,0,0,0"/>
-                    </StackPanel>
+                                   VerticalAlignment="Center" Margin="0,4,10,7" HorizontalAlignment="Right" Width="78"/>
+                        </Grid>
+                        <Border.Style>
+                            <Style>
+                                <Style.Triggers>
+                                    <Trigger Property="Border.IsMouseOver" Value="True">
+                                        <Setter Property="Border.Background" Value="#8d0d26"></Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                    </Border>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <Border x:Name="WindowControlButton_Hide" Background="Transparent" MouseLeftButtonUp="WindowControlButton_Hide_MouseLeftButtonUp"
                                 MouseEnter="WindowControlButton_MouseEnter" MouseLeave="WindowControlButton_MouseLeave">

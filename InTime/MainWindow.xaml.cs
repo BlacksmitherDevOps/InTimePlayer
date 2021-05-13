@@ -28,6 +28,16 @@ namespace InTime
         public MainWindow()
         {
             InitializeComponent();
+            this.Visibility = Visibility.Hidden;
+            LoginScreen tmp = new LoginScreen();
+            tmp.OnWindowClosed += Tmp_OnWindowClosed;
+            tmp.ShowDialog();
+            
+        }
+
+        private void Tmp_OnWindowClosed()
+        {
+            this.Visibility = Visibility.Visible;
             Control_Bord.Child = new MainPlayerPage_Control(this);
         }
 

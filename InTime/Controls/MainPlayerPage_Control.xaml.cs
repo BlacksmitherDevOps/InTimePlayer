@@ -329,5 +329,10 @@ namespace InTime.Controls
             progressBar.IsIndeterminate = true;
             tape_panel.Child = progressBar;
         }
+
+        private void ProfileBorderMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            
+        }
     }
 }
