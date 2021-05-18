@@ -12,8 +12,8 @@
         <!--Login Grid-->
         <Grid Name="LoginGrid" Visibility="Visible">
             <!--Logo-->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" 
-                    Margin="0,120,0,0">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                    Margin="0,0,0,400">
                 <TextBlock Text="In" FontSize="85" Foreground="#FFFF0051" FontFamily="Cooper Black"/>
                 <TextBlock Text="Time" FontSize="85" Foreground="White" FontFamily="Cooper Black"/>
             </StackPanel>

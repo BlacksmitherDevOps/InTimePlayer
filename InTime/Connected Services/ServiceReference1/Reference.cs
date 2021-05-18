@@ -561,6 +561,163 @@ namespace InTime.ServiceReference1 {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Song_Playlist", Namespace="http://schemas.datacontract.org/2004/07/PlayerService")]
+    [System.SerializableAttribute()]
+    public partial class Song_Playlist : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime CreationDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool CustomField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private byte[] ImageField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ImagePathField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private InTime.ServiceReference1.Song_Singer[] SingersField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private InTime.ServiceReference1.Song[] SongsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TitleField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime CreationDate {
+            get {
+                return this.CreationDateField;
+            }
+            set {
+                if ((this.CreationDateField.Equals(value) != true)) {
+                    this.CreationDateField = value;
+                    this.RaisePropertyChanged("CreationDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool Custom {
+            get {
+                return this.CustomField;
+            }
+            set {
+                if ((this.CustomField.Equals(value) != true)) {
+                    this.CustomField = value;
+                    this.RaisePropertyChanged("Custom");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int ID {
+            get {
+                return this.IDField;
+            }
+            set {
+                if ((this.IDField.Equals(value) != true)) {
+                    this.IDField = value;
+                    this.RaisePropertyChanged("ID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public byte[] Image {
+            get {
+                return this.ImageField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ImageField, value) != true)) {
+                    this.ImageField = value;
+                    this.RaisePropertyChanged("Image");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ImagePath {
+            get {
+                return this.ImagePathField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ImagePathField, value) != true)) {
+                    this.ImagePathField = value;
+                    this.RaisePropertyChanged("ImagePath");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public InTime.ServiceReference1.Song_Singer[] Singers {
+            get {
+                return this.SingersField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SingersField, value) != true)) {
+                    this.SingersField = value;
+                    this.RaisePropertyChanged("Singers");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public InTime.ServiceReference1.Song[] Songs {
+            get {
+                return this.SongsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SongsField, value) != true)) {
+                    this.SongsField = value;
+                    this.RaisePropertyChanged("Songs");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Title {
+            get {
+                return this.TitleField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TitleField, value) != true)) {
+                    this.TitleField = value;
+                    this.RaisePropertyChanged("Title");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference1.IService1")]
     public interface IService1 {
@@ -577,11 +734,23 @@ namespace InTime.ServiceReference1 {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/AddNewTrack", ReplyAction="http://tempuri.org/IService1/AddNewTrackResponse")]
         System.Threading.Tasks.Task AddNewTrackAsync(InTime.ServiceReference1.Song NewSong);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/AddNewAlbum", ReplyAction="http://tempuri.org/IService1/AddNewAlbumResponse")]
+        void AddNewAlbum(InTime.ServiceReference1.Singer_Album NewAlbum);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/AddNewAlbum", ReplyAction="http://tempuri.org/IService1/AddNewAlbumResponse")]
+        System.Threading.Tasks.Task AddNewAlbumAsync(InTime.ServiceReference1.Singer_Album NewAlbum);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetAlbum", ReplyAction="http://tempuri.org/IService1/GetAlbumResponse")]
         InTime.ServiceReference1.Singer_Album GetAlbum(int ID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetAlbum", ReplyAction="http://tempuri.org/IService1/GetAlbumResponse")]
         System.Threading.Tasks.Task<InTime.ServiceReference1.Singer_Album> GetAlbumAsync(int ID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetSingerFull", ReplyAction="http://tempuri.org/IService1/GetSingerFullResponse")]
+        InTime.ServiceReference1.Song_Singer GetSingerFull(int ID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetSingerFull", ReplyAction="http://tempuri.org/IService1/GetSingerFullResponse")]
+        System.Threading.Tasks.Task<InTime.ServiceReference1.Song_Singer> GetSingerFullAsync(int ID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetAllSingers", ReplyAction="http://tempuri.org/IService1/GetAllSingersResponse")]
         InTime.ServiceReference1.Song_Singer[] GetAllSingers();
@@ -595,17 +764,11 @@ namespace InTime.ServiceReference1 {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetTrackStream", ReplyAction="http://tempuri.org/IService1/GetTrackStreamResponse")]
         System.Threading.Tasks.Task<System.IO.Stream> GetTrackStreamAsync(int ID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/AddNewAlbum", ReplyAction="http://tempuri.org/IService1/AddNewAlbumResponse")]
-        void AddNewAlbum(InTime.ServiceReference1.Singer_Album NewAlbum);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/TempFunc", ReplyAction="http://tempuri.org/IService1/TempFuncResponse")]
+        void TempFunc();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/AddNewAlbum", ReplyAction="http://tempuri.org/IService1/AddNewAlbumResponse")]
-        System.Threading.Tasks.Task AddNewAlbumAsync(InTime.ServiceReference1.Singer_Album NewAlbum);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetFile", ReplyAction="http://tempuri.org/IService1/GetFileResponse")]
-        void GetFile();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetFile", ReplyAction="http://tempuri.org/IService1/GetFileResponse")]
-        System.Threading.Tasks.Task GetFileAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/TempFunc", ReplyAction="http://tempuri.org/IService1/TempFuncResponse")]
+        System.Threading.Tasks.Task TempFuncAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/DownloadFile", ReplyAction="http://tempuri.org/IService1/DownloadFileResponse")]
         void DownloadFile(byte[] arr);
@@ -618,6 +781,12 @@ namespace InTime.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/Search", ReplyAction="http://tempuri.org/IService1/SearchResponse")]
         System.Threading.Tasks.Task<InTime.ServiceReference1.SearchResult> SearchAsync(string searchStr);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/playlist", ReplyAction="http://tempuri.org/IService1/playlistResponse")]
+        InTime.ServiceReference1.Song_Playlist playlist(int ID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/playlist", ReplyAction="http://tempuri.org/IService1/playlistResponse")]
+        System.Threading.Tasks.Task<InTime.ServiceReference1.Song_Playlist> playlistAsync(int ID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -663,12 +832,28 @@ namespace InTime.ServiceReference1 {
             return base.Channel.AddNewTrackAsync(NewSong);
         }
         
+        public void AddNewAlbum(InTime.ServiceReference1.Singer_Album NewAlbum) {
+            base.Channel.AddNewAlbum(NewAlbum);
+        }
+        
+        public System.Threading.Tasks.Task AddNewAlbumAsync(InTime.ServiceReference1.Singer_Album NewAlbum) {
+            return base.Channel.AddNewAlbumAsync(NewAlbum);
+        }
+        
         public InTime.ServiceReference1.Singer_Album GetAlbum(int ID) {
             return base.Channel.GetAlbum(ID);
         }
         
         public System.Threading.Tasks.Task<InTime.ServiceReference1.Singer_Album> GetAlbumAsync(int ID) {
             return base.Channel.GetAlbumAsync(ID);
+        }
+        
+        public InTime.ServiceReference1.Song_Singer GetSingerFull(int ID) {
+            return base.Channel.GetSingerFull(ID);
+        }
+        
+        public System.Threading.Tasks.Task<InTime.ServiceReference1.Song_Singer> GetSingerFullAsync(int ID) {
+            return base.Channel.GetSingerFullAsync(ID);
         }
         
         public InTime.ServiceReference1.Song_Singer[] GetAllSingers() {
@@ -687,20 +872,12 @@ namespace InTime.ServiceReference1 {
             return base.Channel.GetTrackStreamAsync(ID);
         }
         
-        public void AddNewAlbum(InTime.ServiceReference1.Singer_Album NewAlbum) {
-            base.Channel.AddNewAlbum(NewAlbum);
+        public void TempFunc() {
+            base.Channel.TempFunc();
         }
         
-        public System.Threading.Tasks.Task AddNewAlbumAsync(InTime.ServiceReference1.Singer_Album NewAlbum) {
-            return base.Channel.AddNewAlbumAsync(NewAlbum);
-        }
-        
-        public void GetFile() {
-            base.Channel.GetFile();
-        }
-        
-        public System.Threading.Tasks.Task GetFileAsync() {
-            return base.Channel.GetFileAsync();
+        public System.Threading.Tasks.Task TempFuncAsync() {
+            return base.Channel.TempFuncAsync();
         }
         
         public void DownloadFile(byte[] arr) {
@@ -717,6 +894,14 @@ namespace InTime.ServiceReference1 {
         
         public System.Threading.Tasks.Task<InTime.ServiceReference1.SearchResult> SearchAsync(string searchStr) {
             return base.Channel.SearchAsync(searchStr);
+        }
+        
+        public InTime.ServiceReference1.Song_Playlist playlist(int ID) {
+            return base.Channel.playlist(ID);
+        }
+        
+        public System.Threading.Tasks.Task<InTime.ServiceReference1.Song_Playlist> playlistAsync(int ID) {
+            return base.Channel.playlistAsync(ID);
         }
     }
 }

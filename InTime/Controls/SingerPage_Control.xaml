@@ -7,13 +7,6 @@
              xmlns:local="clr-namespace:InTime.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="1190">
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Assets/icons.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </UserControl.Resources>
     <Grid>
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">

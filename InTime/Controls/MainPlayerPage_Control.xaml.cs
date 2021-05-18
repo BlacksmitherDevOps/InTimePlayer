@@ -32,12 +32,12 @@ namespace InTime.Controls
             InitializeComponent();
             state= new AppState();
             
-            
             state.sound = SoundState.HighSound;
             mainWindow = window;
+            testRecomendsBord();
             //testAddPlaylist();
             //testInfoBord();
-            testSingerBord();
+            //testSingerBord();
         }
         /* Service methods
 
@@ -53,6 +53,11 @@ namespace InTime.Controls
         GetSingerFull - врзвращает полную информацию об исполнителе со всеми альбомами и песнями
 
         */
+        void testRecomendsBord()
+        {
+            Recommendations_Control recommendations_Control = new Recommendations_Control();
+            tape_panel.Child = recommendations_Control;
+        }
         void testInfoBord()
         {
             PlaylistGrid grid = new PlaylistGrid();
