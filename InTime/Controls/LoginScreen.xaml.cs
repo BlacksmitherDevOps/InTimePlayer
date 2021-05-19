@@ -13,6 +13,7 @@ using System.Drawing;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Microsoft.Win32;
+using MaterialDesignThemes.Wpf;
 
 namespace InTime.Controls
 {
@@ -23,6 +24,7 @@ namespace InTime.Controls
         public LoginScreen()
         {
             InitializeComponent();
+           
         }
 
         #region LoginGrid
@@ -281,6 +283,52 @@ namespace InTime.Controls
             }
         }
         #endregion
-        
+
+        #region UpperPanel
+        bool upperPanelClick;
+        Point coord;
+        private void upper_bord_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            upperPanelClick = true;
+            coord = e.GetPosition(this);
+        }
+        private void upper_bord_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (upperPanelClick && coord != e.GetPosition(this))
+            {
+                if (coord.Y < e.GetPosition(this).Y)
+                    this.Top += e.GetPosition(this).Y - coord.Y;
+                else if (coord.Y > e.GetPosition(this).Y)
+                    this.Top -= coord.Y - e.GetPosition(this).Y;
+                if (coord.X < e.GetPosition(this).X)
+                    this.Left += e.GetPosition(this).X - coord.X;
+                else if (coord.X > e.GetPosition(this).X)
+                    this.Left -= coord.X - e.GetPosition(this).X;
+            }
+        }
+        private void upper_bord_MouseLeave(object sender, MouseEventArgs e)
+        {
+            upperPanelClick = false;
+        }
+        private void upper_bord_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            upperPanelClick = false;
+        }
+
+        private void WindowControlButton_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ((PackIcon)((Border)sender).Child).Foreground = Brushes.White;
+        }
+
+        private void WindowControlButton_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ((PackIcon)((Border)sender).Child).Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF0051"));
+        }
+
+        private void WindowControlButton_Close_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+        #endregion
     }
 }
