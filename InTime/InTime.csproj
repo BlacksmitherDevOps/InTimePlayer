@@ -197,6 +197,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Connected Services\ServiceReference1\InTime.ServiceReference1.Client_User.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\ServiceReference1\InTime.ServiceReference1.SearchResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

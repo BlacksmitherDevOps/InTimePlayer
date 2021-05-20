@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Microsoft.Win32;
 using MaterialDesignThemes.Wpf;
+using InTime.ServiceReference1;
 
 namespace InTime.Controls
 {
@@ -269,7 +270,7 @@ namespace InTime.Controls
             LoginGrid.Visibility = Visibility.Visible;
         }
 
-        private void ConfirmRegBtnClick(object sender, MouseButtonEventArgs e)
+        private async void ConfirmRegBtnClick(object sender, MouseButtonEventArgs e)
         {
             if (RegisterLogin.Text == "" || RegisterPassbox1.Password == "" || RegisterPassbox2.Password == "")
             {
@@ -281,6 +282,7 @@ namespace InTime.Controls
                 WrongDataInput.Visibility = Visibility.Hidden;
                 RegPassError.Visibility = Visibility.Visible;
             }
+           
         }
         #endregion
 

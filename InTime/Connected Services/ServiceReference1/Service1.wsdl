@@ -40,6 +40,34 @@
           <xs:sequence />
         </xs:complexType>
       </xs:element>
+      <xs:element name="TryLogin">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="login_User" nillable="true" type="q4:Login_User" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="TryLoginResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="TryLoginResult" nillable="true" type="q5:Client_User" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="RegNewUser">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="login_User" nillable="true" type="q6:Login_User" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="RegNewUserResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="RegNewUserResult" nillable="true" type="q7:Client_User" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
       <xs:element name="GetAlbum">
         <xs:complexType>
           <xs:sequence>
@@ -50,7 +78,7 @@
       <xs:element name="GetAlbumResponse">
         <xs:complexType>
           <xs:sequence>
-            <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="GetAlbumResult" nillable="true" type="q4:Singer_Album" />
+            <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="GetAlbumResult" nillable="true" type="q8:Singer_Album" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -64,7 +92,7 @@
       <xs:element name="GetSingerFullResponse">
         <xs:complexType>
           <xs:sequence>
-            <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="GetSingerFullResult" nillable="true" type="q5:Song_Singer" />
+            <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="GetSingerFullResult" nillable="true" type="q9:Song_Singer" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -76,7 +104,7 @@
       <xs:element name="GetAllSingersResponse">
         <xs:complexType>
           <xs:sequence>
-            <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="GetAllSingersResult" nillable="true" type="q6:ArrayOfSong_Singer" />
+            <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="GetAllSingersResult" nillable="true" type="q10:ArrayOfSong_Singer" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -90,7 +118,7 @@
       <xs:element name="GetTrackStreamResponse">
         <xs:complexType>
           <xs:sequence>
-            <xs:element xmlns:q7="http://schemas.microsoft.com/Message" name="GetTrackStreamResult" type="q7:StreamBody" />
+            <xs:element xmlns:q11="http://schemas.microsoft.com/Message" name="GetTrackStreamResult" type="q11:StreamBody" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -126,7 +154,7 @@
       <xs:element name="SearchResponse">
         <xs:complexType>
           <xs:sequence>
-            <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="SearchResult" nillable="true" type="q8:SearchResult" />
+            <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="SearchResult" nillable="true" type="q12:SearchResult" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -140,7 +168,7 @@
       <xs:element name="playlistResponse">
         <xs:complexType>
           <xs:sequence>
-            <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="playlistResult" nillable="true" type="q9:Song_Playlist" />
+            <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="playlistResult" nillable="true" type="q13:Song_Playlist" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -244,6 +272,32 @@
         </xs:sequence>
       </xs:complexType>
       <xs:element name="ArrayOfSong_Singer" nillable="true" type="tns:ArrayOfSong_Singer" />
+      <xs:complexType name="Login_User">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Image" nillable="true" type="xs:base64Binary" />
+          <xs:element minOccurs="0" name="Login" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="Login_User" nillable="true" type="tns:Login_User" />
+      <xs:complexType name="Client_User">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Contacts" nillable="true" type="tns:ArrayOfClient_User" />
+          <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ID" type="xs:int" />
+          <xs:element minOccurs="0" name="Image" nillable="true" type="xs:base64Binary" />
+          <xs:element minOccurs="0" name="ImagePath" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="NickName" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="Client_User" nillable="true" type="tns:Client_User" />
+      <xs:complexType name="ArrayOfClient_User">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Client_User" nillable="true" type="tns:Client_User" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfClient_User" nillable="true" type="tns:ArrayOfClient_User" />
       <xs:complexType name="SearchResult">
         <xs:sequence>
           <xs:element minOccurs="0" name="Albums" nillable="true" type="tns:ArrayOfSinger_Album" />
@@ -290,6 +344,18 @@
   </wsdl:message>
   <wsdl:message name="IService1_AddNewAlbum_OutputMessage">
     <wsdl:part name="parameters" element="tns:AddNewAlbumResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_TryLogin_InputMessage">
+    <wsdl:part name="parameters" element="tns:TryLogin" />
+  </wsdl:message>
+  <wsdl:message name="IService1_TryLogin_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TryLoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_RegNewUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:RegNewUser" />
+  </wsdl:message>
+  <wsdl:message name="IService1_RegNewUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegNewUserResponse" />
   </wsdl:message>
   <wsdl:message name="IService1_GetAlbum_InputMessage">
     <wsdl:part name="parameters" element="tns:GetAlbum" />
@@ -352,6 +418,14 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/AddNewAlbum" message="tns:IService1_AddNewAlbum_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/AddNewAlbumResponse" message="tns:IService1_AddNewAlbum_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="TryLogin">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/TryLogin" message="tns:IService1_TryLogin_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/TryLoginResponse" message="tns:IService1_TryLogin_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RegNewUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/RegNewUser" message="tns:IService1_RegNewUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/RegNewUserResponse" message="tns:IService1_RegNewUser_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GetAlbum">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetAlbum" message="tns:IService1_GetAlbum_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetAlbumResponse" message="tns:IService1_GetAlbum_OutputMessage" />
@@ -407,6 +481,24 @@
     </wsdl:operation>
     <wsdl:operation name="AddNewAlbum">
       <soap:operation soapAction="http://tempuri.org/IService1/AddNewAlbum" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TryLogin">
+      <soap:operation soapAction="http://tempuri.org/IService1/TryLogin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegNewUser">
+      <soap:operation soapAction="http://tempuri.org/IService1/RegNewUser" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
