@@ -453,6 +453,7 @@
                 <Grid Name="GridContainer" RowSpan="3" ColumnSpan="3" >
                     <local:AddPlaylist x:Name="AddPlaylistItem" Visibility="Hidden" MouseDown="AddPlaylistItemMouseDown" 
                                        OnChangesAccepted="AddPlaylistItemOnChangesAccepted" OnWindowClosed="AddPlaylistItemOnWindowClosed"/>
+                    <local:ProfileEdit x:Name="ProfileEditItem" Visibility="Hidden" MouseDown="ProfileEditItemOnMouseDown"/>
                 </Grid>
                 <!--Left panel-->
                 <Border Name="LeftPanel" BorderBrush="#FF696087" Grid.Column="0" BorderThickness="0,0,2,0">
@@ -506,6 +507,17 @@
                                 <ListBoxItem Content="TestElement" Style="{StaticResource PlaylistItem}"/>
                                 <ListBoxItem Content="TestElement" Style="{StaticResource PlaylistItem}"/>
                                 <ListBoxItem Content="TestElement" Style="{StaticResource PlaylistItem}"/>
+                                <ListBox.ContextMenu>
+                                    <ContextMenu Background="#8d0d26" Foreground="White" Placement="Mouse" Padding="0">
+                                        <ContextMenu.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Margin="-20,0,-40,0"/>
+                                            </DataTemplate>
+                                        </ContextMenu.ItemTemplate>
+                                        <MenuItem Header="Delete" Click="PlaylistDeleteMenu"/>
+                                        <MenuItem Header="Edit" Click="PlaylistEditmenu"/>
+                                    </ContextMenu>
+                                </ListBox.ContextMenu>
                             </ListBox>
                         </Grid>
                     </Grid>
@@ -559,7 +571,7 @@
                             <Menu Background="Transparent" Panel.ZIndex="10">
                                 <MenuItem Width="133" Height="38" >
                                     <MenuItem Header="Friends" Margin="30,0,0,0" Background="#8d0d26" Foreground="White"/>
-                                    <MenuItem Header="Profile" Margin="30,0,0,0" Background="#8d0d26" Foreground="White"/>
+                                    <MenuItem Header="Edit" Margin="30,0,0,0" Background="#8d0d26" Foreground="White" Click="EditProfile"/>
                                     <MenuItem Header="Settings" Margin="30,0,0,0" Background="#8d0d26" Foreground="White"/>
                                     <MenuItem Header="Log out" Margin="30,0,0,0" Background="#8d0d26" Foreground="White"/>
                                 </MenuItem>

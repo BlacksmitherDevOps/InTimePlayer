@@ -1,0 +1,221 @@
+﻿<UserControl x:Class="InTime.Controls.ProfileEdit"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:InTime.Controls"
+             mc:Ignorable="d" d:DesignHeight="820" d:DesignWidth="1550">
+    <Grid Background="Transparent">
+        <Border Background="#FF1D1D1D" Width="500" Height="600">
+            <Grid>
+                <materialDesign:PackIcon Kind="Close" Height="20" Width="20" 
+                                     Margin="470,10,0,0" Foreground="#ee3e61" Name="CloseAdding"/>
+            <!--Passwords doesn't match error box-->
+            <Border CornerRadius="20" Height="60"  
+                    Background="#8d0d26" Name="RegPassError" Visibility="Hidden" Margin="150,170,150,370" RenderTransformOrigin="0.5,0.5">
+                <Border.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform AngleY="0.158"/>
+                        <RotateTransform/>
+                        <TranslateTransform Y="1.1"/>
+                    </TransformGroup>
+                </Border.RenderTransform>
+                <TextBlock Margin="20,10,20,10" Foreground="White" FontSize="16"
+                           Text="Passwords doesn't match.&#x0a;Please, try again.">
+                </TextBlock>
+            </Border>
+            <!--InvalidEmail doesn't match error box-->
+            <Border CornerRadius="20" Height="60" 
+                Background="#8d0d26" Name="EmailError" Visibility="Hidden"
+                Margin="150,170,150,370" RenderTransformOrigin="0.5,0.5">
+                <Border.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform AngleY="0.158"/>
+                        <RotateTransform/>
+                        <TranslateTransform Y="1.1"/>
+                    </TransformGroup>
+                </Border.RenderTransform>
+                <TextBlock Margin="20,10,20,10" Foreground="White" FontSize="16"
+                       Text="Wrong email input.&#x0a;Please, try again.">
+                </TextBlock>
+            </Border>
+            <!--WrongLogin doesn't match error box-->
+            <Border CornerRadius="20" Height="60" 
+                Background="#8d0d26" Name="LoginInputError" Visibility="Hidden"
+                Margin="150,170,150,370" RenderTransformOrigin="0.5,0.5">
+                <Border.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform AngleY="0.158"/>
+                        <RotateTransform/>
+                        <TranslateTransform Y="1.1"/>
+                    </TransformGroup>
+                </Border.RenderTransform>
+                <TextBlock Margin="20,10,20,10" Foreground="White" FontSize="16"
+                       Text="Login field should &#x0a;be signed.">
+                </TextBlock>
+            </Border>
+            <!--Connection error box-->
+            <Border CornerRadius="20" Height="60" 
+                    Background="#8d0d26" Name="RegNetworkError" Visibility="Hidden" Margin="150,170,150,370">
+                <TextBlock Margin="20,10,20,10" Foreground="White" FontSize="16"
+                           Text="Network issues.&#x0a;Please, try again later.">
+                </TextBlock>
+            </Border>
+            <!--AvatarPhoto-->
+            <Ellipse  Name="AvatarPicker"
+                     MouseEnter="AvatarPickerMouseEnter" MouseLeave="AvatarPickerMouseLeave"
+                     MouseLeftButtonDown="AvatarPickerMouseLeftButtonDown" Margin="170,10,170,435">
+                <Ellipse.Fill>
+                    <ImageBrush ImageSource="../Assets/profile.jpg"/>
+                </Ellipse.Fill>
+            </Ellipse>
+            <materialDesign:PackIcon Kind="AccountEditOutline" Margin="240,60,0,0" Width="40" Height="40"
+                                     Foreground="#FFFF0051" Name="EditIcon" Visibility="Hidden"
+                                     MouseEnter="EditIconMouseEnter"/>
+            <!--Login box-->
+            <Border Background="Transparent" BorderBrush="#FFFF0051" BorderThickness="2" Height="40" CornerRadius="20" Margin="75,245,75,315">
+                <Grid>
+                    <TextBox Panel.ZIndex="10" Name="RegisterLogin" Height="35" VerticalContentAlignment="Center" 
+                             HorizontalContentAlignment="Stretch" FontSize="20" 
+                             Foreground="#FFFF0051" CaretBrush="#FFFF0051"
+                             Background="Transparent" BorderThickness="0" Margin="25,0,28,0">
+                        <TextBox.Style>
+                            <Style>
+
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
+                    <TextBlock Grid.Column="1" HorizontalAlignment="Left"
+                               Margin="25,0,0,0" Text="Enter login ..." VerticalAlignment="Center"
+                               Foreground="#FFFF0051" FontSize="16">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text,ElementName=RegisterLogin}" Value="">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Grid>
+            </Border>
+            <!--Email box-->
+            <Border Background="Transparent" BorderBrush="#FFFF0051" BorderThickness="2" Height="40" CornerRadius="20" Margin="75,300,75,260" >
+                <Grid>
+                    <TextBox Panel.ZIndex="10" Name="MailBox" Height="35" VerticalContentAlignment="Center" 
+                             HorizontalContentAlignment="Stretch" FontSize="20" 
+                             Foreground="#FFFF0051" CaretBrush="#FFFF0051"
+                             Background="Transparent" BorderThickness="0" Margin="25,0,28,0">
+                        <TextBox.Style>
+                            <Style>
+
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
+                    <TextBlock Grid.Column="1" HorizontalAlignment="Left"
+                               Margin="25,0,0,0" Text="Enter email ..." VerticalAlignment="Center"
+                               Foreground="#FFFF0051" FontSize="16">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text,ElementName=MailBox}" Value="">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Grid>
+            </Border>
+            <!--Password box1-->
+            <Border Height="40" 
+                    CornerRadius="20" Background="Transparent"
+                    HorizontalAlignment="Center"
+                    BorderThickness="2" Width="350" BorderBrush="#FFFF0051" Margin="75,355,75,205">
+                <Grid>
+                    <PasswordBox Name="RegisterPassbox1" Background="Transparent" Height="35" FontSize="16" Foreground="#FFFF0051"
+                                 CaretBrush="#FFFF0051" BorderThickness="0" Margin="25,0,28,0"
+                                 VerticalContentAlignment="Center" Panel.ZIndex="10"
+                                 PasswordChanged="RegisterPassbox1PasswordChanged">
+                        <PasswordBox.Style>
+                            <Style/>
+                        </PasswordBox.Style>
+                    </PasswordBox>
+                    <TextBlock Grid.Column="1" HorizontalAlignment="Left"
+                               Margin="25,0,0,0" Text="Enter password ..." VerticalAlignment="Center"
+                               Foreground="#FFFF0051" FontSize="16" Name="RegisterPassBlock1"/>
+                </Grid>
+            </Border>
+            <!--Password box2-->
+            <Border Height="40" 
+                    CornerRadius="20" Background="Transparent"
+                    HorizontalAlignment="Center"
+                    BorderThickness="2" Width="350" BorderBrush="#FFFF0051" Margin="75,410,75,150">
+                <Grid>
+                    <PasswordBox Name="RegisterPassbox2" Background="Transparent" Height="35" FontSize="16" Foreground="#FFFF0051"
+                                 CaretBrush="#FFFF0051" BorderThickness="0" Margin="25,0,28,0"
+                                 VerticalContentAlignment="Center" Panel.ZIndex="10"
+                                 PasswordChanged="RegisterPassboxPasswordChanged">
+                        <PasswordBox.Style>
+                            <Style/>
+                        </PasswordBox.Style>
+                    </PasswordBox>
+                    <TextBlock Grid.Column="1" HorizontalAlignment="Left"
+                               Margin="25,0,0,0" Text="Confirm password ..." VerticalAlignment="Center"
+                               Foreground="#FFFF0051" FontSize="16" Name="RegisterPassBlock2"/>
+                </Grid>
+            </Border>
+            <!--Cancel buttton-->
+            <Border CornerRadius="20" Height="40" Width="160" 
+                    Background="#8d0d26"
+                    Name="CancelRegrBtn" Margin="75,488,265,72">
+                <Grid>
+                    <TextBox IsHitTestVisible="False" Background="Transparent" Text="Cancel" Foreground="White" 
+                             VerticalAlignment="Center" HorizontalAlignment="Center"
+                             FontSize="18" BorderThickness="0">
+                        <TextBox.Style>
+                            <Style/>
+                        </TextBox.Style>
+                    </TextBox>
+                </Grid>
+                <Border.Style>
+                    <Style>
+                        <EventSetter Event="Border.MouseEnter" Handler="CancelRegBtnMouseEnter"/>
+                        <EventSetter Event="Border.MouseLeave" Handler="CancelRegBtnMouseLeave"/>
+                        <EventSetter Event="Border.MouseLeftButtonDown" Handler="CancelRegBtnClick"/>
+                    </Style>
+                </Border.Style>
+            </Border>
+            <!--Confirm buttton-->
+            <Border CornerRadius="20" Height="40" Width="160" 
+                    Background="#8d0d26"
+                    Name="ConfirmRegBtn" Margin="265,488,75,72">
+                <Grid>
+                    <TextBox IsHitTestVisible="False" Background="Transparent" Text="Confirm" Foreground="White" 
+                             VerticalAlignment="Center" HorizontalAlignment="Center"
+                             FontSize="18" BorderThickness="0">
+                        <TextBox.Style>
+                            <Style/>
+                        </TextBox.Style>
+                    </TextBox>
+                </Grid>
+                <Border.Style>
+                    <Style>
+                        <EventSetter Event="Border.MouseEnter" Handler="ConfirmRegBtnMouseEnter"/>
+                        <EventSetter Event="Border.MouseLeave" Handler="ConfirmRegBtnMouseLeave"/>
+                        <EventSetter Event="Border.MouseLeftButtonDown" Handler="ConfirmRegBtnClick"/>
+                    </Style>
+                </Border.Style>
+            </Border>
+            </Grid>
+        </Border>
+    </Grid>
+   
+</UserControl>
