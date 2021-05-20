@@ -38,20 +38,11 @@
                 <TextBlock Text="In" FontSize="85" Foreground="#FFFF0051" FontFamily="Cooper Black"/>
                 <TextBlock Text="Time" FontSize="85" Foreground="White" FontFamily="Cooper Black"/>
             </StackPanel>
-            <!--Error box-->
-            <Border CornerRadius="20" Height="60" Width="300" Margin="0,-270,0,0"
-                Background="#8d0d26" Name="LoginError" Visibility="Hidden">
-                <TextBlock Margin="20,10,20,10" Foreground="White" FontSize="16"
-                           Text="The email or password is incorrect.&#x0a;Please, try again.">
-
-                </TextBlock>
-            </Border>
-            <!--Error box-->
+            <!--Login Error box-->
             <Border CornerRadius="20" Height="60" Width="300" Margin="0,-270,0,0"
                 Background="#8d0d26" Name="NetworkError" Visibility="Hidden">
-                <TextBlock Margin="20,10,20,10" Foreground="White" FontSize="16"
-                       Text="Connetion issues.&#x0a;Please, try again later.">
-
+                <TextBlock Name="ErrorText" Margin="20,10,20,10" Foreground="White" FontSize="16"
+                       Text="User with this login/mail doesn't&#x0a; exist. Please, sign up.">
                 </TextBlock>
             </Border>
             <!--Login box-->
@@ -60,8 +51,8 @@
                             HorizontalAlignment="Center"
                             BorderThickness="2" Width="350" BorderBrush="#FFFF0051">
                 <Grid>
-                    <TextBox Panel.ZIndex="10" Name="Search" Height="35" VerticalContentAlignment="Center" 
-                         HorizontalContentAlignment="Stretch" FontSize="20" 
+                    <TextBox Panel.ZIndex="10" Name="LoginBox" Height="35" VerticalContentAlignment="Center" 
+                         HorizontalContentAlignment="Stretch" FontSize="20" Text="mylteks@mail.ru"
                          Foreground="#FFFF0051" CaretBrush="#FFFF0051"
                          Background="Transparent" BorderThickness="0" Margin="25,0,28,0">
                         <TextBox.Style>
@@ -77,7 +68,7 @@
                             <Style TargetType="{x:Type TextBlock}">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Text,ElementName=Search}" Value="">
+                                    <DataTrigger Binding="{Binding Text,ElementName=LoginBox}" Value="">
                                         <Setter Property="Visibility" Value="Visible"/>
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -92,9 +83,9 @@
                  HorizontalAlignment="Center"
                  BorderThickness="2" Width="350" BorderBrush="#FFFF0051">
                 <Grid>
-                    <PasswordBox Name="Pass" Background="Transparent" Height="35" FontSize="16" Foreground="#FFFF0051"
+                    <PasswordBox Name="LoginPassBox" Background="Transparent" Height="35" FontSize="16" Foreground="#FFFF0051"
                              CaretBrush="#FFFF0051" BorderThickness="0" Margin="25,0,28,0"
-                             PasswordChanged="PasswordBox_OnPasswordChanged"
+                             PasswordChanged="PasswordBox_OnPasswordChanged" 
                              VerticalContentAlignment="Center" Panel.ZIndex="10">
                         <PasswordBox.Style>
                             <Style/>
@@ -167,33 +158,22 @@
                 <TextBlock Text="In" FontSize="85" Foreground="#FFFF0051" FontFamily="Cooper Black"/>
                 <TextBlock Text="Time" FontSize="85" Foreground="White" FontFamily="Cooper Black"/>
             </StackPanel>
-            <!--Login error box-->
-            <Border CornerRadius="20" Height="60" Width="300" Margin="180,230,170,460"
-                    Background="#8d0d26" Name="InvalidLogin" Visibility="Hidden">
-                <TextBlock Margin="20,10,20,10" Foreground="White" FontSize="16"
-                           Text="The login is incorrect.&#x0a;Please, try again.">
-                </TextBlock>
-            </Border>
             <!--Network error box-->
             <Border CornerRadius="20" Height="60" Width="300" Margin="180,230,170,460"
-                    Background="#8d0d26" Name="NetworkErrorRecovery" Visibility="Hidden">
+                    Background="#8d0d26" Name="RecoveryPage1ErrorBox" Visibility="Hidden">
                 <TextBlock Margin="20,10,20,10" Foreground="White" FontSize="16"
-                           Text="Network issues.&#x0a;Please, try again later.">
+                           Text="Invalid recovery code.&#x0a;Please, try again."
+                           Name="RecoveryPage1MessageBox">
                 </TextBlock>
             </Border>
-            <!--Network error box-->
-            <Border CornerRadius="20" Height="60" Width="300" Margin="180,230,170,460"
-                    Background="#8d0d26" Name="InvalidCode" Visibility="Hidden">
-                <TextBlock Margin="20,10,20,10" Foreground="White" FontSize="16"
-                           Text="Invalid recovery code.&#x0a;Please, try again.">
-                </TextBlock>
-            </Border>
+            <!--Wrong password pattern-->
+
             <!--Login enter box-->
             <Border Background="Transparent" BorderBrush="#FFFF0051" BorderThickness="2"
                     Width="360" Height="40" CornerRadius="20" Margin="145,320,145,390">
                 <Grid>
                     <TextBox Panel.ZIndex="10" Name="RecoveryLogin" Height="35" VerticalContentAlignment="Center" 
-                             HorizontalContentAlignment="Stretch" FontSize="20" 
+                             HorizontalContentAlignment="Stretch" FontSize="20" TextChanged="RecoveryLoginTextChanged"
                              Foreground="#FFFF0051" CaretBrush="#FFFF0051"
                              Background="Transparent" BorderThickness="0" Margin="25,0,28,0">
                         <TextBox.Style>
@@ -203,7 +183,7 @@
                         </TextBox.Style>
                     </TextBox>
                     <TextBlock Grid.Column="1" HorizontalAlignment="Left"
-                               Margin="25,0,0,0" Text="Enter login ..." VerticalAlignment="Center"
+                               Margin="25,0,0,0" Text="Enter login/mail ..." VerticalAlignment="Center"
                                Foreground="#FFFF0051" FontSize="16">
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}">
@@ -223,7 +203,7 @@
                     Width="360" Height="40" CornerRadius="20" Margin="145,390,145,320">
                 <Grid>
                     <TextBox Panel.ZIndex="10" Name="CodeEnterBox" Height="35" VerticalContentAlignment="Center" 
-                             HorizontalContentAlignment="Stretch" FontSize="20" 
+                             HorizontalContentAlignment="Stretch" FontSize="20" TextChanged="RecoveryLoginTextChanged"
                              Foreground="#FFFF0051" CaretBrush="#FFFF0051"
                              Background="Transparent" BorderThickness="0" Margin="25,0,28,0">
                         <TextBox.Style>
@@ -250,7 +230,7 @@
             </Border>
             <!--Send code button-->
             <Border CornerRadius="20" VerticalAlignment="Center" Margin="410,395,150,325"
-                    Background="#8d0d26"
+                    Background="#8d0d26" IsEnabled="False"
                     Name="SendCodeBtn" Height="30">
                 <Grid>
                     <TextBox IsHitTestVisible="False" Background="Transparent" Text="Send code" Foreground="White" 
@@ -292,7 +272,7 @@
             </Border>
             <!--Accept button-->
             <Border CornerRadius="20" Height="40" Width="160" Margin="145,460,345,250"
-                    Background="#8d0d26"
+                    Background="#8d0d26" IsEnabled="False"
                     Name="AcceptBtn">
                 <Grid>
                     <TextBox IsHitTestVisible="False" Background="Transparent" Text="Accept" Foreground="White" 
@@ -319,18 +299,20 @@
                 <TextBlock Text="In" FontSize="85" Foreground="#FFFF0051" FontFamily="Cooper Black"/>
                 <TextBlock Text="Time" FontSize="85" Foreground="White" FontFamily="Cooper Black"/>
             </StackPanel>
-            <!--Passwords error box-->
-            <Border CornerRadius="20" Height="60" Margin="170,225,170,465"
-                    Background="#8d0d26" Name="PasswordsError" Visibility="Hidden">
-                <TextBlock Margin="20,10,20,10" Foreground="White" FontSize="16"
-                           Text="Entered passwords doesn't match.&#x0a;Please, try again.">
+
+            <Border CornerRadius="20" Margin="170,210,170,440"
+                    Background="#8d0d26" Name="RecoveryPage2ErrorPassBox" Visibility="Hidden">
+                <TextBlock Margin="10,10,0,10" Foreground="White" FontSize="16"
+                           Text="Password must be between 8-15 &#x0a;characters and contain one uppercase&#x0a;one letter,one lowercase letter,one digit &#x0a;and one special  character."
+                           Name="RecoveryPage2ErrorPassMessage">
                 </TextBlock>
             </Border>
-            <!--Connection error box-->
-            <Border CornerRadius="20" Height="60" Margin="170,240,170,450"
-                    Background="#8d0d26" Name="Page2NetworkError" Visibility="Hidden">
+            <!--Passwords error box-->
+            <Border CornerRadius="20" Height="60" Margin="170,225,170,465"
+                    Background="#8d0d26" Name="RecoveryPage2ErrorBox" Visibility="Hidden">
                 <TextBlock Margin="20,10,20,10" Foreground="White" FontSize="16"
-                           Text="Network issues.&#x0a;Please, try again later.">
+                           Text="Entered passwords doesn't match.&#x0a;Please, try again."
+                           Name="RecoveryPage2ErrorMessage">
                 </TextBlock>
             </Border>
             <!--Password box1-->
@@ -341,7 +323,7 @@
                 <Grid>
                     <PasswordBox Name="Passbox1" Background="Transparent" Height="35" FontSize="16" Foreground="#FFFF0051"
                                  CaretBrush="#FFFF0051" BorderThickness="0" Margin="25,0,28,0"
-                                 PasswordChanged="Passbox1_OnPasswordChanged"
+                                 PasswordChanged="PassboxOnPasswordChanged"
                                  VerticalContentAlignment="Center" Panel.ZIndex="10">
                         <PasswordBox.Style>
                             <Style/>
@@ -360,7 +342,7 @@
                 <Grid>
                     <PasswordBox Name="Passbox2" Background="Transparent" Height="35" FontSize="16" Foreground="#FFFF0051"
                                  CaretBrush="#FFFF0051" BorderThickness="0" Margin="25,0,28,0"
-                                 PasswordChanged="Passbox2_OnPasswordChanged"
+                                 PasswordChanged="PassboxOnPasswordChanged"
                                  VerticalContentAlignment="Center" Panel.ZIndex="10">
                         <PasswordBox.Style>
                             <Style/>
@@ -394,7 +376,7 @@
             </Border>
             <!--Confirm buttton-->
             <Border CornerRadius="20" Height="40" Width="160" Margin="150,480,340,230"
-                    Background="#8d0d26"
+                    Background="#8d0d26" IsEnabled="False"
                     Name="ConfirmBtnPage2">
                 <Grid>
                     <TextBox IsHitTestVisible="False" Background="Transparent" Text="Confirm" Foreground="White" 
@@ -422,25 +404,19 @@
                 <TextBlock Text="In" FontSize="85" Foreground="#FFFF0051" FontFamily="Cooper Black"/>
                 <TextBlock Text="Time" FontSize="85" Foreground="White" FontFamily="Cooper Black"/>
             </StackPanel>
-            <!--Data input error box-->
-            <Border CornerRadius="20" Height="60" Margin="170,220,170,470"
-                    Background="#8d0d26" Name="WrongDataInput" Visibility="Hidden">
-                <TextBlock Margin="20,10,20,10" Foreground="White" FontSize="16"
-                           Text="One or more fields doesn't fill.&#x0a;Please, try again.">
+            <!--Wrong password input error box-->
+            <Border CornerRadius="20" Margin="170,205,170,460"
+                    Background="#8d0d26" Name="WrongPasswordInput" Visibility="Hidden">
+                <TextBlock Margin="20,0,10,0" Foreground="White" FontSize="16"
+                           Text="Password must be between 8-15 &#x0a;characters and contain one uppercase&#x0a;one letter,one lowercase letter,one digit &#x0a;and one special  character.">
                 </TextBlock>
             </Border>
-            <!--Passwords doesn't match error box-->
+            <!--sign up error box-->
             <Border CornerRadius="20" Height="60" Margin="170,220,170,470"
-                    Background="#8d0d26" Name="RegPassError" Visibility="Hidden">
-                <TextBlock Margin="20,10,20,10" Foreground="White" FontSize="16"
-                           Text="Passwords doesn't match.&#x0a;Please, try again.">
-                </TextBlock>
-            </Border>
-            <!--Connection error box-->
-            <Border CornerRadius="20" Height="60" Margin="170,220,170,470"
-                    Background="#8d0d26" Name="RegNetworkError" Visibility="Hidden">
-                <TextBlock Margin="20,10,20,10" Foreground="White" FontSize="16"
-                           Text="Network issues.&#x0a;Please, try again later.">
+                    Background="#8d0d26" Name="RegisterErrorBox" Visibility="Hidden">
+                <TextBlock Margin="20,10,10,10" Foreground="White" FontSize="16"
+                           Text="Network issues. Please check your&#x0a;internet connection and try again later."
+                           Name="RegisterErrorMessage">
                 </TextBlock>
             </Border>
             <!--AvatarPhoto-->
@@ -453,12 +429,12 @@
             </Ellipse>
             <materialDesign:PackIcon Kind="AccountEditOutline" Margin="310,315,0,0" Width="40" Height="40"
                                      Foreground="#FFFF0051" Name="EditIcon" Visibility="Hidden"
-                                     MouseEnter="EditIconMouseEnter"/>
+                                     MouseEnter="EditIconMouseEnter" MouseDown="EditIconMouseDown"/>
             <!--Login box-->
             <Border Background="Transparent" BorderBrush="#FFFF0051" BorderThickness="2" Height="40" CornerRadius="20" Margin="145,405,155,305">
                 <Grid>
                     <TextBox Panel.ZIndex="10" Name="RegisterLogin" Height="35" VerticalContentAlignment="Center" 
-                             HorizontalContentAlignment="Stretch" FontSize="20" 
+                             HorizontalContentAlignment="Stretch" FontSize="20" TextChanged="RegisterFieldsTextChanged"
                              Foreground="#FFFF0051" CaretBrush="#FFFF0051"
                              Background="Transparent" BorderThickness="0" Margin="25,0,28,0">
                         <TextBox.Style>
@@ -486,9 +462,9 @@
             <!--Email box-->
             <Border Background="Transparent" BorderBrush="#FFFF0051" BorderThickness="2" Height="40" CornerRadius="20" Margin="145,460,155,250">
                 <Grid>
-                    <TextBox Panel.ZIndex="10" Name="MailBox" Height="35" VerticalContentAlignment="Center" 
+                    <TextBox Panel.ZIndex="10" Name="RegisterMail" Height="35" VerticalContentAlignment="Center" 
                              HorizontalContentAlignment="Stretch" FontSize="20" 
-                             Foreground="#FFFF0051" CaretBrush="#FFFF0051"
+                             Foreground="#FFFF0051" CaretBrush="#FFFF0051" TextChanged="RegisterFieldsTextChanged"
                              Background="Transparent" BorderThickness="0" Margin="25,0,28,0">
                         <TextBox.Style>
                             <Style>
@@ -503,7 +479,7 @@
                             <Style TargetType="{x:Type TextBlock}">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Text,ElementName=MailBox}" Value="">
+                                    <DataTrigger Binding="{Binding Text,ElementName=RegisterMail}" Value="">
                                         <Setter Property="Visibility" Value="Visible"/>
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -521,7 +497,7 @@
                     <PasswordBox Name="RegisterPassbox1" Background="Transparent" Height="35" FontSize="16" Foreground="#FFFF0051"
                                  CaretBrush="#FFFF0051" BorderThickness="0" Margin="25,0,28,0"
                                  VerticalContentAlignment="Center" Panel.ZIndex="10"
-                                 PasswordChanged="RegisterPassbox1PasswordChanged">
+                                 PasswordChanged="OnPasswordChanged">
                         <PasswordBox.Style>
                             <Style/>
                         </PasswordBox.Style>
@@ -540,7 +516,7 @@
                     <PasswordBox Name="RegisterPassbox2" Background="Transparent" Height="35" FontSize="16" Foreground="#FFFF0051"
                                  CaretBrush="#FFFF0051" BorderThickness="0" Margin="25,0,28,0"
                                  VerticalContentAlignment="Center" Panel.ZIndex="10"
-                                 PasswordChanged="RegisterPassboxPasswordChanged">
+                                 PasswordChanged="OnPasswordChanged">
                         <PasswordBox.Style>
                             <Style/>
                         </PasswordBox.Style>
@@ -573,7 +549,7 @@
             </Border>
             <!--Confirm buttton-->
             <Border CornerRadius="20" Height="40" Width="160" Margin="145,630,345,80"
-                    Background="#8d0d26"
+                    Background="#8d0d26" IsEnabled="False"
                     Name="ConfirmRegBtn">
                 <Grid>
                     <TextBox IsHitTestVisible="False" Background="Transparent" Text="Confirm" Foreground="White" 

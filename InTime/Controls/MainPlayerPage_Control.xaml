@@ -453,6 +453,7 @@
                 <Grid Name="GridContainer" RowSpan="3" ColumnSpan="3" >
                     <local:AddPlaylist x:Name="AddPlaylistItem" Visibility="Hidden" MouseDown="AddPlaylistItemMouseDown" 
                                        OnChangesAccepted="AddPlaylistItemOnChangesAccepted" OnWindowClosed="AddPlaylistItemOnWindowClosed"/>
+                    <local:ProfileEdit x:Name="ProfileEditItem" Visibility="Hidden" MouseDown="ProfileEditItemOnMouseDown"/>
                 </Grid>
                 <!--Left panel-->
                 <Border Name="LeftPanel" BorderBrush="#FF696087" Grid.Column="0" BorderThickness="0,0,2,0">
@@ -506,13 +507,24 @@
                                 <ListBoxItem Content="TestElement" Style="{StaticResource PlaylistItem}"/>
                                 <ListBoxItem Content="TestElement" Style="{StaticResource PlaylistItem}"/>
                                 <ListBoxItem Content="TestElement" Style="{StaticResource PlaylistItem}"/>
+                                <ListBox.ContextMenu>
+                                    <ContextMenu Background="#8d0d26" Foreground="White" Placement="Mouse" Padding="0">
+                                        <ContextMenu.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Margin="-20,0,-40,0"/>
+                                            </DataTemplate>
+                                        </ContextMenu.ItemTemplate>
+                                        <MenuItem Header="Delete" Click="PlaylistDeleteMenu"/>
+                                        <MenuItem Header="Edit" Click="PlaylistEditmenu"/>
+                                    </ContextMenu>
+                                </ListBox.ContextMenu>
                             </ListBox>
                         </Grid>
                     </Grid>
                 </Border>
                 <!--central panel-->
                 <Grid Name="CentralPanel" Grid.Column="1">
-                   
+
                     <Grid.RowDefinitions>
                         <RowDefinition Height="40"/>
                         <RowDefinition/>
@@ -552,28 +564,29 @@
                         </Border>
                     </Border>
                     <Border HorizontalAlignment="Right" CornerRadius="20" BorderBrush="#FFFF0051"
-                            BorderThickness="1" Width="135" Margin="0,0,145,0" Name="Profileborder"
+                            BorderThickness="1" Width="185" Margin="0,0,95,0" Name="Profileborder"
                             MouseLeftButtonDown="ProfileBorderMouseLeftButtonDown">
 
                         <Grid>
-                            <Menu Background="Transparent" Panel.ZIndex="10">
-                                <MenuItem Width="133" Height="38" >
+                            <Menu Background="Transparent" Panel.ZIndex="10" ToolTip="{ Binding Path=Text,ElementName=Profile_tb}">
+                                <MenuItem Width="183" Height="38" >
                                     <MenuItem Header="Friends" Margin="30,0,0,0" Background="#8d0d26" Foreground="White"/>
-                                    <MenuItem Header="Profile" Margin="30,0,0,0" Background="#8d0d26" Foreground="White"/>
+                                    <MenuItem Header="Edit" Margin="30,0,0,0" Background="#8d0d26" Foreground="White" Click="EditProfile"/>
                                     <MenuItem Header="Settings" Margin="30,0,0,0" Background="#8d0d26" Foreground="White"/>
                                     <MenuItem Header="Log out" Margin="30,0,0,0" Background="#8d0d26" Foreground="White"/>
                                 </MenuItem>
                             </Menu>
                             <!--Avatar-->
-                            <Ellipse Width="40" Margin="0,0,93,0">
+                            <Ellipse Width="40" Margin="0,0,143,0" >
                                 <Ellipse.Fill>
-                                    <ImageBrush ImageSource="../Assets/profile.jpg"></ImageBrush>
+                                    <ImageBrush
+                                        x:Name="AvatarBrush" ImageSource="../Assets/profile.jpg"></ImageBrush>
                                 </Ellipse.Fill>
                             </Ellipse>
                             <!--Profile-->
                             <TextBlock Name="Profile_tb" Text="Profile" TextTrimming="WordEllipsis"
-                                   FontSize="22" Foreground="#FFFF0051" FontWeight="Medium"
-                                   VerticalAlignment="Center" Margin="0,4,10,7" HorizontalAlignment="Right" Width="78"/>
+                                   FontSize="22" Foreground="#FFFF0051" FontWeight="Medium" 
+                                   VerticalAlignment="Center" Margin="0,4,10,7" HorizontalAlignment="Right" Width="128"/>
                         </Grid>
                         <Border.Style>
                             <Style>

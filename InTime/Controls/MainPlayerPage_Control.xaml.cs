@@ -20,24 +20,17 @@ using System.Windows.Shapes;
 
 namespace InTime.Controls
 {
-    /// <summary>
-    /// Логика взаимодействия для MainPlayerPage_Control.xaml
-    /// </summary>
     public partial class MainPlayerPage_Control : UserControl
     {
         private AppState state;
         Window mainWindow;
-        public MainPlayerPage_Control(Window window)
+        public MainPlayerPage_Control(Window window,Client_User user)
         {
             InitializeComponent();
-            state= new AppState();
+            state= new AppState(user);
             
-            state.sound = SoundState.HighSound;
             mainWindow = window;
-            testRecomendsBord();
-            //testAddPlaylist();
-            //testInfoBord();
-            //testSingerBord();
+            InitUser(user);
         }
         /* Service methods
 
@@ -53,6 +46,22 @@ namespace InTime.Controls
         GetSingerFull - врзвращает полную информацию об исполнителе со всеми альбомами и песнями
 
         */
+
+        async void InitUser(Client_User user)
+        {
+            Profile_tb.Text = user.NickName;
+            AvatarBrush.ImageSource = ConvertToImage(user.Image);
+            ProfileEditItem.AvatarImgBrush.ImageSource = ConvertToImage(user.Image);
+        }
+        public BitmapSource ConvertToImage(byte[] arr)
+        {
+            using (MemoryStream ms = new MemoryStream(arr))
+            {
+                var decoder = BitmapDecoder.Create(ms,
+                    BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.OnLoad);
+                return decoder.Frames[0];
+            }
+        }
         void testRecomendsBord()
         {
             Recommendations_Control recommendations_Control = new Recommendations_Control();
@@ -356,10 +365,12 @@ namespace InTime.Controls
             
         }
 
+        #region PlaylisAdding
+
         private void AddPlaylistBtnClick(object sender, RoutedEventArgs e)
         {
             AddPlaylistItem.Visibility = Visibility.Visible;
-            LeftPanel.Opacity=0.7;
+            LeftPanel.Opacity = 0.7;
             CentralPanel.Opacity = 0.7;
             BottomPanel.Opacity = 0.7;
             Panel.SetZIndex(GridContainer, 2);
@@ -368,21 +379,21 @@ namespace InTime.Controls
 
         private void Window_OnPlaylistAdded(string name, string path)
         {
-            Console.WriteLine(name,"  ", path);
+            Console.WriteLine(name, "  ", path);
         }
-        
+
 
         private void AddPlaylistItemMouseDown(object sender, MouseButtonEventArgs e)
         {
             Point p = e.GetPosition(AddPlaylistItem);
-            if (!(p.X >= 485 && p.X <= 935 && p.Y >= 185 && p.Y <= 535)&&AddPlaylistItem._IsImageEdited==true)
+            if (!(p.X >= 485 && p.X <= 935 && p.Y >= 185 && p.Y <= 535) && AddPlaylistItem._IsImageEdited == true)
             {
-                    AddPlaylistItem.Visibility = Visibility.Hidden;
-                    LeftPanel.Opacity = 1;
-                    CentralPanel.Opacity = 1;
-                    BottomPanel.Opacity = 1;
-                    Panel.SetZIndex(GridContainer, -1);
-                    Panel.SetZIndex(AddPlaylistItem, -1);
+                AddPlaylistItem.Visibility = Visibility.Hidden;
+                LeftPanel.Opacity = 1;
+                CentralPanel.Opacity = 1;
+                BottomPanel.Opacity = 1;
+                Panel.SetZIndex(GridContainer, -1);
+                Panel.SetZIndex(AddPlaylistItem, -1);
             }
             else
             {
@@ -419,6 +430,49 @@ namespace InTime.Controls
             BottomPanel.Opacity = 1;
             Panel.SetZIndex(GridContainer, -1);
             Panel.SetZIndex(AddPlaylistItem, -1);
+        }
+
+        #endregion
+
+        #region PlaylistsContextMenu
+
+        private void PlaylistDeleteMenu(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void PlaylistEditmenu(object sender, RoutedEventArgs e)
+        {
+            AddPlaylistBtnClick(this,null);
+        }
+
+        #endregion
+
+        private void EditProfile(object sender, RoutedEventArgs e)
+        {
+            ProfileEditItem.Visibility = Visibility.Visible;
+            LeftPanel.Opacity = 0.7;
+            CentralPanel.Opacity = 0.7;
+            BottomPanel.Opacity = 0.7;
+            Panel.SetZIndex(GridContainer,2);
+            Panel.SetZIndex(ProfileEditItem,2);
+           
+        }
+
+        private void ProfileEditItemOnMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Point p = e.GetPosition(ProfileEditItem);
+            if (!(p.X >= 460 && p.X <= 960 && p.Y >= 60 && p.Y <= 660)&&!ProfileEditItem.FilePicked)
+            {
+                ProfileEditItem.Visibility = Visibility.Hidden;
+                LeftPanel.Opacity = 1;
+                CentralPanel.Opacity = 1;
+                BottomPanel.Opacity = 1;
+                Panel.SetZIndex(GridContainer, -1);
+                Panel.SetZIndex(ProfileEditItem, -1);
+            }
+
+            ProfileEditItem.FilePicked = false;
         }
     }
 }
