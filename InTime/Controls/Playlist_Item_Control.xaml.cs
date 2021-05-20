@@ -44,12 +44,22 @@ namespace InTime.Controls
         {
             ColorAnimation animation = new ColorAnimation((Color)ColorConverter.ConvertFromString("#FF635D5D"), TimeSpan.FromSeconds(0.2));
             main_grid.Background.BeginAnimation(SolidColorBrush.ColorProperty, animation);
+            PlayIco.Visibility = Visibility.Visible;
+            main_image.Opacity = 0.7;
         }
 
         private void main_grid_MouseLeave(object sender, MouseEventArgs e)
         {
             ColorAnimation animation = new ColorAnimation((Color)ColorConverter.ConvertFromString("#FF403B3B"), TimeSpan.FromSeconds(0.2));
             main_grid.Background.BeginAnimation(SolidColorBrush.ColorProperty, animation);
+            PlayIco.Visibility = Visibility.Hidden;
+            main_image.Opacity = 1;
+        }
+
+        private void PlayIcoMouseEnter(object sender, MouseEventArgs e)
+        {
+            PlayIco.Visibility = Visibility.Visible;
+            main_image.Opacity = 0.7;
         }
     }
 }

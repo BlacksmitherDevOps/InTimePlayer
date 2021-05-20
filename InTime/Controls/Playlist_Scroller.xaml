@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignWidth="800" Margin="50,10,50,50">
     <Grid>
-        <Border x:Name="bord" MouseLeave="bord_MouseLeave" BorderThickness="1" BorderBrush="#FFFF0051">
+        <Border x:Name="bord" MouseLeave="bord_MouseLeave"  >
             <ScrollViewer Name="viewer" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">
                 <StackPanel Name="panel" Orientation="Horizontal" ScrollViewer.CanContentScroll="True"
                             MouseMove="panel_MouseMove" MouseDown="panel_MouseDown"

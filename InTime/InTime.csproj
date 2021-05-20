@@ -77,6 +77,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AdditionalResources.cs" />
+    <Compile Include="Controls\AddPlaylist.xaml.cs">
+      <DependentUpon>AddPlaylist.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AppState.cs" />
     <Compile Include="Controls\AlbumGrid.xaml.cs">
       <DependentUpon>AlbumGrid.xaml</DependentUpon>
@@ -110,6 +113,10 @@
     </Compile>
     <Compile Include="tempPlaylist.cs" />
     <Compile Include="tempSong.cs" />
+    <Page Include="Controls\AddPlaylist.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Assets\icons.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -264,6 +271,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\profile.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\playlisticon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.4.0.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.0.0\build\MaterialDesignThemes.targets')" />

@@ -21,7 +21,7 @@
     <Grid Background="#FF2E2A2A">
         <Border Name="upper_bord" Background="Transparent" MouseDown="upper_bord_MouseDown"
                     MouseLeave="upper_bord_MouseLeave" MouseMove="upper_bord_MouseMove"
-                    MouseUp="upper_bord_MouseUp" Height="50" BorderThickness="0,0,0,1" BorderBrush="#FFFF0051"
+                    MouseUp="upper_bord_MouseUp" Height="50" 
                     HorizontalAlignment="Stretch" VerticalAlignment="Top">
             <Border x:Name="WindowControlButton_Close" Margin="0,0,10,0" Width="30" HorizontalAlignment="Right"
                     Background="Transparent"
@@ -107,7 +107,7 @@
             </Border>
             <!--Recovery label-->
             <TextBlock Text="Forgot password?" VerticalAlignment="Center" HorizontalAlignment="Center"
-                   Margin="0,95,0,0" Foreground="#ee3e61" FontSize="14" Name="AccRecovery">
+                   Margin="370,415,170,318" Foreground="#ee3e61" FontSize="14" Name="AccRecovery">
                 <TextBlock.Style>
                     <Style>
                         <EventSetter Event="TextBlock.MouseEnter" Handler="AccRecoveryMouseEnter"/>
