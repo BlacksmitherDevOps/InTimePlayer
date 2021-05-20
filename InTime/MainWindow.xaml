@@ -14,7 +14,7 @@
     </WindowChrome.WindowChrome>
     <Grid x:Name="main_Grid">
         <Border Name="Control_Bord">
-
+            
         </Border>
     </Grid>
 </Window>

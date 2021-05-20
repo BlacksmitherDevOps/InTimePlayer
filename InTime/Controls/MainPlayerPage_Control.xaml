@@ -438,7 +438,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid Background="#FF272626">
+    <Grid Name="OwnerGrid" Background="#FF272626">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="0"/>
@@ -450,7 +450,12 @@
                     <ColumnDefinition Width="180"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Border BorderBrush="#FF696087" Grid.Column="0" BorderThickness="0,0,2,0">
+                <Grid Name="GridContainer" RowSpan="3" ColumnSpan="3" >
+                    <local:AddPlaylist x:Name="AddPlaylistItem" Visibility="Hidden" MouseDown="AddPlaylistItemMouseDown" 
+                                       OnChangesAccepted="AddPlaylistItemOnChangesAccepted" OnWindowClosed="AddPlaylistItemOnWindowClosed"/>
+                </Grid>
+                <!--Left panel-->
+                <Border Name="LeftPanel" BorderBrush="#FF696087" Grid.Column="0" BorderThickness="0,0,2,0">
                     <Grid Background="#FF1D1D1D">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="60"/>
@@ -458,12 +463,12 @@
                             <RowDefinition />
                             <RowDefinition Height="50"/>
                         </Grid.RowDefinitions>
-                        <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                        <StackPanel Orientation="Horizontal" Margin="20,10,0,0">
                             <TextBlock Text="In" FontSize="36" Foreground="#FFFF0051" FontFamily="Cooper Black"/>
                             <TextBlock Text="Time" FontSize="36" Foreground="White" FontFamily="Cooper Black"/>
                         </StackPanel>
                         <Grid Grid.Row="1">
-                            <StackPanel x:Name="RadioBtnsPanel">
+                            <StackPanel x:Name="RadioBtnsPanel" Margin="0,15,0,0">
                                 <RadioButton Style="{StaticResource {x:Type ToggleButton}}" Content="Favorites" GroupName="System" Checked="ToggleButton_OnChecked" Background="{x:Null}"/>
                                 <RadioButton Style="{StaticResource {x:Type ToggleButton}}" Content="Recomendations" GroupName="System" Checked="ToggleButton_OnChecked"/>
                                 <RadioButton Style="{StaticResource {x:Type ToggleButton}}" Content="Recently Listened" GroupName="System" Checked="ToggleButton_OnChecked"/>
@@ -472,7 +477,7 @@
                         </Grid>
                         <!--Add button-->
                         <Border x:Name="Brdr" Grid.Row="3" BorderThickness="0,2,0,0">
-                            <Button x:Name="AddPlaylistBtn" Style="{StaticResource Add_btn}" Tag="{StaticResource plus}" Content="Add playlist"/>
+                            <Button x:Name="AddPlaylistBtn" Style="{StaticResource Add_btn}" Tag="{StaticResource plus}" Content="Add playlist" Click="AddPlaylistBtnClick"/>
                         </Border>
                         <!--Playlist listbox-->
                         <Grid  Grid.Row="2">
@@ -505,9 +510,9 @@
                         </Grid>
                     </Grid>
                 </Border>
-
-                <Grid Grid.Column="1">
-                    <!--central panel-->
+                <!--central panel-->
+                <Grid Name="CentralPanel" Grid.Column="1">
+                   
                     <Grid.RowDefinitions>
                         <RowDefinition Height="40"/>
                         <RowDefinition/>
@@ -605,7 +610,8 @@
                     </Border>
                 </Grid>
             </Grid>
-            <Border Grid.Row="2" BorderThickness="0,2,0,0" Background="#FF474343">
+            <!--Bottonpanel-->
+            <Border Name="BottomPanel" Grid.Row="2" BorderThickness="0,2,0,0" Background="#FF474343">
                 <Grid Background="#FF27263C">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="60"/>

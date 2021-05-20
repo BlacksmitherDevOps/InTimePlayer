@@ -28,12 +28,12 @@ namespace InTime.Controls
             List<Song_Playlist> playlists = new List<Song_Playlist>();
             List<Song_Singer> song_Singers = new List<Song_Singer>();
             song_Singers.Add(new Song_Singer() { Name = "{AuthorName}" });
-            playlists.Add(new Song_Playlist() { Image = File.ReadAllBytes(@"D:\WPF\InTimePlayer\InTime\Controls\3E-zsSjyGLU.jpg"), Title = "{PlaylistName}", Singers = song_Singers.ToArray() });
-            playlists.Add(new Song_Playlist() { Image = File.ReadAllBytes(@"D:\WPF\InTimePlayer\InTime\Controls\3E-zsSjyGLU.jpg"), Title = "{PlaylistName}", Singers = song_Singers.ToArray() });
-            playlists.Add(new Song_Playlist() { Image = File.ReadAllBytes(@"D:\WPF\InTimePlayer\InTime\Controls\3E-zsSjyGLU.jpg"), Title = "{PlaylistName}", Singers = song_Singers.ToArray() });
-            playlists.Add(new Song_Playlist() { Image = File.ReadAllBytes(@"D:\WPF\InTimePlayer\InTime\Controls\3E-zsSjyGLU.jpg"), Title = "{PlaylistName}", Singers = song_Singers.ToArray() });
-            playlists.Add(new Song_Playlist() { Image = File.ReadAllBytes(@"D:\WPF\InTimePlayer\InTime\Controls\3E-zsSjyGLU.jpg"), Title = "{PlaylistName}", Singers = song_Singers.ToArray() });
-            playlists.Add(new Song_Playlist() { Image = File.ReadAllBytes(@"D:\WPF\InTimePlayer\InTime\Controls\3E-zsSjyGLU.jpg"), Title = "{PlaylistName}", Singers = song_Singers.ToArray() });
+            playlists.Add(new Song_Playlist() { Image = File.ReadAllBytes(@"C:\Player\InTimePlayer\InTime\Controls\3E-zsSjyGLU.jpg"), Title = "{PlaylistName}", Singers = song_Singers.ToArray() });
+            playlists.Add(new Song_Playlist() { Image = File.ReadAllBytes(@"C:\Player\InTimePlayer\InTime\Controls\3E-zsSjyGLU.jpg"), Title = "{PlaylistName}", Singers = song_Singers.ToArray() });
+            playlists.Add(new Song_Playlist() { Image = File.ReadAllBytes(@"C:\Player\InTimePlayer\InTime\Controls\3E-zsSjyGLU.jpg"), Title = "{PlaylistName}", Singers = song_Singers.ToArray() });
+            playlists.Add(new Song_Playlist() { Image = File.ReadAllBytes(@"C:\Player\InTimePlayer\InTime\Controls\3E-zsSjyGLU.jpg"), Title = "{PlaylistName}", Singers = song_Singers.ToArray() });
+            playlists.Add(new Song_Playlist() { Image = File.ReadAllBytes(@"C:\Player\InTimePlayer\InTime\Controls\3E-zsSjyGLU.jpg"), Title = "{PlaylistName}", Singers = song_Singers.ToArray() });
+            playlists.Add(new Song_Playlist() { Image = File.ReadAllBytes(@"C:\Player\InTimePlayer\InTime\Controls\3E-zsSjyGLU.jpg"), Title = "{PlaylistName}", Singers = song_Singers.ToArray() });
             AddList("Recently played", playlists);
             AddList("Special for you", playlists);
             AddList("New 2021", playlists);

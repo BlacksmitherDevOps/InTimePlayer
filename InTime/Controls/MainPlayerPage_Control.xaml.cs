@@ -355,5 +355,70 @@ namespace InTime.Controls
         {
             
         }
+
+        private void AddPlaylistBtnClick(object sender, RoutedEventArgs e)
+        {
+            AddPlaylistItem.Visibility = Visibility.Visible;
+            LeftPanel.Opacity=0.7;
+            CentralPanel.Opacity = 0.7;
+            BottomPanel.Opacity = 0.7;
+            Panel.SetZIndex(GridContainer, 2);
+            Panel.SetZIndex(AddPlaylistItem, 2);
+        }
+
+        private void Window_OnPlaylistAdded(string name, string path)
+        {
+            Console.WriteLine(name,"  ", path);
+        }
+        
+
+        private void AddPlaylistItemMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Point p = e.GetPosition(AddPlaylistItem);
+            if (!(p.X >= 485 && p.X <= 935 && p.Y >= 185 && p.Y <= 535)&&AddPlaylistItem._IsImageEdited==true)
+            {
+                    AddPlaylistItem.Visibility = Visibility.Hidden;
+                    LeftPanel.Opacity = 1;
+                    CentralPanel.Opacity = 1;
+                    BottomPanel.Opacity = 1;
+                    Panel.SetZIndex(GridContainer, -1);
+                    Panel.SetZIndex(AddPlaylistItem, -1);
+            }
+            else
+            {
+                AddPlaylistItem._IsImageEdited = true;
+            }
+        }
+
+        private void AddPlaylistItemOnChangesAccepted()
+        {
+            Console.WriteLine($"{AddPlaylistItem.PlaylistName} {AddPlaylistItem.ImagePath}");
+            ImageBrush ib = new ImageBrush();
+            ib.ImageSource = new BitmapImage(new Uri(Environment.CurrentDirectory.Substring(0, Environment.CurrentDirectory.LastIndexOf("InTime")) + @"InTime\Assets\playlisticon.png"));
+            AddPlaylistItem.PlaylistImg.Fill = ib;
+            AddPlaylistItem.PlaylistNameBox.Text = "";
+            AddPlaylistItem.PlaylistName = "";
+            AddPlaylistItem.Visibility = Visibility.Hidden;
+            LeftPanel.Opacity = 1;
+            CentralPanel.Opacity = 1;
+            BottomPanel.Opacity = 1;
+            Panel.SetZIndex(GridContainer, -1);
+            Panel.SetZIndex(AddPlaylistItem, -1);
+        }
+
+        private void AddPlaylistItemOnWindowClosed()
+        {
+            ImageBrush ib = new ImageBrush();
+            ib.ImageSource = new BitmapImage(new Uri(Environment.CurrentDirectory.Substring(0, Environment.CurrentDirectory.LastIndexOf("InTime")) + @"InTime\Assets\playlisticon.png"));
+            AddPlaylistItem.PlaylistImg.Fill = ib;
+            AddPlaylistItem.PlaylistNameBox.Text = "";
+            AddPlaylistItem.PlaylistName = "";
+            AddPlaylistItem.Visibility = Visibility.Hidden;
+            LeftPanel.Opacity = 1;
+            CentralPanel.Opacity = 1;
+            BottomPanel.Opacity = 1;
+            Panel.SetZIndex(GridContainer, -1);
+            Panel.SetZIndex(AddPlaylistItem, -1);
+        }
     }
 }
