@@ -6,9 +6,28 @@
              xmlns:local="clr-namespace:InTime.Controls"
              mc:Ignorable="d" 
              d:DesignWidth="800" Margin="50,10,50,50">
-    <Grid>
-        <Border x:Name="bord" MouseLeave="bord_MouseLeave"  >
-            <ScrollViewer Name="viewer" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">
+    <Grid PreviewMouseWheel="main_grid_PreviewMouseWheel">
+        <Grid x:Name="right_Grid" Panel.ZIndex="2" HorizontalAlignment="Right" VerticalAlignment="Center"
+              MouseEnter="ArrowGrid_MouseEnter" MouseLeave="ArrowGrid_MouseLeave" MouseDown="right_Grid_MouseDown">
+            <TextBlock x:Name="right_Tb" Text=">" Panel.ZIndex="2" FontSize="24"
+                       VerticalAlignment="Center" HorizontalAlignment="Center"
+                       Foreground="#FFFF0051" Margin="2,0,0,4"/>
+            <Ellipse x:Name="right_Ellipse" Fill="#FF515151" Width="50" Height="50">
+
+            </Ellipse>
+        </Grid>
+        <Grid x:Name="left_Grid" Panel.ZIndex="2" HorizontalAlignment="Left" VerticalAlignment="Center"
+              MouseEnter="ArrowGrid_MouseEnter" MouseLeave="ArrowGrid_MouseLeave" MouseDown="left_Grid_MouseDown">
+            <TextBlock x:Name="left_Tb" Text="&lt;" Panel.ZIndex="2" FontSize="24"
+                       VerticalAlignment="Center" HorizontalAlignment="Center"
+                       Foreground="#FFFF0051" Margin="0,0,0,5"/>
+            <Ellipse x:Name="left_Ellipse" Fill="#FF515151" Width="50" Height="50">
+
+            </Ellipse>
+        </Grid>
+        <Border Margin="50,0,50,0" x:Name="bord" MouseLeave="bord_MouseLeave"  >
+            <ScrollViewer Name="viewer" VerticalScrollBarVisibility="Hidden" 
+                          HorizontalScrollBarVisibility="Hidden" ScrollChanged="viewer_ScrollChanged">
                 <StackPanel Name="panel" Orientation="Horizontal" ScrollViewer.CanContentScroll="True"
                             MouseMove="panel_MouseMove" MouseDown="panel_MouseDown"
                             MouseLeftButtonUp="panel_MouseLeftButtonUp"/>

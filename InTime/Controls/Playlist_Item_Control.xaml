@@ -8,7 +8,8 @@
              mc:Ignorable="d" 
              Margin="20,10,20,10">
     <Grid x:Name="main_grid" Background="#FF403B3B"
-          MouseEnter="main_grid_MouseEnter" MouseLeave="main_grid_MouseLeave" Cursor="Hand">
+          MouseEnter="main_grid_MouseEnter" MouseLeave="main_grid_MouseLeave" Cursor="Hand"
+          PreviewMouseWheel="main_grid_PreviewMouseWheel">
         
         <Grid.RowDefinitions>
             <RowDefinition Height="4*"/>

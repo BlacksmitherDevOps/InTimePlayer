@@ -22,18 +22,20 @@ namespace InTime.Controls
     /// </summary>
     public partial class Recommendations_Control : UserControl
     {
+        public event ScrollCall ScrollCall;
         public Recommendations_Control()
         {
             InitializeComponent();
             List<Song_Playlist> playlists = new List<Song_Playlist>();
             List<Song_Singer> song_Singers = new List<Song_Singer>();
             song_Singers.Add(new Song_Singer() { Name = "{AuthorName}" });
-            playlists.Add(new Song_Playlist() { Image = File.ReadAllBytes(@"C:\Player\InTimePlayer\InTime\Controls\3E-zsSjyGLU.jpg"), Title = "{PlaylistName}", Singers = song_Singers.ToArray() });
-            playlists.Add(new Song_Playlist() { Image = File.ReadAllBytes(@"C:\Player\InTimePlayer\InTime\Controls\3E-zsSjyGLU.jpg"), Title = "{PlaylistName}", Singers = song_Singers.ToArray() });
-            playlists.Add(new Song_Playlist() { Image = File.ReadAllBytes(@"C:\Player\InTimePlayer\InTime\Controls\3E-zsSjyGLU.jpg"), Title = "{PlaylistName}", Singers = song_Singers.ToArray() });
-            playlists.Add(new Song_Playlist() { Image = File.ReadAllBytes(@"C:\Player\InTimePlayer\InTime\Controls\3E-zsSjyGLU.jpg"), Title = "{PlaylistName}", Singers = song_Singers.ToArray() });
-            playlists.Add(new Song_Playlist() { Image = File.ReadAllBytes(@"C:\Player\InTimePlayer\InTime\Controls\3E-zsSjyGLU.jpg"), Title = "{PlaylistName}", Singers = song_Singers.ToArray() });
-            playlists.Add(new Song_Playlist() { Image = File.ReadAllBytes(@"C:\Player\InTimePlayer\InTime\Controls\3E-zsSjyGLU.jpg"), Title = "{PlaylistName}", Singers = song_Singers.ToArray() });
+            playlists.Add(new Song_Playlist() { Image = File.ReadAllBytes(@"D:\WPF\InTimePlayer\InTime\Controls\3E-zsSjyGLU.jpg"), Title = "{PlaylistName}", Singers = song_Singers.ToArray() });
+            playlists.Add(new Song_Playlist() { Image = File.ReadAllBytes(@"D:\WPF\InTimePlayer\InTime\Controls\3E-zsSjyGLU.jpg"), Title = "{PlaylistName}", Singers = song_Singers.ToArray() });
+            playlists.Add(new Song_Playlist() { Image = File.ReadAllBytes(@"D:\WPF\InTimePlayer\InTime\Controls\3E-zsSjyGLU.jpg"), Title = "{PlaylistName}", Singers = song_Singers.ToArray() });
+            playlists.Add(new Song_Playlist() { Image = File.ReadAllBytes(@"D:\WPF\InTimePlayer\InTime\Controls\3E-zsSjyGLU.jpg"), Title = "{PlaylistName}", Singers = song_Singers.ToArray() });
+            playlists.Add(new Song_Playlist() { Image = File.ReadAllBytes(@"D:\WPF\InTimePlayer\InTime\Controls\3E-zsSjyGLU.jpg"), Title = "{PlaylistName}", Singers = song_Singers.ToArray() });
+            playlists.Add(new Song_Playlist() { Image = File.ReadAllBytes(@"D:\WPF\InTimePlayer\InTime\Controls\3E-zsSjyGLU.jpg"), Title = "{PlaylistName}", Singers = song_Singers.ToArray() });
+            playlists.Add(new Song_Playlist() { Image = File.ReadAllBytes(@"D:\WPF\InTimePlayer\InTime\Controls\3E-zsSjyGLU.jpg"), Title = "{PlaylistName}", Singers = song_Singers.ToArray() });
             AddList("Recently played", playlists);
             AddList("Special for you", playlists);
             AddList("New 2021", playlists);
@@ -42,8 +44,14 @@ namespace InTime.Controls
         {
             TextBlock textBlock = new TextBlock() { Text= title, Style = FindResource("title_tb") as Style };
             Playlist_Scroller playlist_Scroller = new Playlist_Scroller(playlists);
+            playlist_Scroller.ScrollCall += Playlist_Scroller_ScrollCall;
             tape_panel.Children.Add(textBlock);
             tape_panel.Children.Add(playlist_Scroller);
+        }
+
+        private void Playlist_Scroller_ScrollCall(bool flag)
+        {
+            ScrollCall?.Invoke(flag);
         }
     }
 }

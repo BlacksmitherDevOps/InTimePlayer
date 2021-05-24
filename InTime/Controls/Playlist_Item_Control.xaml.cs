@@ -23,6 +23,7 @@ namespace InTime.Controls
     /// </summary>
     public partial class Playlist_Item_Control : UserControl
     {
+        public event ScrollCall ScrollCall;
         public Playlist_Item_Control(Song_Playlist playlist)
         {
             InitializeComponent();
@@ -60,6 +61,18 @@ namespace InTime.Controls
         {
             PlayIco.Visibility = Visibility.Visible;
             main_image.Opacity = 0.7;
+        }
+
+        private void main_grid_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (e.Delta < 0)
+            {
+                ScrollCall?.Invoke(true);
+            }
+            else
+            {
+                ScrollCall?.Invoke(false);
+            }
         }
     }
 }

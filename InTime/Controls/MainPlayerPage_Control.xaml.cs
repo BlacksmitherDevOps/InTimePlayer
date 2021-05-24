@@ -30,7 +30,9 @@ namespace InTime.Controls
             state= new AppState(user);
             
             mainWindow = window;
+
             InitUser(user);
+            testRecomendsBord();
         }
         /* Service methods
 
@@ -65,6 +67,7 @@ namespace InTime.Controls
         void testRecomendsBord()
         {
             Recommendations_Control recommendations_Control = new Recommendations_Control();
+            recommendations_Control.ScrollCall += Grid_ScrollCall;
             tape_panel.Child = recommendations_Control;
         }
         void testInfoBord()
@@ -104,9 +107,15 @@ namespace InTime.Controls
         private void Grid_ScrollCall(bool flag)
         {
             if (!flag)
+            {
                 main_Viewer.LineUp();
+                main_Viewer.LineUp();
+            }
             else
+            {
                 main_Viewer.LineDown();
+                main_Viewer.LineDown();
+            }
         }
 
         void testSingerBord()
