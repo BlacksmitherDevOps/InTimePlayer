@@ -52,7 +52,7 @@
                             BorderThickness="2" Width="350" BorderBrush="#FFFF0051">
                 <Grid>
                     <TextBox Panel.ZIndex="10" Name="LoginBox" Height="35" VerticalContentAlignment="Center" 
-                         HorizontalContentAlignment="Stretch" FontSize="20" Text="mylteks@mail.ru"
+                         HorizontalContentAlignment="Stretch" FontSize="20"
                          Foreground="#FFFF0051" CaretBrush="#FFFF0051"
                          Background="Transparent" BorderThickness="0" Margin="25,0,28,0">
                         <TextBox.Style>

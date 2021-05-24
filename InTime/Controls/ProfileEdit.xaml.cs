@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,12 +22,12 @@ using Microsoft.Win32;
 namespace InTime.Controls
 {
     public delegate void ProfileEditCancel();
-    /// <summary>
-    /// Interaction logic for ProfileEdit.xaml
-    /// </summary>
+    public delegate void ProfileEdited(Client_User user);
+
     public partial class ProfileEdit : UserControl
     {
         public event ProfileEditCancel OnEditCancel;
+        public event ProfileEdited OnProfileEdited;
         public ProfileEdit()
         {
             InitializeComponent();
@@ -33,9 +35,8 @@ namespace InTime.Controls
 
         public void InitUser()
         {
-            CurrentUser.ImagePath=String.Empty;
             RegisterLogin.Text = CurrentUser.NickName;
-            MailBox.Text = CurrentUser.NickName;
+            MailBox.Text = CurrentUser.Email;
             if (CurrentUser.Image != null) 
                 AvatarImgBrush.ImageSource= ConvertToImage(CurrentUser.Image);
             else
@@ -119,11 +120,22 @@ namespace InTime.Controls
                 if (RegisterLogin.Text != String.Empty) CurrentUser.NickName = RegisterLogin.Text;
                 if (MailBox.Text != String.Empty) CurrentUser.Email = MailBox.Text;
                 if (RegisterPassbox1.Password.Length != 0) CurrentUser.Password = RegisterPassbox1.Password;
-                if (CurrentUser.ImagePath != String.Empty) CurrentUser.Image = File.ReadAllBytes(CurrentUser.ImagePath);
+                if (CurrentUser.ImagePath != null) CurrentUser.Image = File.ReadAllBytes(CurrentUser.ImagePath);
                 try
                 {
                     Service1Client client = new Service1Client();
-                    await client.EditProfileAsync(CurrentUser);
+                    if (await client.EditProfileAsync(CurrentUser))
+                    {
+                        OnProfileEdited?.Invoke(CurrentUser);
+                        CancelRegBtnClick(this, null);
+                    }
+                }
+                catch(FaultException<EditFailed> exception)
+                {
+                    WrongPasswordInput.Visibility = Visibility.Hidden;
+                    EditProfileErrorBox.Visibility = Visibility.Visible;
+                    EditProfileErrorMessage.Text = exception.Detail.Message;
+                    return;
                 }
                 catch
                 {
@@ -150,24 +162,24 @@ namespace InTime.Controls
                     return false;
                 }
             }
-            else if (!System.Text.RegularExpressions.Regex.IsMatch(RegisterLogin.Text, "^[a-zA-Z][a-zA-Z0-9._-]{0,21}([-.][^_]|[^-.]{2})$"))
+            if (!System.Text.RegularExpressions.Regex.IsMatch(RegisterLogin.Text, "^[a-zA-Z][a-zA-Z0-9._-]{0,21}([-.][^_]|[^-.]{2})$"))
             {
                 WrongPasswordInput.Visibility = Visibility.Hidden;
                 EditProfileErrorMessage.Text = "Login should start with letter and\ncontains only \"0-9\",\".\",\"_\".\".\"-\"";
                 EditProfileErrorBox.Visibility = Visibility.Visible;
                 return false;
             }
-            else if (RegisterPassbox1.Password != RegisterPassbox2.Password)
+            if (RegisterPassbox1.Password != RegisterPassbox2.Password)
             {
                 WrongPasswordInput.Visibility = Visibility.Hidden;
                 EditProfileErrorMessage.Text = "Passwords doesn't match.\nPlease, try again.";
-                EditProfileErrorMessage.Visibility = Visibility.Visible;
+                EditProfileErrorBox.Visibility = Visibility.Visible;
                 return false;
             }
-            else if ((RegisterPassbox1.Password == RegisterPassbox2.Password) &&
-                     (RegisterPassbox1.Password != String.Empty))
+            if ((RegisterPassbox1.Password == RegisterPassbox2.Password) &&
+                     (RegisterPassbox1.Password.Length>0)&&!Regex.IsMatch(RegisterPassbox1.Password, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$"))
             {
-                EditProfileErrorMessage.Visibility = Visibility.Hidden;
+                EditProfileErrorBox.Visibility = Visibility.Hidden;
                 WrongPasswordInput.Visibility = Visibility.Visible;
                 return false;
             }
@@ -194,7 +206,7 @@ namespace InTime.Controls
 
         // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CurrentUserProperty =
-            DependencyProperty.Register("CurrentUser", typeof(int), typeof(ProfileEdit));
+            DependencyProperty.Register("CurrentUser", typeof(Client_User), typeof(ProfileEdit));
 
         public BitmapSource ConvertToImage(byte[] arr)
         {
@@ -206,5 +218,9 @@ namespace InTime.Controls
             }
         }
 
+        private void CloseAddingMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            CancelRegBtnClick(this, null);
+        }
     }
 }

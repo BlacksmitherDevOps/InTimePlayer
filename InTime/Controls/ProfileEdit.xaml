@@ -10,7 +10,7 @@
         <Border Background="#FF1D1D1D" Width="500" Height="600">
             <Grid>
                 <materialDesign:PackIcon Kind="Close" Height="20" Width="20" 
-                                     Margin="470,10,0,0" Foreground="#ee3e61" Name="CloseAdding"/>
+                                     Margin="470,10,0,0" Foreground="#ee3e61" Name="CloseAdding" MouseDown="CloseAddingMouseDown"/>
                 <!--Wrong password input error box-->
                 <Border CornerRadius="20" Margin="90,160,90,360"
                         Background="#8d0d26" Name="WrongPasswordInput" Visibility="Hidden">
@@ -20,7 +20,7 @@
                 </Border>
                 <!--Connection error box-->
             <Border CornerRadius="20" Height="60" 
-                    Background="#8d0d26" Name="EditProfileErrorBox" Visibility="Hidden" Margin="150,170,150,370">
+                    Background="#8d0d26" Name="EditProfileErrorBox" Visibility="Hidden" Margin="105,170,90,370">
                 <TextBlock Margin="20,10,20,10" Foreground="White" FontSize="16"
                            Text="Network issues.&#x0a;Please, try again later." Name="EditProfileErrorMessage">
                 </TextBlock>

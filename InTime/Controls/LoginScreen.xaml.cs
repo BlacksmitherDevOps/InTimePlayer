@@ -551,7 +551,23 @@ namespace InTime.Controls
         private async void admin_Click(object sender, RoutedEventArgs e)
         {
             Service1Client client = new Service1Client();
-            OnWindowClosed?.Invoke(await client.TryLoginAsync(new Login_User { Image = null, ExtensionData = null, Login = "BogdanLysenkoLox", Password = "Aa12345678!", Email = null }));
+            try
+            {
+                OnWindowClosed?.Invoke(await client.TryLoginAsync(new Login_User
+                {
+                    Image = null, ExtensionData = null, Login = "BogdanLysenkoLox", Password = "Aa12345678!",
+                    Email = null
+                }));
+            }
+            catch (FaultException<LoginFailed> ex)
+            {
+                Console.WriteLine(ex.Detail.Message);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
             this.Close();
         }
     }
