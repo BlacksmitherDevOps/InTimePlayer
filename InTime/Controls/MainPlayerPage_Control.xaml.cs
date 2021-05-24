@@ -28,11 +28,10 @@ namespace InTime.Controls
         {
             InitializeComponent();
             state= new AppState(user);
-            
             mainWindow = window;
 
             InitUser(user);
-            testRecomendsBord();
+            ShowRecomendsBord();
         }
         /* Service methods
 
@@ -49,11 +48,12 @@ namespace InTime.Controls
 
         */
 
-        async void InitUser(Client_User user)
+        #region Startupinit
+        void InitUser(Client_User user)
         {
+            ProfileEditItem.CurrentUser = user;
             Profile_tb.Text = user.NickName;
             AvatarBrush.ImageSource = ConvertToImage(user.Image);
-            ProfileEditItem.AvatarImgBrush.ImageSource = ConvertToImage(user.Image);
         }
         public BitmapSource ConvertToImage(byte[] arr)
         {
@@ -64,7 +64,9 @@ namespace InTime.Controls
                 return decoder.Frames[0];
             }
         }
-        void testRecomendsBord()
+
+        #endregion
+        void ShowRecomendsBord()
         {
             Recommendations_Control recommendations_Control = new Recommendations_Control();
             recommendations_Control.ScrollCall += Grid_ScrollCall;
@@ -191,6 +193,8 @@ namespace InTime.Controls
             }
         }
         #endregion
+        #region LeftPanelLists
+
         private void ToggleButton_OnChecked(object sender, RoutedEventArgs e)
         {
             if (PlaylistBox.SelectedIndex >= 0)
@@ -207,9 +211,12 @@ namespace InTime.Controls
             }
         }
 
+        #endregion
+        #region MediaButtonsAnimation
+
         private void BottomButtonsBorder_MouseLeave(object sender, MouseEventArgs e)
         {
-            ((PackIcon)((Border)sender).Child).Foreground.BeginAnimation(SolidColorBrush.ColorProperty,new ColorAnimation((Color)ColorConverter.ConvertFromString("#FF784242"), TimeSpan.FromSeconds(0.1)));
+            ((PackIcon)((Border)sender).Child).Foreground.BeginAnimation(SolidColorBrush.ColorProperty, new ColorAnimation((Color)ColorConverter.ConvertFromString("#FF784242"), TimeSpan.FromSeconds(0.1)));
 
         }
 
@@ -217,6 +224,9 @@ namespace InTime.Controls
         {
             ((PackIcon)((Border)sender).Child).Foreground.BeginAnimation(SolidColorBrush.ColorProperty, new ColorAnimation((Color)ColorConverter.ConvertFromString("#FFFF0051"), TimeSpan.FromSeconds(0.1)));
         }
+
+        #endregion
+        #region WindowMove/Minimize/Maximize/Resize
         bool upperPanelClick;
         Point coord;
         private void upper_bord_MouseDown(object sender, MouseButtonEventArgs e)
@@ -227,12 +237,12 @@ namespace InTime.Controls
 
         private void upper_bord_MouseMove(object sender, MouseEventArgs e)
         {
-            if(upperPanelClick && coord != e.GetPosition(mainWindow))
+            if (upperPanelClick && coord != e.GetPosition(mainWindow))
             {
                 if (coord.Y < e.GetPosition(mainWindow).Y)
                     mainWindow.Top += e.GetPosition(mainWindow).Y - coord.Y;
-                else if(coord.Y > e.GetPosition(mainWindow).Y)
-                    mainWindow.Top -=  coord.Y - e.GetPosition(mainWindow).Y;
+                else if (coord.Y > e.GetPosition(mainWindow).Y)
+                    mainWindow.Top -= coord.Y - e.GetPosition(mainWindow).Y;
                 if (coord.X < e.GetPosition(mainWindow).X)
                     mainWindow.Left += e.GetPosition(mainWindow).X - coord.X;
                 else if (coord.X > e.GetPosition(mainWindow).X)
@@ -274,7 +284,7 @@ namespace InTime.Controls
         Point RestoreSize;
         private void WindowControlButton_Maximize_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            
+
             if (!maximized)
             {
                 RestoreCoord = new Point(mainWindow.Left, mainWindow.Top);
@@ -288,6 +298,9 @@ namespace InTime.Controls
             }
             maximized = !maximized;
         }
+
+
+        #endregion
         #region Restore
         void RestoreAnimation()
         {
@@ -334,12 +347,13 @@ namespace InTime.Controls
             MaximizeRestor_Icon.Kind = PackIconKind.WindowRestore;
         }
         #endregion
+        #region Search
 
         private async void Search_KeyDown(object sender, KeyEventArgs e)
         {
             if (Search.Text.Length < 1)
                 return;
-            if(e.Key == Key.Enter)
+            if (e.Key == Key.Enter)
             {
                 LoadingScreen();
                 SearchPanel searchPanel = new SearchPanel();
@@ -369,11 +383,7 @@ namespace InTime.Controls
             tape_panel.Child = progressBar;
         }
 
-        private void ProfileBorderMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            
-        }
-
+        #endregion
         #region PlaylisAdding
 
         private void AddPlaylistBtnClick(object sender, RoutedEventArgs e)
@@ -442,7 +452,6 @@ namespace InTime.Controls
         }
 
         #endregion
-
         #region PlaylistsContextMenu
 
         private void PlaylistDeleteMenu(object sender, RoutedEventArgs e)
@@ -456,6 +465,7 @@ namespace InTime.Controls
         }
 
         #endregion
+        #region ProfileEdit
 
         private void EditProfile(object sender, RoutedEventArgs e)
         {
@@ -463,15 +473,15 @@ namespace InTime.Controls
             LeftPanel.Opacity = 0.7;
             CentralPanel.Opacity = 0.7;
             BottomPanel.Opacity = 0.7;
-            Panel.SetZIndex(GridContainer,2);
-            Panel.SetZIndex(ProfileEditItem,2);
-           
+            Panel.SetZIndex(GridContainer, 2);
+            Panel.SetZIndex(ProfileEditItem, 2);
+            ProfileEditItem.InitUser();
         }
 
         private void ProfileEditItemOnMouseDown(object sender, MouseButtonEventArgs e)
         {
             Point p = e.GetPosition(ProfileEditItem);
-            if (!(p.X >= 460 && p.X <= 960 && p.Y >= 60 && p.Y <= 660)&&!ProfileEditItem.FilePicked)
+            if (!(p.X >= 460 && p.X <= 960 && p.Y >= 60 && p.Y <= 660) && !ProfileEditItem.FilePicked)
             {
                 ProfileEditItem.Visibility = Visibility.Hidden;
                 LeftPanel.Opacity = 1;
@@ -480,8 +490,27 @@ namespace InTime.Controls
                 Panel.SetZIndex(GridContainer, -1);
                 Panel.SetZIndex(ProfileEditItem, -1);
             }
-
             ProfileEditItem.FilePicked = false;
         }
+
+        private void ProfileEditItemOnEditCancel()
+        {
+            ProfileEditItem.Visibility = Visibility.Hidden;
+            LeftPanel.Opacity = 1;
+            CentralPanel.Opacity = 1;
+            BottomPanel.Opacity = 1;
+            Panel.SetZIndex(GridContainer, -1);
+            Panel.SetZIndex(ProfileEditItem, -1);
+            ProfileEditItem.FilePicked = false;
+        }
+
+        private void ProfileEditItemOnProfileEdited(Client_User user)
+        {
+            state.user = user;
+            InitUser(user);
+        }
+
+        #endregion
+
     }
 }
