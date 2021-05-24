@@ -456,7 +456,7 @@ namespace InTime.Controls
             BottomPanel.Opacity = 0.7;
             Panel.SetZIndex(GridContainer,2);
             Panel.SetZIndex(ProfileEditItem,2);
-           
+            ProfileEditItem.InitUser();
         }
 
         private void ProfileEditItemOnMouseDown(object sender, MouseButtonEventArgs e)
@@ -471,8 +471,12 @@ namespace InTime.Controls
                 Panel.SetZIndex(GridContainer, -1);
                 Panel.SetZIndex(ProfileEditItem, -1);
             }
-
             ProfileEditItem.FilePicked = false;
+        }
+
+        private void ProfileEditItemOnEditCancel()
+        {
+            EditProfile(this,null);
         }
     }
 }

@@ -11,64 +11,24 @@
             <Grid>
                 <materialDesign:PackIcon Kind="Close" Height="20" Width="20" 
                                      Margin="470,10,0,0" Foreground="#ee3e61" Name="CloseAdding"/>
-            <!--Passwords doesn't match error box-->
-            <Border CornerRadius="20" Height="60"  
-                    Background="#8d0d26" Name="RegPassError" Visibility="Hidden" Margin="150,170,150,370" RenderTransformOrigin="0.5,0.5">
-                <Border.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform AngleY="0.158"/>
-                        <RotateTransform/>
-                        <TranslateTransform Y="1.1"/>
-                    </TransformGroup>
-                </Border.RenderTransform>
-                <TextBlock Margin="20,10,20,10" Foreground="White" FontSize="16"
-                           Text="Passwords doesn't match.&#x0a;Please, try again.">
-                </TextBlock>
-            </Border>
-            <!--InvalidEmail doesn't match error box-->
+                <!--Wrong password input error box-->
+                <Border CornerRadius="20" Margin="90,160,90,360"
+                        Background="#8d0d26" Name="WrongPasswordInput" Visibility="Hidden">
+                    <TextBlock Margin="20,0,10,0" Foreground="White" FontSize="16"
+                               Text="Password must be between 8-15 &#x0a;characters and contain one uppercase&#x0a;one letter,one lowercase letter,one digit &#x0a;and one special  character.">
+                    </TextBlock>
+                </Border>
+                <!--Connection error box-->
             <Border CornerRadius="20" Height="60" 
-                Background="#8d0d26" Name="EmailError" Visibility="Hidden"
-                Margin="150,170,150,370" RenderTransformOrigin="0.5,0.5">
-                <Border.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform AngleY="0.158"/>
-                        <RotateTransform/>
-                        <TranslateTransform Y="1.1"/>
-                    </TransformGroup>
-                </Border.RenderTransform>
+                    Background="#8d0d26" Name="EditProfileErrorBox" Visibility="Hidden" Margin="150,170,150,370">
                 <TextBlock Margin="20,10,20,10" Foreground="White" FontSize="16"
-                       Text="Wrong email input.&#x0a;Please, try again.">
-                </TextBlock>
-            </Border>
-            <!--WrongLogin doesn't match error box-->
-            <Border CornerRadius="20" Height="60" 
-                Background="#8d0d26" Name="LoginInputError" Visibility="Hidden"
-                Margin="150,170,150,370" RenderTransformOrigin="0.5,0.5">
-                <Border.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform AngleY="0.158"/>
-                        <RotateTransform/>
-                        <TranslateTransform Y="1.1"/>
-                    </TransformGroup>
-                </Border.RenderTransform>
-                <TextBlock Margin="20,10,20,10" Foreground="White" FontSize="16"
-                       Text="Login field should &#x0a;be signed.">
-                </TextBlock>
-            </Border>
-            <!--Connection error box-->
-            <Border CornerRadius="20" Height="60" 
-                    Background="#8d0d26" Name="RegNetworkError" Visibility="Hidden" Margin="150,170,150,370">
-                <TextBlock Margin="20,10,20,10" Foreground="White" FontSize="16"
-                           Text="Network issues.&#x0a;Please, try again later.">
+                           Text="Network issues.&#x0a;Please, try again later." Name="EditProfileErrorMessage">
                 </TextBlock>
             </Border>
             <!--AvatarPhoto-->
             <Ellipse  Name="AvatarPicker"
                      MouseEnter="AvatarPickerMouseEnter" MouseLeave="AvatarPickerMouseLeave"
-                     MouseLeftButtonDown="AvatarPickerMouseLeftButtonDown" Margin="170,10,170,435">
+                     MouseLeftButtonDown="AvatarPickerMouseLeftButtonDown" Margin="170,0,170,445">
                 <Ellipse.Fill>
                     <ImageBrush x:Name="AvatarImgBrush" ImageSource="../Assets/profile.jpg"/>
                 </Ellipse.Fill>
@@ -143,7 +103,7 @@
                     <PasswordBox Name="RegisterPassbox1" Background="Transparent" Height="35" FontSize="16" Foreground="#FFFF0051"
                                  CaretBrush="#FFFF0051" BorderThickness="0" Margin="25,0,28,0"
                                  VerticalContentAlignment="Center" Panel.ZIndex="10"
-                                 PasswordChanged="RegisterPassbox1PasswordChanged">
+                                 PasswordChanged="PasswordChanged">
                         <PasswordBox.Style>
                             <Style/>
                         </PasswordBox.Style>
@@ -162,7 +122,7 @@
                     <PasswordBox Name="RegisterPassbox2" Background="Transparent" Height="35" FontSize="16" Foreground="#FFFF0051"
                                  CaretBrush="#FFFF0051" BorderThickness="0" Margin="25,0,28,0"
                                  VerticalContentAlignment="Center" Panel.ZIndex="10"
-                                 PasswordChanged="RegisterPassboxPasswordChanged">
+                                 PasswordChanged="PasswordChanged">
                         <PasswordBox.Style>
                             <Style/>
                         </PasswordBox.Style>

@@ -453,7 +453,7 @@
                 <Grid Name="GridContainer" RowSpan="3" ColumnSpan="3" >
                     <local:AddPlaylist x:Name="AddPlaylistItem" Visibility="Hidden" MouseDown="AddPlaylistItemMouseDown" 
                                        OnChangesAccepted="AddPlaylistItemOnChangesAccepted" OnWindowClosed="AddPlaylistItemOnWindowClosed"/>
-                    <local:ProfileEdit x:Name="ProfileEditItem" Visibility="Hidden" MouseDown="ProfileEditItemOnMouseDown"/>
+                    <local:ProfileEdit x:Name="ProfileEditItem" Visibility="Hidden" MouseDown="ProfileEditItemOnMouseDown" OnEditCancel="ProfileEditItemOnEditCancel"/>
                 </Grid>
                 <!--Left panel-->
                 <Border Name="LeftPanel" BorderBrush="#FF696087" Grid.Column="0" BorderThickness="0,0,2,0">

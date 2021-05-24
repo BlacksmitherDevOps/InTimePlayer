@@ -425,7 +425,7 @@ namespace InTime.Controls
                 RegisterErrorMessage.Text = exception.Detail.Message;
                 return;
             }
-            catch (Exception exception)
+            catch 
             {
                 RegisterErrorBox.Visibility = Visibility.Visible;
                 RegisterErrorMessage.Text =
