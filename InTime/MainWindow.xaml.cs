@@ -35,10 +35,10 @@ namespace InTime
             
         }
 
-        private void Tmp_OnWindowClosed()
+        private void Tmp_OnWindowClosed(Client_User user)
         {
             this.Visibility = Visibility.Visible;
-            Control_Bord.Child = new MainPlayerPage_Control(this);
+            Control_Bord.Child = new MainPlayerPage_Control(this,user);
         }
 
         private void Window_StateChanged(object sender, EventArgs e)

@@ -96,6 +96,9 @@
     <Compile Include="Controls\Playlist_Scroller.xaml.cs">
       <DependentUpon>Playlist_Scroller.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ProfileEdit.xaml.cs">
+      <DependentUpon>ProfileEdit.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Recommendations_Control.xaml.cs">
       <DependentUpon>Recommendations_Control.xaml</DependentUpon>
     </Compile>
@@ -142,6 +145,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Playlist_Scroller.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ProfileEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -211,6 +218,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\ServiceReference1\InTime.ServiceReference1.Singer_Album.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\ServiceReference1\InTime.ServiceReference1.Song.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\ServiceReference1\InTime.ServiceReference1.Song_Playlist.datasource">

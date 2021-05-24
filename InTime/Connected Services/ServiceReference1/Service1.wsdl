@@ -40,31 +40,88 @@
           <xs:sequence />
         </xs:complexType>
       </xs:element>
+      <xs:element name="EditProfile">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="profile" nillable="true" type="q4:Client_User" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="EditProfileResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="EditProfileResult" type="xs:boolean" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
       <xs:element name="TryLogin">
         <xs:complexType>
           <xs:sequence>
-            <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="login_User" nillable="true" type="q4:Login_User" />
+            <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="login_User" nillable="true" type="q5:Login_User" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
       <xs:element name="TryLoginResponse">
         <xs:complexType>
           <xs:sequence>
-            <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="TryLoginResult" nillable="true" type="q5:Client_User" />
+            <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="TryLoginResult" nillable="true" type="q6:Client_User" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
       <xs:element name="RegNewUser">
         <xs:complexType>
           <xs:sequence>
-            <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="login_User" nillable="true" type="q6:Login_User" />
+            <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="login_User" nillable="true" type="q7:Login_User" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
       <xs:element name="RegNewUserResponse">
         <xs:complexType>
           <xs:sequence>
-            <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="RegNewUserResult" nillable="true" type="q7:Client_User" />
+            <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="RegNewUserResult" nillable="true" type="q8:Client_User" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="RecoverPassCodeRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="login_User" nillable="true" type="q9:Login_User" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="RecoverPassCodeRequestResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="RecoverPassCodeRequestResult" type="xs:boolean" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="RecoverPassCodeCheck">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="login_User" nillable="true" type="q10:Login_User" />
+            <xs:element minOccurs="0" name="code" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="RecoverPassCodeCheckResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="RecoverPassCodeCheckResult" type="xs:boolean" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ChangePassword">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="login_User" nillable="true" type="q11:Login_User" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ChangePasswordResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="ChangePasswordResult" type="xs:boolean" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -78,7 +135,21 @@
       <xs:element name="GetAlbumResponse">
         <xs:complexType>
           <xs:sequence>
-            <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="GetAlbumResult" nillable="true" type="q8:Singer_Album" />
+            <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="GetAlbumResult" nillable="true" type="q12:Singer_Album" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetRecentlyPlayed">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="ID" type="xs:int" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetRecentlyPlayedResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="GetRecentlyPlayedResult" nillable="true" type="q13:ArrayOfSong" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -92,7 +163,7 @@
       <xs:element name="GetSingerFullResponse">
         <xs:complexType>
           <xs:sequence>
-            <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="GetSingerFullResult" nillable="true" type="q9:Song_Singer" />
+            <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="GetSingerFullResult" nillable="true" type="q14:Song_Singer" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -104,7 +175,7 @@
       <xs:element name="GetAllSingersResponse">
         <xs:complexType>
           <xs:sequence>
-            <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="GetAllSingersResult" nillable="true" type="q10:ArrayOfSong_Singer" />
+            <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="GetAllSingersResult" nillable="true" type="q15:ArrayOfSong_Singer" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -118,7 +189,7 @@
       <xs:element name="GetTrackStreamResponse">
         <xs:complexType>
           <xs:sequence>
-            <xs:element xmlns:q11="http://schemas.microsoft.com/Message" name="GetTrackStreamResult" type="q11:StreamBody" />
+            <xs:element xmlns:q16="http://schemas.microsoft.com/Message" name="GetTrackStreamResult" type="q16:StreamBody" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -154,7 +225,7 @@
       <xs:element name="SearchResponse">
         <xs:complexType>
           <xs:sequence>
-            <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="SearchResult" nillable="true" type="q12:SearchResult" />
+            <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="SearchResult" nillable="true" type="q17:SearchResult" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -168,7 +239,7 @@
       <xs:element name="playlistResponse">
         <xs:complexType>
           <xs:sequence>
-            <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="playlistResult" nillable="true" type="q13:Song_Playlist" />
+            <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="playlistResult" nillable="true" type="q18:Song_Playlist" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -272,15 +343,6 @@
         </xs:sequence>
       </xs:complexType>
       <xs:element name="ArrayOfSong_Singer" nillable="true" type="tns:ArrayOfSong_Singer" />
-      <xs:complexType name="Login_User">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="Image" nillable="true" type="xs:base64Binary" />
-          <xs:element minOccurs="0" name="Login" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
-        </xs:sequence>
-      </xs:complexType>
-      <xs:element name="Login_User" nillable="true" type="tns:Login_User" />
       <xs:complexType name="Client_User">
         <xs:sequence>
           <xs:element minOccurs="0" name="Contacts" nillable="true" type="tns:ArrayOfClient_User" />
@@ -289,6 +351,8 @@
           <xs:element minOccurs="0" name="Image" nillable="true" type="xs:base64Binary" />
           <xs:element minOccurs="0" name="ImagePath" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="NickName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Playlists" nillable="true" type="tns:ArrayOfSong_Playlist" />
         </xs:sequence>
       </xs:complexType>
       <xs:element name="Client_User" nillable="true" type="tns:Client_User" />
@@ -298,15 +362,12 @@
         </xs:sequence>
       </xs:complexType>
       <xs:element name="ArrayOfClient_User" nillable="true" type="tns:ArrayOfClient_User" />
-      <xs:complexType name="SearchResult">
+      <xs:complexType name="ArrayOfSong_Playlist">
         <xs:sequence>
-          <xs:element minOccurs="0" name="Albums" nillable="true" type="tns:ArrayOfSinger_Album" />
-          <xs:element minOccurs="0" name="GenreSongs" nillable="true" type="tns:ArrayOfSong" />
-          <xs:element minOccurs="0" name="Singers" nillable="true" type="tns:ArrayOfSong_Singer" />
-          <xs:element minOccurs="0" name="Songs" nillable="true" type="tns:ArrayOfSong" />
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Song_Playlist" nillable="true" type="tns:Song_Playlist" />
         </xs:sequence>
       </xs:complexType>
-      <xs:element name="SearchResult" nillable="true" type="tns:SearchResult" />
+      <xs:element name="ArrayOfSong_Playlist" nillable="true" type="tns:ArrayOfSong_Playlist" />
       <xs:complexType name="Song_Playlist">
         <xs:sequence>
           <xs:element minOccurs="0" name="CreationDate" type="xs:dateTime" />
@@ -320,6 +381,48 @@
         </xs:sequence>
       </xs:complexType>
       <xs:element name="Song_Playlist" nillable="true" type="tns:Song_Playlist" />
+      <xs:complexType name="EditFailed">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="EditFailed" nillable="true" type="tns:EditFailed" />
+      <xs:complexType name="Login_User">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Image" nillable="true" type="xs:base64Binary" />
+          <xs:element minOccurs="0" name="Login" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="Login_User" nillable="true" type="tns:Login_User" />
+      <xs:complexType name="LoginFailed">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="LoginFailed" nillable="true" type="tns:LoginFailed" />
+      <xs:complexType name="RegFailed">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="RegFailed" nillable="true" type="tns:RegFailed" />
+      <xs:complexType name="RecoverFailed">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="RecoverFailed" nillable="true" type="tns:RecoverFailed" />
+      <xs:complexType name="SearchResult">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Albums" nillable="true" type="tns:ArrayOfSinger_Album" />
+          <xs:element minOccurs="0" name="GenreSongs" nillable="true" type="tns:ArrayOfSong" />
+          <xs:element minOccurs="0" name="Singers" nillable="true" type="tns:ArrayOfSong_Singer" />
+          <xs:element minOccurs="0" name="Songs" nillable="true" type="tns:ArrayOfSong" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="SearchResult" nillable="true" type="tns:SearchResult" />
     </xs:schema>
     <xs:schema xmlns:tns="http://schemas.microsoft.com/Message" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/Message" xmlns:xs="http://www.w3.org/2001/XMLSchema">
       <xs:simpleType name="StreamBody">
@@ -345,11 +448,23 @@
   <wsdl:message name="IService1_AddNewAlbum_OutputMessage">
     <wsdl:part name="parameters" element="tns:AddNewAlbumResponse" />
   </wsdl:message>
+  <wsdl:message name="IService1_EditProfile_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditProfile" />
+  </wsdl:message>
+  <wsdl:message name="IService1_EditProfile_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditProfileResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_EditProfile_EditFailedFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/PlayerService" name="detail" element="q1:EditFailed" />
+  </wsdl:message>
   <wsdl:message name="IService1_TryLogin_InputMessage">
     <wsdl:part name="parameters" element="tns:TryLogin" />
   </wsdl:message>
   <wsdl:message name="IService1_TryLogin_OutputMessage">
     <wsdl:part name="parameters" element="tns:TryLoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_TryLogin_LoginFailedFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/PlayerService" name="detail" element="q2:LoginFailed" />
   </wsdl:message>
   <wsdl:message name="IService1_RegNewUser_InputMessage">
     <wsdl:part name="parameters" element="tns:RegNewUser" />
@@ -357,11 +472,47 @@
   <wsdl:message name="IService1_RegNewUser_OutputMessage">
     <wsdl:part name="parameters" element="tns:RegNewUserResponse" />
   </wsdl:message>
+  <wsdl:message name="IService1_RegNewUser_RegFailedFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/PlayerService" name="detail" element="q3:RegFailed" />
+  </wsdl:message>
+  <wsdl:message name="IService1_RecoverPassCodeRequest_InputMessage">
+    <wsdl:part name="parameters" element="tns:RecoverPassCodeRequest" />
+  </wsdl:message>
+  <wsdl:message name="IService1_RecoverPassCodeRequest_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RecoverPassCodeRequestResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_RecoverPassCodeRequest_RecoverFailedFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/PlayerService" name="detail" element="q4:RecoverFailed" />
+  </wsdl:message>
+  <wsdl:message name="IService1_RecoverPassCodeCheck_InputMessage">
+    <wsdl:part name="parameters" element="tns:RecoverPassCodeCheck" />
+  </wsdl:message>
+  <wsdl:message name="IService1_RecoverPassCodeCheck_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RecoverPassCodeCheckResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_RecoverPassCodeCheck_RecoverFailedFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/PlayerService" name="detail" element="q5:RecoverFailed" />
+  </wsdl:message>
+  <wsdl:message name="IService1_ChangePassword_InputMessage">
+    <wsdl:part name="parameters" element="tns:ChangePassword" />
+  </wsdl:message>
+  <wsdl:message name="IService1_ChangePassword_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ChangePasswordResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_ChangePassword_RecoverFailedFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/PlayerService" name="detail" element="q6:RecoverFailed" />
+  </wsdl:message>
   <wsdl:message name="IService1_GetAlbum_InputMessage">
     <wsdl:part name="parameters" element="tns:GetAlbum" />
   </wsdl:message>
   <wsdl:message name="IService1_GetAlbum_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetAlbumResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GetRecentlyPlayed_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRecentlyPlayed" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GetRecentlyPlayed_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRecentlyPlayedResponse" />
   </wsdl:message>
   <wsdl:message name="IService1_GetSingerFull_InputMessage">
     <wsdl:part name="parameters" element="tns:GetSingerFull" />
@@ -418,17 +569,43 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/AddNewAlbum" message="tns:IService1_AddNewAlbum_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/AddNewAlbumResponse" message="tns:IService1_AddNewAlbum_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="EditProfile">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/EditProfile" message="tns:IService1_EditProfile_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/EditProfileResponse" message="tns:IService1_EditProfile_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IService1/EditProfileEditFailedFault" name="EditFailedFault" message="tns:IService1_EditProfile_EditFailedFault_FaultMessage" />
+    </wsdl:operation>
     <wsdl:operation name="TryLogin">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/TryLogin" message="tns:IService1_TryLogin_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/TryLoginResponse" message="tns:IService1_TryLogin_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IService1/TryLoginLoginFailedFault" name="LoginFailedFault" message="tns:IService1_TryLogin_LoginFailedFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="RegNewUser">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/RegNewUser" message="tns:IService1_RegNewUser_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/RegNewUserResponse" message="tns:IService1_RegNewUser_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IService1/RegNewUserRegFailedFault" name="RegFailedFault" message="tns:IService1_RegNewUser_RegFailedFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RecoverPassCodeRequest">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/RecoverPassCodeRequest" message="tns:IService1_RecoverPassCodeRequest_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/RecoverPassCodeRequestResponse" message="tns:IService1_RecoverPassCodeRequest_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IService1/RecoverPassCodeRequestRecoverFailedFault" name="RecoverFailedFault" message="tns:IService1_RecoverPassCodeRequest_RecoverFailedFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RecoverPassCodeCheck">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/RecoverPassCodeCheck" message="tns:IService1_RecoverPassCodeCheck_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/RecoverPassCodeCheckResponse" message="tns:IService1_RecoverPassCodeCheck_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IService1/RecoverPassCodeCheckRecoverFailedFault" name="RecoverFailedFault" message="tns:IService1_RecoverPassCodeCheck_RecoverFailedFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangePassword">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/ChangePassword" message="tns:IService1_ChangePassword_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/ChangePasswordResponse" message="tns:IService1_ChangePassword_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IService1/ChangePasswordRecoverFailedFault" name="RecoverFailedFault" message="tns:IService1_ChangePassword_RecoverFailedFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetAlbum">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetAlbum" message="tns:IService1_GetAlbum_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetAlbumResponse" message="tns:IService1_GetAlbum_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRecentlyPlayed">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetRecentlyPlayed" message="tns:IService1_GetRecentlyPlayed_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetRecentlyPlayedResponse" message="tns:IService1_GetRecentlyPlayed_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetSingerFull">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetSingerFull" message="tns:IService1_GetSingerFull_InputMessage" />
@@ -488,6 +665,18 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="EditProfile">
+      <soap:operation soapAction="http://tempuri.org/IService1/EditProfile" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="EditFailedFault">
+        <soap:fault use="literal" name="EditFailedFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
     <wsdl:operation name="TryLogin">
       <soap:operation soapAction="http://tempuri.org/IService1/TryLogin" style="document" />
       <wsdl:input>
@@ -496,6 +685,9 @@
       <wsdl:output>
         <soap:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="LoginFailedFault">
+        <soap:fault use="literal" name="LoginFailedFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="RegNewUser">
       <soap:operation soapAction="http://tempuri.org/IService1/RegNewUser" style="document" />
@@ -505,9 +697,57 @@
       <wsdl:output>
         <soap:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="RegFailedFault">
+        <soap:fault use="literal" name="RegFailedFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RecoverPassCodeRequest">
+      <soap:operation soapAction="http://tempuri.org/IService1/RecoverPassCodeRequest" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="RecoverFailedFault">
+        <soap:fault use="literal" name="RecoverFailedFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RecoverPassCodeCheck">
+      <soap:operation soapAction="http://tempuri.org/IService1/RecoverPassCodeCheck" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="RecoverFailedFault">
+        <soap:fault use="literal" name="RecoverFailedFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ChangePassword">
+      <soap:operation soapAction="http://tempuri.org/IService1/ChangePassword" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="RecoverFailedFault">
+        <soap:fault use="literal" name="RecoverFailedFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="GetAlbum">
       <soap:operation soapAction="http://tempuri.org/IService1/GetAlbum" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRecentlyPlayed">
+      <soap:operation soapAction="http://tempuri.org/IService1/GetRecentlyPlayed" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
