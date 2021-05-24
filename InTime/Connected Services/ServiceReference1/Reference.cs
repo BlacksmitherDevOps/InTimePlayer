@@ -1218,6 +1218,29 @@ namespace InTime.ServiceReference1 {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetAlbum", ReplyAction="http://tempuri.org/IService1/GetAlbumResponse")]
         System.Threading.Tasks.Task<InTime.ServiceReference1.Singer_Album> GetAlbumAsync(int ID);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetTrack", ReplyAction="http://tempuri.org/IService1/GetTrackResponse")]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(InTime.ServiceReference1.Song_Singer))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(InTime.ServiceReference1.Singer_Album[]))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(InTime.ServiceReference1.Singer_Album))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(InTime.ServiceReference1.Song[]))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(InTime.ServiceReference1.Song))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(InTime.ServiceReference1.Song_Singer[]))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(InTime.ServiceReference1.Client_User))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(InTime.ServiceReference1.Client_User[]))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(InTime.ServiceReference1.Song_Playlist[]))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(InTime.ServiceReference1.Song_Playlist))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(InTime.ServiceReference1.EditFailed))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(InTime.ServiceReference1.Login_User))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(InTime.ServiceReference1.LoginFailed))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(InTime.ServiceReference1.RegFailed))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(InTime.ServiceReference1.RecoverFailed))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(InTime.ServiceReference1.SearchResult))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(byte[]))]
+        object GetTrack(int ID, System.TimeSpan skipspan, System.TimeSpan takespan);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetTrack", ReplyAction="http://tempuri.org/IService1/GetTrackResponse")]
+        System.Threading.Tasks.Task<object> GetTrackAsync(int ID, System.TimeSpan skipspan, System.TimeSpan takespan);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetRecentlyPlayed", ReplyAction="http://tempuri.org/IService1/GetRecentlyPlayedResponse")]
         InTime.ServiceReference1.Song[] GetRecentlyPlayed(int ID);
         
@@ -1372,6 +1395,14 @@ namespace InTime.ServiceReference1 {
         
         public System.Threading.Tasks.Task<InTime.ServiceReference1.Singer_Album> GetAlbumAsync(int ID) {
             return base.Channel.GetAlbumAsync(ID);
+        }
+        
+        public object GetTrack(int ID, System.TimeSpan skipspan, System.TimeSpan takespan) {
+            return base.Channel.GetTrack(ID, skipspan, takespan);
+        }
+        
+        public System.Threading.Tasks.Task<object> GetTrackAsync(int ID, System.TimeSpan skipspan, System.TimeSpan takespan) {
+            return base.Channel.GetTrackAsync(ID, skipspan, takespan);
         }
         
         public InTime.ServiceReference1.Song[] GetRecentlyPlayed(int ID) {

@@ -683,7 +683,7 @@
                             </Border>
                             <!--Play button-->
                             <Border x:Name="Play_btn" Grid.Column="2" Style="{StaticResource BottomButtonsBorder_Style}">
-                                <materialDesign:PackIcon Kind="Play" Foreground="#FF784242" Width="30" Height="30"
+                                <materialDesign:PackIcon Kind="Play" Foreground="#FF784242" Width="30" Height="30" MouseLeftButtonDown="PlayButtonMouseLeftButtonDown"
                                                          VerticalAlignment="Center" HorizontalAlignment="Center" materialDesign:ShadowAssist.ShadowDepth="Depth2"/>
                             </Border>
 

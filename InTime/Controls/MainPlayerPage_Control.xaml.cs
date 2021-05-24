@@ -17,6 +17,9 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using NAudio;
+using NAudio.Wave;
+using NAudio.Wave.SampleProviders;
 
 namespace InTime.Controls
 {
@@ -31,7 +34,7 @@ namespace InTime.Controls
             mainWindow = window;
 
             InitUser(user);
-            ShowRecomendsBord();
+            //ShowRecomendsBoard();
         }
         /* Service methods
 
@@ -53,6 +56,12 @@ namespace InTime.Controls
         {
             ProfileEditItem.CurrentUser = user;
             Profile_tb.Text = user.NickName;
+            if (user.Image == null)
+            {
+                AvatarBrush.ImageSource= new BitmapImage(new Uri(
+                    Environment.CurrentDirectory.Substring(0, Environment.CurrentDirectory.LastIndexOf("InTime")) + @"InTime\Assets\profile.jpg"));
+            }
+            else
             AvatarBrush.ImageSource = ConvertToImage(user.Image);
         }
         public BitmapSource ConvertToImage(byte[] arr)
@@ -66,7 +75,7 @@ namespace InTime.Controls
         }
 
         #endregion
-        void ShowRecomendsBord()
+        void ShowRecomendsBoard()
         {
             Recommendations_Control recommendations_Control = new Recommendations_Control();
             recommendations_Control.ScrollCall += Grid_ScrollCall;
@@ -511,6 +520,19 @@ namespace InTime.Controls
         }
 
         #endregion
+        protected void asd()
+        {
+        }
 
+        private void PlayButtonMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Service1Client client = new Service1Client();
+            //var player = new WaveOutEvent();
+            //player.Init();
+            //player.Play();
+            Console.WriteLine((int)client.GetTrack(23, TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(30)));
+            //BufferedWaveProvider provider=new BufferedWaveProvider(new BufferedWaveProvider())
+
+        }
     }
 }
