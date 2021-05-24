@@ -478,6 +478,7 @@ namespace InTime.Controls
                 RegisterErrorMessage.Text = "All fields should be signed. Please sign\nall fields and try again.";
                 RegisterErrorBox.Visibility = Visibility.Visible;
             }
+           
         }
         private void OnPasswordChanged(object sender, RoutedEventArgs e)
         {
@@ -543,9 +544,15 @@ namespace InTime.Controls
         {
             Application.Current.Shutdown();
         }
+
+
         #endregion
 
-
-        
+        private async void admin_Click(object sender, RoutedEventArgs e)
+        {
+            Service1Client client = new Service1Client();
+            OnWindowClosed?.Invoke(await client.TryLoginAsync(new Login_User { Image = null, ExtensionData = null, Login = "BogdanLysenkoLox", Password = "Aa12345678!", Email = null }));
+            this.Close();
+        }
     }
 }

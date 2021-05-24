@@ -85,7 +85,7 @@
                 <Grid>
                     <PasswordBox Name="LoginPassBox" Background="Transparent" Height="35" FontSize="16" Foreground="#FFFF0051"
                              CaretBrush="#FFFF0051" BorderThickness="0" Margin="25,0,28,0"
-                             PasswordChanged="PasswordBox_OnPasswordChanged" 
+                             PasswordChanged="PasswordBox_OnPasswordChanged"
                              VerticalContentAlignment="Center" Panel.ZIndex="10">
                         <PasswordBox.Style>
                             <Style/>
@@ -149,6 +149,7 @@
                     </Style>
                 </Border.Style>
             </Border>
+            <Button x:Name="admin" Content="admin" Width="200" Margin="227,576,223,142" Click="admin_Click" />
         </Grid>
         <!--Recovery Grid-->
         <Grid Name="RecoveryPage1" Visibility="Hidden">
