@@ -164,7 +164,12 @@
                 <ColumnDefinition Width="150"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Image Width="120" Height="120" VerticalAlignment="Center" HorizontalAlignment="Left" Source="3E-zsSjyGLU.jpg"/>
+            <Ellipse>
+                <Ellipse.Fill>
+                    <ImageBrush x:Name="img_brush"/>
+                </Ellipse.Fill>
+            </Ellipse>
+            <Image x:Name="img_br" Width="120" Height="120" VerticalAlignment="Center" HorizontalAlignment="Left" Source="3E-zsSjyGLU.jpg"/>
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="40"/>

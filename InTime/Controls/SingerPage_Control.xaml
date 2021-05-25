@@ -23,7 +23,11 @@
                 <ColumnDefinition Width="200"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Image Width="150" Height="150" VerticalAlignment="Center" HorizontalAlignment="Center" Source="3E-zsSjyGLU.jpg"/>
+            <Ellipse>
+                <Ellipse.Fill>
+                    <ImageBrush x:Name="img_brush"/>
+                </Ellipse.Fill>
+            </Ellipse>
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50"/>

@@ -20,7 +20,7 @@
               MouseEnter="ArrowGrid_MouseEnter" MouseLeave="ArrowGrid_MouseLeave" MouseDown="left_Grid_MouseDown">
             <TextBlock x:Name="left_Tb" Text="&lt;" Panel.ZIndex="2" FontSize="24"
                        VerticalAlignment="Center" HorizontalAlignment="Center"
-                       Foreground="#FFFF0051" Margin="0,0,0,5"/>
+                       Foreground="#FFFF0051" Margin="0,0,0,5" TextDecorations="{x:Null}"/>
             <Ellipse x:Name="left_Ellipse" Fill="#FF515151" Width="50" Height="50">
 
             </Ellipse>

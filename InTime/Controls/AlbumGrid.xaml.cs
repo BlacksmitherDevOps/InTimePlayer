@@ -1,6 +1,8 @@
-﻿using MaterialDesignThemes.Wpf;
+﻿using InTime.ServiceReference1;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,17 +25,26 @@ namespace InTime.Controls
     public partial class AlbumGrid : UserControl
     {
         public event ScrollCall ScrollCall;
-        public AlbumGrid(AlbumItem album)
+        public AlbumGrid(Singer_Album album)
         {
            InitializeComponent();
            InitControl(album);
         }
-        void InitControl(AlbumItem album)
+        void InitControl(Singer_Album album)
         {
             albumName_tb.Text = album.Title;
             songs_lb.ItemsSource = album.Songs;
+            img_br.Source = ConvertToImage(album.Image);
         }
-
+        public BitmapSource ConvertToImage(byte[] arr)
+        {
+            using (MemoryStream ms = new MemoryStream(arr))
+            {
+                var decoder = BitmapDecoder.Create(ms,
+                    BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.OnLoad);
+                return decoder.Frames[0];
+            }
+        }
 
         #region listBoxAnimations
         private void ListBoxItem_MouseEnter(object sender, MouseEventArgs e)

@@ -1,6 +1,8 @@
-﻿using MaterialDesignThemes.Wpf;
+﻿using InTime.ServiceReference1;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,20 +25,30 @@ namespace InTime.Controls
     public partial class SingerPage_Control : UserControl
     {
         public event ScrollCall ScrollCall;
-        public SingerPage_Control(SingerItem singer)
+        public SingerPage_Control(Song_Singer singer)
         {
             InitializeComponent();
             InitControl(singer);
         }
-        void InitControl(SingerItem singer)
+        void InitControl(Song_Singer singer)
         {
             singerName_tb.Text = singer.Name;
+            img_brush.ImageSource = ConvertToImage(singer.Image);
             foreach (var item in singer.Albums)
             {
                 AddAlbum(item);
             }
         }
-        void AddAlbum(AlbumItem album)
+        public BitmapSource ConvertToImage(byte[] arr)
+        {
+            using (MemoryStream ms = new MemoryStream(arr))
+            {
+                var decoder = BitmapDecoder.Create(ms,
+                    BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.OnLoad);
+                return decoder.Frames[0];
+            }
+        }
+        void AddAlbum(Singer_Album album)
         {
             AlbumGrid albumGrid = new AlbumGrid(album);
             albumGrid.ScrollCall += AlbumGrid_ScrollCall;

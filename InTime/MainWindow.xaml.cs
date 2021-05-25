@@ -20,6 +20,8 @@ using InTime.ServiceReference1;
 namespace InTime
 {
     public delegate void ScrollCall(bool flag);
+    public delegate void OpenPlaylist(int id);
+    public delegate void OpenSingerPage(int id);
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -39,8 +41,12 @@ namespace InTime
         {
             this.Visibility = Visibility.Visible;
             Control_Bord.Child = new MainPlayerPage_Control(this,user);
+            Console.WriteLine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData));
         }
-
+        void AutoLogin()
+        {
+           // Directory.Exists(Environment.UserName)
+        }
         private void Window_StateChanged(object sender, EventArgs e)
         {
             if (this.WindowState == WindowState.Maximized)

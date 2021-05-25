@@ -23,6 +23,7 @@ namespace InTime.Controls
     public partial class Playlist_Scroller : UserControl
     {
         public event ScrollCall ScrollCall;
+        public event OpenPlaylist OpenPlaylist;
         public Playlist_Scroller(List<Song_Playlist> playlists)
         {
             InitializeComponent();
@@ -30,8 +31,14 @@ namespace InTime.Controls
             {
                 Playlist_Item_Control item_Control = new Playlist_Item_Control(item);
                 item_Control.ScrollCall += Item_Control_ScrollCall;
+                item_Control.OpenPlaylist += Item_Control_OpenPlaylist;
                 panel.Children.Add(item_Control);
             }
+        }
+
+        private void Item_Control_OpenPlaylist(int id)
+        {
+            OpenPlaylist?.Invoke(id);
         }
 
         private void Item_Control_ScrollCall(bool flag)

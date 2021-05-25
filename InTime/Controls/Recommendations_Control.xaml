@@ -21,7 +21,7 @@
             <RowDefinition Height="100"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <TextBlock Text="Welcome {USERNAME}" VerticalAlignment="Center" HorizontalAlignment="Center"
+        <TextBlock Text="Welcome" VerticalAlignment="Center" HorizontalAlignment="Center"
                    FontSize="64" Foreground="White" FontFamily="Franklin Gothic Demi"/>
         <StackPanel Name="tape_panel" Grid.Row="1">
             

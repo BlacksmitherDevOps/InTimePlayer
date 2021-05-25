@@ -24,12 +24,15 @@ namespace InTime.Controls
     public partial class Playlist_Item_Control : UserControl
     {
         public event ScrollCall ScrollCall;
+        public event OpenPlaylist OpenPlaylist;
+        int id;
         public Playlist_Item_Control(Song_Playlist playlist)
         {
             InitializeComponent();
+            id = playlist.ID;
             main_image.Source = ConvertToImage(playlist.Image);
             playlist_name_tb.Text = playlist.Title;
-            author_name_tb.Text = playlist.Singers.First().Name;
+            author_name_tb.Text = playlist.Creator;
         }
         BitmapSource ConvertToImage(byte[] arr)
         {
@@ -73,6 +76,11 @@ namespace InTime.Controls
             {
                 ScrollCall?.Invoke(false);
             }
+        }
+
+        private void main_grid_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            OpenPlaylist?.Invoke(id);
         }
     }
 }

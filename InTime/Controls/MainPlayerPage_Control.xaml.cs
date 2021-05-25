@@ -1,9 +1,11 @@
 ﻿using InTime.ServiceReference1;
 using MaterialDesignThemes.Wpf;
+using NAudio.Wave;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,10 +26,10 @@ namespace InTime.Controls
     {
         private AppState state;
         Window mainWindow;
-        public MainPlayerPage_Control(Window window,Client_User user)
+        public MainPlayerPage_Control(Window window, Client_User user)
         {
             InitializeComponent();
-            state= new AppState(user);
+            state = new AppState(user);
             mainWindow = window;
 
             InitUser(user);
@@ -54,6 +56,7 @@ namespace InTime.Controls
             ProfileEditItem.CurrentUser = user;
             Profile_tb.Text = user.NickName;
             AvatarBrush.ImageSource = ConvertToImage(user.Image);
+            PlaylistBox.ItemsSource = user.Playlists;
         }
         public BitmapSource ConvertToImage(byte[] arr)
         {
@@ -70,13 +73,93 @@ namespace InTime.Controls
         {
             Recommendations_Control recommendations_Control = new Recommendations_Control();
             recommendations_Control.ScrollCall += Grid_ScrollCall;
+            recommendations_Control.UserName = ProfileEditItem.CurrentUser.NickName;
+            recommendations_Control.OpenPlaylist += Recommendations_Control_OpenPlaylist;
             tape_panel.Child = recommendations_Control;
         }
+        async void OpenPlaylist(int id)
+        {
+            PlaylistGrid playlist = new PlaylistGrid();
+            playlist.OpenSingerPage += Playlist_OpenSingerPage;
+            Service1Client client = new Service1Client();
+            Song_Playlist _Playlist = await client.GetPlaylistByIDAsync(id);
+            client.Close();
+            playlist.CurrentPlaylist = _Playlist;
+            playlist.Init();
+            tape_panel.Child = playlist;
+        }
+        private async void Recommendations_Control_OpenPlaylist(int id)
+        {
+            LoadingScreen();
+            OpenPlaylist(id);
+        }
+        async void OpenSingerPage(int id)
+        {
+            Service1Client client = new Service1Client();
+            Song_Singer singer = await client.GetSingerFullAsync(id);
+            client.Close();
+            SingerPage_Control singerPage_Control = new SingerPage_Control(singer);
+            singerPage_Control.ScrollCall += Grid_ScrollCall;
+            tape_panel.Child = singerPage_Control;
+            
+        }
+        private void Playlist_OpenSingerPage(int id)
+        {
+            //LoadingScreen();
+            //OpenSingerPage(id);
+        }
+        #region PlaySong
+        async void PlaySongByID(int ID)
+        {
+            Service1Client client = new Service1Client();
+            PlayMp3FromUrl(await client.GetTrackStreamAsync(ID));
+            client.Close();
+        }
+        private Stream ms = new MemoryStream();
+        public async void PlayMp3FromUrl(Stream song_stream)
+        {
+            new Thread(delegate (object o)
+            {
+                using (var stream = song_stream)
+                {
+                    byte[] buffer = new byte[65536]; // 64KB chunks
+                    int read;
+                    while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
+                    {
+                        var pos = ms.Position;
+                        ms.Position = ms.Length;
+                        ms.Write(buffer, 0, read);
+                        ms.Position = pos;
+                    }
+                }
+            }).Start();
+
+            // Pre-buffering some data to allow NAudio to start playing
+            new Thread(delegate (object o)
+            {
+                while (ms.Length < 65536 * 10)
+                Thread.Sleep(1000);
+
+            ms.Position = 0;
+            using (WaveStream blockAlignedStream = new BlockAlignReductionStream(WaveFormatConversionStream.CreatePcmStream(new Mp3FileReader(ms))))
+            {
+                using (WaveOut waveOut = new WaveOut(WaveCallbackInfo.FunctionCallback()))
+                {
+                    waveOut.Init(blockAlignedStream);
+                    waveOut.Play();
+                    while (waveOut.PlaybackState == PlaybackState.Playing)
+                    {
+                        System.Threading.Thread.Sleep(100);
+                    }
+                }
+            }
+            }).Start();
+        }
+        #endregion
         void testInfoBord()
         {
             PlaylistGrid grid = new PlaylistGrid();
             grid.ScrollCall += Grid_ScrollCall;
-            grid.ImageSource =@"C:\Player\InTimePlayer\InTime\Controls\3E-zsSjyGLU.jpg";
             grid.PlaylistDuration=DateTime.Now;
             grid.PlaylistName = "Custom playlist";
             grid.SongsCount = 322;
@@ -120,36 +203,7 @@ namespace InTime.Controls
             }
         }
 
-        void testSingerBord()
-        {
-            List<PlaylistItem> lst = new List<PlaylistItem>();
-            lst.Add(new PlaylistItem { SongAlbum = "Best Album", SongArtist = "Rammstein", ID = 2, SongDuration = DateTime.Now, SongTitle = "Sonne" });
-            lst.Add(new PlaylistItem { SongAlbum = "Best Album", SongArtist = "Rammstein", ID = 2, SongDuration = DateTime.Now, SongTitle = "Sonne" });
-            lst.Add(new PlaylistItem { SongAlbum = "Best Album", SongArtist = "Rammstein", ID = 2, SongDuration = DateTime.Now, SongTitle = "Sonne" });
-            lst.Add(new PlaylistItem { SongAlbum = "Best Album", SongArtist = "Rammstein", ID = 2, SongDuration = DateTime.Now, SongTitle = "Sonne" });
-            lst.Add(new PlaylistItem { SongAlbum = "Best Album", SongArtist = "Rammstein", ID = 2, SongDuration = DateTime.Now, SongTitle = "Sonne" });
-
-
-            SingerItem _Singer = new SingerItem();
-            _Singer.Name = "Rammstein";
-
-            AlbumItem album = new AlbumItem();
-            album.Title = "First album";
-            album.Songs = lst;
-
-            AlbumItem album1 = new AlbumItem();
-            album1.Title = "Second album";
-            album1.Songs = lst;
-
-            AlbumItem album2 = new AlbumItem();
-            album2.Title = "Third album";
-            album2.Songs = lst;
-
-            _Singer.Albums = new List<AlbumItem>() { album, album1, album2 };
-            SingerPage_Control list = new SingerPage_Control(_Singer);
-            list.ScrollCall += Grid_ScrollCall;
-            tape_panel.Child = list;
-        }
+      
         #region Sound
         /// <summary>
         /// Изменение состояния картинки громкости
@@ -512,5 +566,9 @@ namespace InTime.Controls
 
         #endregion
 
+        private async void Play_btn_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            PlaySongByID(21);
+        }
     }
 }

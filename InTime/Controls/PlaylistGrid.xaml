@@ -72,7 +72,7 @@
                 <Setter Property="Background" Value="#FF2E2A2A"/>
                 <Setter Property="Foreground" Value="White"/>
                 <Setter Property="BorderThickness" Value="0,0,0,1"/>
-                <Setter Property="BorderBrush" Value="#FFFF5656"/>
+                <Setter Property="BorderBrush" Value="#FFFF0051"/>
                 <EventSetter Event="MouseEnter" Handler="ListBoxItem_MouseEnter"/>
                 <EventSetter Event="MouseLeave" Handler="ListBoxItem_MouseLeave"/>
                 <EventSetter Event="Unselected" Handler="ListBoxItem_Unselected"/>
@@ -107,14 +107,15 @@
                                                      VerticalAlignment="Center" HorizontalAlignment="Center"
                                                      Foreground="White"/>
                     </Border>
-                    <TextBlock Text="{Binding SongTitle}" Grid.Column="1" FontSize="20"
-                                       Margin="7,3,0,0"/>
-                    <TextBlock Grid.Column="2" Text="{Binding SongArtist}" FontSize="20"
-                                       Margin="7,3,0,0"/>
-                    <TextBlock Grid.Column="3" Text="{Binding SongAlbum}" FontSize="20"
-                                       Margin="7,3,0,0"/>
-                    <TextBlock Grid.Column="4" Text="{Binding SongDuration,StringFormat=mm:ss}" FontSize="20"
-                                       Margin="7,3,0,0"/>
+                    <TextBlock Text="{Binding Title}" Grid.Column="1" FontSize="20"
+                                       Margin="7,3,0,0" TextTrimming="WordEllipsis"/>
+                    <TextBlock Grid.Column="2" Text="{Binding Singers[0].Name}" Tag="{Binding ID}" FontSize="20" TextTrimming="WordEllipsis"
+                                       Margin="7,3,0,0" MouseEnter="TextBlock_MouseEnter" MouseLeave="TextBlock_MouseLeave"
+                               PreviewMouseDown="TextBlock_PreviewMouseDown"  Cursor="Hand"/>
+                    <TextBlock Grid.Column="3" Text="{Binding Album.Title}" FontSize="20"
+                                       Margin="7,3,0,0" TextTrimming="WordEllipsis"/>
+                    <TextBlock Grid.Column="4" Text="{Binding Duration,StringFormat=mm:ss}" FontSize="20"
+                                       Margin="7,3,0,0" TextTrimming="WordEllipsis"/>
                     <Border Name="more_Bord" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <materialDesign:PackIcon Visibility="Hidden" Kind="DotsHorizontal" Width="25" Height="25"/>
                     </Border>
@@ -124,7 +125,7 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate>
-                            <Border BorderThickness="0,0,0,2" BorderBrush="Red" >
+                            <Border BorderThickness="0,0,0,2" BorderBrush="#FFFF0051" >
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="130"/>
@@ -134,7 +135,7 @@
                                         <ColumnDefinition Width="100"/>
                                         <ColumnDefinition Width="50"/>
                                     </Grid.ColumnDefinitions>
-                                    <Border BorderBrush="Red" Height="33" Grid.ColumnSpan="7"/>
+                                    <Border BorderBrush="#FFFF0051" Height="33" Grid.ColumnSpan="7"/>
                                     <Button x:Name="PlayBtn" Style="{StaticResource Play_btn}" Grid.Column="0"/>
                                     <TextBlock Text="{Binding SongTitle,ElementName=_PlaylistItem}" Grid.Column="1" FontSize="10"
                                        Margin="7,3,0,0"/>
@@ -201,7 +202,7 @@
                 <ColumnDefinition Width="100"/>
                 <ColumnDefinition Width="50"/>
             </Grid.ColumnDefinitions>
-            <Border BorderBrush="#FFFF5656"  BorderThickness="0,0.8,0,0.8" Grid.ColumnSpan="7"/>
+            <Border BorderBrush="#FFFF0051"  BorderThickness="0,0.8,0,0.8" Grid.ColumnSpan="7"/>
             <TextBlock Text="Title" Grid.Column="1" FontSize="20"
                         Margin="7,8,0,0" Foreground="#FFE6DDDD"/>
             <TextBlock Grid.Column="2" Text="Artist" FontSize="20"
@@ -218,7 +219,7 @@
             Header="Simular Songs" BorderThickness="0,1,0,0" 
             Background="{Binding}"
             Foreground="#FFE6DDDD"
-            BorderBrush="#FFFF5656" Grid.Row="3" FontFamily="Microsoft YaHei" Grid.ColumnSpan="2">
+            BorderBrush="#FFFF0051" Grid.Row="3" FontFamily="Microsoft YaHei" Grid.ColumnSpan="2">
             <StackPanel
             Orientation="Vertical"
             TextBlock.Foreground="{DynamicResource MaterialDesignBody}">

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -23,32 +24,76 @@ namespace InTime.Controls
     public partial class Recommendations_Control : UserControl
     {
         public event ScrollCall ScrollCall;
+        public event OpenPlaylist OpenPlaylist;
         public Recommendations_Control()
         {
             InitializeComponent();
-            List<Song_Playlist> playlists = new List<Song_Playlist>();
-            List<Song_Singer> song_Singers = new List<Song_Singer>();
-            song_Singers.Add(new Song_Singer() { Name = "{AuthorName}" });
-            playlists.Add(new Song_Playlist() { Image = File.ReadAllBytes(@"D:\WPF\InTimePlayer\InTime\Controls\3E-zsSjyGLU.jpg"), Title = "{PlaylistName}", Singers = song_Singers.ToArray() });
-            playlists.Add(new Song_Playlist() { Image = File.ReadAllBytes(@"D:\WPF\InTimePlayer\InTime\Controls\3E-zsSjyGLU.jpg"), Title = "{PlaylistName}", Singers = song_Singers.ToArray() });
-            playlists.Add(new Song_Playlist() { Image = File.ReadAllBytes(@"D:\WPF\InTimePlayer\InTime\Controls\3E-zsSjyGLU.jpg"), Title = "{PlaylistName}", Singers = song_Singers.ToArray() });
-            playlists.Add(new Song_Playlist() { Image = File.ReadAllBytes(@"D:\WPF\InTimePlayer\InTime\Controls\3E-zsSjyGLU.jpg"), Title = "{PlaylistName}", Singers = song_Singers.ToArray() });
-            playlists.Add(new Song_Playlist() { Image = File.ReadAllBytes(@"D:\WPF\InTimePlayer\InTime\Controls\3E-zsSjyGLU.jpg"), Title = "{PlaylistName}", Singers = song_Singers.ToArray() });
-            playlists.Add(new Song_Playlist() { Image = File.ReadAllBytes(@"D:\WPF\InTimePlayer\InTime\Controls\3E-zsSjyGLU.jpg"), Title = "{PlaylistName}", Singers = song_Singers.ToArray() });
-            playlists.Add(new Song_Playlist() { Image = File.ReadAllBytes(@"D:\WPF\InTimePlayer\InTime\Controls\3E-zsSjyGLU.jpg"), Title = "{PlaylistName}", Singers = song_Singers.ToArray() });
-            AddList("Recently played", playlists);
-            AddList("Special for you", playlists);
-            AddList("New 2021", playlists);
+            RequestRock();
+            RequestPop();
+            RequestHouse();
         }
         public void AddList(string title, List<Song_Playlist> playlists)
         {
             TextBlock textBlock = new TextBlock() { Text= title, Style = FindResource("title_tb") as Style };
             Playlist_Scroller playlist_Scroller = new Playlist_Scroller(playlists);
             playlist_Scroller.ScrollCall += Playlist_Scroller_ScrollCall;
+            playlist_Scroller.OpenPlaylist += Playlist_Scroller_OpenPlaylist;
             tape_panel.Children.Add(textBlock);
             tape_panel.Children.Add(playlist_Scroller);
         }
 
+        private void Playlist_Scroller_OpenPlaylist(int id)
+        {
+            OpenPlaylist?.Invoke(id);
+        }
+
+        public string UserName
+        {
+            get { return (string)GetValue(UserNameProperty); }
+            set { SetValue(UserNameProperty, value); }
+        }
+        public static readonly DependencyProperty UserNameProperty =
+            DependencyProperty.Register("UserName", typeof(string), typeof(Recommendations_Control));
+        async void RequestRock()
+        {
+            try
+            {
+                Service1Client client = new Service1Client();
+                AddList("Rock Today!", (await client.GetRockTodayAsync()).ToList());
+                client.Close();
+            }
+            catch (FaultException<LoadPlaylistFailed> exception)
+            {
+                Console.WriteLine(exception.Detail.Message);
+            }
+            
+        }
+        async void RequestPop()
+        {
+            try
+            {
+            Service1Client client = new Service1Client();
+            AddList("Chill with Pop Music~~", (await client.GetPopTodayAsync()).ToList());
+            client.Close();
+            }
+            catch (FaultException<LoadPlaylistFailed> exception)
+            {
+                Console.WriteLine(exception.Detail.Message);
+            }
+        }
+        async void RequestHouse()
+        {
+            try
+            {
+                Service1Client client = new Service1Client();
+                AddList("Dance!", (await client.GetHouseTodayAsync()).ToList());
+                client.Close();
+            }
+            catch (FaultException<LoadPlaylistFailed> exception)
+            {
+                Console.WriteLine(exception.Detail.Message);
+            }
+}
         private void Playlist_Scroller_ScrollCall(bool flag)
         {
             ScrollCall?.Invoke(flag);

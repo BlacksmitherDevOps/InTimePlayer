@@ -243,7 +243,7 @@
                                            Height="30" Width="7" Fill="#FF1D1D1D"
                                            HorizontalAlignment="Left" Grid.Column="0"/>
                                 <TextBlock Grid.Column="1"
-                                           Text="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}"
+                                           Text="{Binding Title}" Foreground="{TemplateBinding Foreground}"
                                            FontSize="16"/>
                             </Grid>
                             <ControlTemplate.Triggers>
@@ -490,24 +490,7 @@
                             <Label Content="Playlists" Grid.Row="0" VerticalAlignment="Top" Margin="15,0,0,0" FontSize="18"
                                    Foreground="White" FontFamily="Segoe UI Semibold" FontStyle="Italic"/>
                             <ListBox x:Name="PlaylistBox" VerticalAlignment="Stretch" Grid.Row="1" BorderBrush="Transparent" SelectionChanged="PlaylistBox_OnSelectionChanged">
-                                <ListBoxItem Content="TestElement" Style="{StaticResource PlaylistItem}"/>
-                                <ListBoxItem Content="TestElement" Style="{StaticResource PlaylistItem}"/>
-                                <ListBoxItem Content="TestElement" Style="{StaticResource PlaylistItem}"/>
-                                <ListBoxItem Content="TestElement" Style="{StaticResource PlaylistItem}"/>
-                                <ListBoxItem Content="TestElement" Style="{StaticResource PlaylistItem}"/>
-                                <ListBoxItem Content="TestElement" Style="{StaticResource PlaylistItem}"/>
-                                <ListBoxItem Content="TestElement" Style="{StaticResource PlaylistItem}"/>
-                                <ListBoxItem Content="TestElement" Style="{StaticResource PlaylistItem}"/>
-                                <ListBoxItem Content="TestElement" Style="{StaticResource PlaylistItem}"/>
-                                <ListBoxItem Content="TestElement" Style="{StaticResource PlaylistItem}"/>
-                                <ListBoxItem Content="TestElement" Style="{StaticResource PlaylistItem}"/>
-                                <ListBoxItem Content="TestElement" Style="{StaticResource PlaylistItem}"/>
-                                <ListBoxItem Content="TestElement" Style="{StaticResource PlaylistItem}"/>
-                                <ListBoxItem Content="TestElement" Style="{StaticResource PlaylistItem}"/>
-                                <ListBoxItem Content="TestElement" Style="{StaticResource PlaylistItem}"/>
-                                <ListBoxItem Content="TestElement" Style="{StaticResource PlaylistItem}"/>
-                                <ListBoxItem Content="TestElement" Style="{StaticResource PlaylistItem}"/>
-                                <ListBoxItem Content="TestElement" Style="{StaticResource PlaylistItem}"/>
+                                
                                 <ListBox.ContextMenu>
                                     <ContextMenu Background="#8d0d26" Foreground="White" Placement="Mouse" Padding="0">
                                         <ContextMenu.ItemTemplate>
@@ -682,7 +665,7 @@
                                                          VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </Border>
                             <!--Play button-->
-                            <Border x:Name="Play_btn" Grid.Column="2" Style="{StaticResource BottomButtonsBorder_Style}">
+                            <Border x:Name="Play_btn" MouseDown="Play_btn_MouseDown" Grid.Column="2" Style="{StaticResource BottomButtonsBorder_Style}">
                                 <materialDesign:PackIcon Kind="Play" Foreground="#FF784242" Width="30" Height="30"
                                                          VerticalAlignment="Center" HorizontalAlignment="Center" materialDesign:ShadowAssist.ShadowDepth="Depth2"/>
                             </Border>

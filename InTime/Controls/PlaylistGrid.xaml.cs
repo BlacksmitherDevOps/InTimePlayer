@@ -1,4 +1,5 @@
-﻿using MaterialDesignThemes.Wpf;
+﻿using InTime.ServiceReference1;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,20 +24,36 @@ namespace InTime.Controls
     public partial class PlaylistGrid : UserControl
     {
         public event ScrollCall ScrollCall;
+        public event OpenSingerPage OpenSingerPage;
         public PlaylistGrid()
         {
             InitializeComponent();
-
         }
-        public string ImageSource
+        public void Init()
         {
-            get { return (string)GetValue(ImageSourceProperty); }
+            ImageSource = CurrentPlaylist.Image;
+            PlaylistName = CurrentPlaylist.Title;
+            SongsCount = CurrentPlaylist.Songs.Length;
+            SongList.ItemsSource = CurrentPlaylist.Songs;
+        }
+        public Song_Playlist CurrentPlaylist
+        {
+            get { return (Song_Playlist)GetValue(PlaylistProperty); }
+            set { SetValue(PlaylistProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ImageSource.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty PlaylistProperty =
+            DependencyProperty.Register("Playlist", typeof(Song_Playlist), typeof(PlaylistGrid));
+        public byte[] ImageSource
+        {
+            get { return (byte[])GetValue(ImageSourceProperty); }
             set { SetValue(ImageSourceProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for ImageSource.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ImageSourceProperty =
-            DependencyProperty.Register("ImageSource", typeof(string), typeof(PlaylistGrid));
+            DependencyProperty.Register("ImageSource", typeof(byte[]), typeof(PlaylistGrid));
 
 
         public string PlaylistName
@@ -73,7 +90,7 @@ namespace InTime.Controls
         public static readonly DependencyProperty SongsCountProperty =
             DependencyProperty.Register("SongsCount", typeof(int), typeof(PlaylistGrid));
 
-
+       
         private void ListBoxItem_MouseEnter(object sender, MouseEventArgs e)
         {
             if (((ListBoxItem)sender).IsSelected)
@@ -110,6 +127,7 @@ namespace InTime.Controls
         }
         private void ListBoxItem_Unselected(object sender, RoutedEventArgs e)
         {
+                
             Border playBord = GetPlayBorder((ListBoxItem)sender);
             if (playBord != null)
                 ((PackIcon)playBord.Child).Kind = PackIconKind.PlayCircleOutline;
@@ -117,6 +135,7 @@ namespace InTime.Controls
         }
         private void ListBoxItem_Selected(object sender, RoutedEventArgs e)
         {
+            
             ((ListBoxItem)sender).Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB8FF8F"));
             Border playBord = GetPlayBorder((ListBoxItem)sender);
             if (playBord != null)
@@ -125,6 +144,8 @@ namespace InTime.Controls
         Border GetPlayBorder(ListBoxItem item)
         {
             ListBox lb = FindParent<ListBox>(item);
+            if (lb == null)
+                return null;
             ListBoxItem myListBoxItem = (ListBoxItem)lb.ContainerFromElement(item);
             ContentPresenter myContentPresenter = FindVisualChild<ContentPresenter>(myListBoxItem);
             DataTemplate myDataTemplate = myContentPresenter.ContentTemplate;
@@ -133,6 +154,8 @@ namespace InTime.Controls
         Border GetMoreBorder(ListBoxItem item)
         {
             ListBox lb = FindParent<ListBox>(item);
+            if (lb == null)
+                return null;
             ListBoxItem myListBoxItem = (ListBoxItem)lb.ContainerFromElement(item);
             ContentPresenter myContentPresenter = FindVisualChild<ContentPresenter>(myListBoxItem);
             DataTemplate myDataTemplate = myContentPresenter.ContentTemplate;
@@ -172,6 +195,25 @@ namespace InTime.Controls
             {
                 ScrollCall?.Invoke(false);
             }
+        }
+
+        private void TextBlock_MouseEnter(object sender, MouseEventArgs e)
+        {
+            TextBlock textBlock = (TextBlock)sender;
+            textBlock.TextDecorations = TextDecorations.Underline;
+        }
+
+        private void TextBlock_MouseLeave(object sender, MouseEventArgs e)
+        {
+            TextBlock textBlock = (TextBlock)sender;
+            textBlock.TextDecorations = null;
+        }
+
+        bool fl = false;
+        private void TextBlock_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            fl = true;
+            OpenSingerPage?.Invoke(Int32.Parse(((TextBlock)sender).Tag.ToString()));
         }
     }
 }
