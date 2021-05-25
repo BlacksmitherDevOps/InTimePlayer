@@ -553,8 +553,11 @@ namespace InTime.Controls
             Service1Client client = new Service1Client();
             try
             {
-               //await client.DownloadFileAsync(File.ReadAllBytes("d:\\rrk.jpg"));
-               //await client.tmpAsync(File.ReadAllBytes("d:\\ger.jpg"));
+                //await client.DownloadFileAsync(File.ReadAllBytes("d:\\rrk.jpg"));
+                //await client.tmpAsync(File.ReadAllBytes("d:\\ger.jpg"));
+                OnWindowClosed?.Invoke(await client.TryLoginAsync(new Login_User { Image = null, ExtensionData = null, Login = "BogdanLysenkoLox", Password = "dsa", Email = null }));
+
+                this.Close();
             }
             catch (FaultException<LoginFailed> ex)
             {
@@ -565,8 +568,7 @@ namespace InTime.Controls
                 Console.WriteLine(ex.Message);
             }
 
-            OnWindowClosed?.Invoke(await client.TryLoginAsync(new Login_User { Image = null, ExtensionData = null, Login = "BogdanLysenkoLox", Password = "dsa", Email = null }));
-            this.Close();
+
         }
     }
 }

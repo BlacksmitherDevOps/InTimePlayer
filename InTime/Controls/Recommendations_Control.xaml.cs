@@ -28,9 +28,6 @@ namespace InTime.Controls
         public Recommendations_Control()
         {
             InitializeComponent();
-            RequestRock();
-            RequestPop();
-            RequestHouse();
         }
         public void AddList(string title, List<Song_Playlist> playlists)
         {
@@ -42,6 +39,21 @@ namespace InTime.Controls
             tape_panel.Children.Add(playlist_Scroller);
         }
 
+        public async void Init()
+        {
+            try
+            {
+                Service1Client client = new Service1Client();
+                AddList("Rock Today!", (await client.GetRockTodayAsync()).ToList());
+                AddList("Chill with Pop Music~~", (await client.GetPopTodayAsync()).ToList());
+                AddList("Dance!", (await client.GetHouseTodayAsync()).ToList());
+                client.Close();
+            }
+            catch (FaultException<LoadPlaylistFailed> exception)
+            {
+                Console.WriteLine(exception.Detail.Message);
+            }
+        }
         private void Playlist_Scroller_OpenPlaylist(int id)
         {
             OpenPlaylist?.Invoke(id);
@@ -60,6 +72,8 @@ namespace InTime.Controls
             {
                 Service1Client client = new Service1Client();
                 AddList("Rock Today!", (await client.GetRockTodayAsync()).ToList());
+                AddList("Chill with Pop Music~~", (await client.GetPopTodayAsync()).ToList());
+                AddList("Dance!", (await client.GetHouseTodayAsync()).ToList());
                 client.Close();
             }
             catch (FaultException<LoadPlaylistFailed> exception)

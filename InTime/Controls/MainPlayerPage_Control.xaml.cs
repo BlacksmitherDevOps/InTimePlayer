@@ -69,12 +69,13 @@ namespace InTime.Controls
         }
 
         #endregion
-        void ShowRecomendsBord()
+        async void ShowRecomendsBord()
         {
             Recommendations_Control recommendations_Control = new Recommendations_Control();
             recommendations_Control.ScrollCall += Grid_ScrollCall;
             recommendations_Control.UserName = ProfileEditItem.CurrentUser.NickName;
             recommendations_Control.OpenPlaylist += Recommendations_Control_OpenPlaylist;
+            recommendations_Control.Init();
             tape_panel.Child = recommendations_Control;
         }
         async void OpenPlaylist(int id)
@@ -88,6 +89,19 @@ namespace InTime.Controls
             playlist.Init();
             tape_panel.Child = playlist;
         }
+
+        private async void Playlist_OpenSingerPage(int id)
+        {
+            //LoadingScreen();
+
+            Service1Client client = new Service1Client();
+            Song_Singer singer;
+            singer = await client.GetSingerFullAsync(id);
+            SingerPage_Control singerPage_Control = new SingerPage_Control(singer);
+            singerPage_Control.ScrollCall += Grid_ScrollCall;
+            tape_panel.Child = singerPage_Control;
+        }
+
         private async void Recommendations_Control_OpenPlaylist(int id)
         {
             LoadingScreen();
@@ -95,19 +109,10 @@ namespace InTime.Controls
         }
         async void OpenSingerPage(int id)
         {
-            Service1Client client = new Service1Client();
-            Song_Singer singer = await client.GetSingerFullAsync(id);
-            client.Close();
-            SingerPage_Control singerPage_Control = new SingerPage_Control(singer);
-            singerPage_Control.ScrollCall += Grid_ScrollCall;
-            tape_panel.Child = singerPage_Control;
+            
             
         }
-        private void Playlist_OpenSingerPage(int id)
-        {
-            //LoadingScreen();
-            //OpenSingerPage(id);
-        }
+
         #region PlaySong
         async void PlaySongByID(int ID)
         {
@@ -414,6 +419,7 @@ namespace InTime.Controls
                 Service1Client client = new Service1Client();
                 SearchResult searchResult = await client.SearchAsync(Search.Text);
                 client.Close();
+                Console.WriteLine(searchResult.Songs.Length);
                 searchPanel.AddSongs(searchResult.Songs);
                 searchPanel.AddArtists(searchResult.Singers);
                 searchPanel.AddGenres(searchResult.GenreSongs);

@@ -109,12 +109,12 @@
                     </Border>
                     <TextBlock Text="{Binding Title}" Grid.Column="1" FontSize="20"
                                        Margin="7,3,0,0" TextTrimming="WordEllipsis"/>
-                    <TextBlock Grid.Column="2" Text="{Binding Singers[0].Name}" Tag="{Binding ID}" FontSize="20" TextTrimming="WordEllipsis"
+                    <TextBlock Grid.Column="2" Text="{Binding Singers[0].Name}" FontSize="20" TextTrimming="WordEllipsis"
                                        Margin="7,3,0,0" MouseEnter="TextBlock_MouseEnter" MouseLeave="TextBlock_MouseLeave"
-                               PreviewMouseDown="TextBlock_PreviewMouseDown"  Cursor="Hand"/>
+                                       Cursor="Hand"/>
                     <TextBlock Grid.Column="3" Text="{Binding Album.Title}" FontSize="20"
                                        Margin="7,3,0,0" TextTrimming="WordEllipsis"/>
-                    <TextBlock Grid.Column="4" Text="{Binding Duration,StringFormat=mm:ss}" FontSize="20"
+                    <TextBlock Grid.Column="4" Text="{Binding Duration,StringFormat=mm\\:ss}" FontSize="20"
                                        Margin="7,3,0,0" TextTrimming="WordEllipsis"/>
                     <Border Name="more_Bord" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <materialDesign:PackIcon Visibility="Hidden" Kind="DotsHorizontal" Width="25" Height="25"/>

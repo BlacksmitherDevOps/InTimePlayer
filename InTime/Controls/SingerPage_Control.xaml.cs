@@ -36,6 +36,8 @@ namespace InTime.Controls
             img_brush.ImageSource = ConvertToImage(singer.Image);
             foreach (var item in singer.Albums)
             {
+                if (item.Songs.Length < 1)
+                    continue;
                 AddAlbum(item);
             }
         }

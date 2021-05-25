@@ -37,25 +37,46 @@ namespace InTime.Controls
                 AddSong(songs[i]);
             }
         }
-       
-        void GetFreeSlot(Grid grid, UIElement searchItem)
+        bool CheckRow(Grid grid, UIElement searchItem, int row)
         {
-            foreach (var row in grid.RowDefinitions)
+            if(grid.Children.Count < 1)
             {
-                foreach (var col in grid.ColumnDefinitions)
+                Grid.SetColumn(searchItem, 0);
+                Grid.SetRow(searchItem, 0);
+                return true;
+            }
+            for (int i = 0; i < 2; i++)
+            {
+                bool flag = false;
+                foreach (UserControl child in grid.Children)
                 {
-                    foreach (SearchItem child in grid.Children)
+                    if (Grid.GetColumn(child) == i && Grid.GetRow(child) == row)
                     {
-                        if (Grid.GetColumn(child) != grid.ColumnDefinitions.IndexOf(col) && Grid.GetRow(child) != grid.RowDefinitions.IndexOf(row))
-                        {
-                            Grid.SetColumn(searchItem, grid.ColumnDefinitions.IndexOf(col));
-                            Grid.SetRow(searchItem, grid.RowDefinitions.IndexOf(row));
-                            return;
-                        }
+                        flag = true;
+                        break;
                     }
                 }
+                if(flag == false)
+                {
+                    Grid.SetColumn(searchItem, i);
+                    Grid.SetRow(searchItem, row);
+                    return true;
+                }
             }
-
+                
+            return false;
+        }
+        void GetFreeSlot(Grid grid, UIElement searchItem)
+        {
+            int row = 0;
+            while (true)
+            {
+                if (row > 1)
+                    break;
+                if (CheckRow(grid, searchItem, row))
+                    break;
+                row++;
+            }
         }
         public void AddAlbums(Singer_Album[] albums)
         {

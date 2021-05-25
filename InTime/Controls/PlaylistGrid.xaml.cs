@@ -127,7 +127,7 @@ namespace InTime.Controls
         }
         private void ListBoxItem_Unselected(object sender, RoutedEventArgs e)
         {
-                
+            
             Border playBord = GetPlayBorder((ListBoxItem)sender);
             if (playBord != null)
                 ((PackIcon)playBord.Child).Kind = PackIconKind.PlayCircleOutline;
@@ -135,7 +135,14 @@ namespace InTime.Controls
         }
         private void ListBoxItem_Selected(object sender, RoutedEventArgs e)
         {
-            
+            if (OnSinger)
+            {
+                Song song = ((Song)((ListBoxItem)sender).Content);
+                Console.WriteLine(song.Singers[0]);
+                OpenSingerPage?.Invoke(song.Singers[0].ID);
+
+                return;
+            }
             ((ListBoxItem)sender).Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB8FF8F"));
             Border playBord = GetPlayBorder((ListBoxItem)sender);
             if (playBord != null)
@@ -196,24 +203,20 @@ namespace InTime.Controls
                 ScrollCall?.Invoke(false);
             }
         }
-
+        bool OnSinger = false;
         private void TextBlock_MouseEnter(object sender, MouseEventArgs e)
         {
+            OnSinger = true;
             TextBlock textBlock = (TextBlock)sender;
             textBlock.TextDecorations = TextDecorations.Underline;
         }
 
         private void TextBlock_MouseLeave(object sender, MouseEventArgs e)
         {
+            OnSinger = false;
             TextBlock textBlock = (TextBlock)sender;
             textBlock.TextDecorations = null;
         }
 
-        bool fl = false;
-        private void TextBlock_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            fl = true;
-            OpenSingerPage?.Invoke(Int32.Parse(((TextBlock)sender).Tag.ToString()));
-        }
     }
 }
