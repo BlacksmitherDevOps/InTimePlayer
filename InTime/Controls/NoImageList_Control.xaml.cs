@@ -19,37 +19,21 @@ using System.Windows.Shapes;
 namespace InTime.Controls
 {
     /// <summary>
-    /// Логика взаимодействия для PlaylistGrid.xaml
+    /// Логика взаимодействия для NoImageList_Control.xaml
     /// </summary>
-    public partial class PlaylistGrid : UserControl
+    public partial class NoImageList_Control : UserControl
     {
         public event ScrollCall ScrollCall;
         public event OpenSingerPage OpenSingerPage;
-        public event UserPlaylistChanged UserPlaylistChanged; 
-        public PlaylistGrid()
+        public event UserPlaylistChanged UserPlaylistChanged;
+        public NoImageList_Control()
         {
             InitializeComponent();
         }
         public void Init()
         {
-            ImageSource = CurrentPlaylist.Image;
-            PlaylistName = CurrentPlaylist.Title;
-            SongsCount = CurrentPlaylist.Songs.Length;
             SongList.ItemsSource = CurrentPlaylist.Songs;
-            playlistName_tb.Text = CurrentPlaylist.Title;
-            playlistDur_tb.Text = GetDuration(CurrentPlaylist).ToString(@"hh\:mm\:ss");
-            playlistCnt_tb.Text = CurrentPlaylist.Songs.Length.ToString();
-            fav_btn.Content = CurrentUser.Playlists.Any(c => c.ID == CurrentPlaylist.ID) ? "Remove from favorites" : "Add to favorites";
-            
-        }
-        TimeSpan GetDuration(Song_Playlist playlist)
-        {
-            TimeSpan timeSpan = new TimeSpan();
-            foreach (var item in playlist.Songs)
-            {
-                timeSpan += item.Duration;
-            }
-            return timeSpan;
+            List_name.Text = CurrentPlaylist.Title;
         }
         public Client_User CurrentUser
         {
@@ -57,7 +41,6 @@ namespace InTime.Controls
             set { SetValue(CurrentUserProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for ImageSource.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CurrentUserProperty =
             DependencyProperty.Register("CurrentUser", typeof(Client_User), typeof(PlaylistGrid));
         public Song_Playlist CurrentPlaylist
@@ -65,56 +48,10 @@ namespace InTime.Controls
             get { return (Song_Playlist)GetValue(PlaylistProperty); }
             set { SetValue(PlaylistProperty, value); }
         }
-
-        // Using a DependencyProperty as the backing store for ImageSource.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty PlaylistProperty =
             DependencyProperty.Register("Playlist", typeof(Song_Playlist), typeof(PlaylistGrid));
-        public byte[] ImageSource
-        {
-            get { return (byte[])GetValue(ImageSourceProperty); }
-            set { SetValue(ImageSourceProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for ImageSource.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ImageSourceProperty =
-            DependencyProperty.Register("ImageSource", typeof(byte[]), typeof(PlaylistGrid));
 
 
-        public string PlaylistName
-        {
-            get { return (string)GetValue(PlaylistNameProperty); }
-            set { SetValue(PlaylistNameProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for Playlistame.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty PlaylistNameProperty =
-            DependencyProperty.Register("PlaylistName", typeof(string), typeof(PlaylistGrid));
-
-
-
-        public DateTime PlaylistDuration
-        {
-            get { return (DateTime)GetValue(PlaylistDurationProperty); }
-            set { SetValue(PlaylistDurationProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for PlaylistDuration.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty PlaylistDurationProperty =
-            DependencyProperty.Register("PlaylistDuration", typeof(DateTime), typeof(PlaylistGrid));
-
-
-
-        public int SongsCount
-        {
-            get { return (int)GetValue(SongsCountProperty); }
-            set { SetValue(SongsCountProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for SongsCount.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty SongsCountProperty =
-            DependencyProperty.Register("SongsCount", typeof(int), typeof(PlaylistGrid));
-
-       
         private void ListBoxItem_MouseEnter(object sender, MouseEventArgs e)
         {
             if (((ListBoxItem)sender).IsSelected)
@@ -151,7 +88,7 @@ namespace InTime.Controls
         }
         private void ListBoxItem_Unselected(object sender, RoutedEventArgs e)
         {
-            
+
             Border playBord = GetPlayBorder((ListBoxItem)sender);
             if (playBord != null)
                 ((PackIcon)playBord.Child).Kind = PackIconKind.PlayCircleOutline;
@@ -240,23 +177,5 @@ namespace InTime.Controls
             OnSinger = false;
             TextBlock textBlock = (TextBlock)sender;
             textBlock.TextDecorations = null;
-        }
-
-        private async void fav_btn_Click(object sender, RoutedEventArgs e)
-        {
-            Service1Client client = new Service1Client();
-            if (fav_btn.Content.ToString() != "Remove from favorites")
-            {
-                await client.AddPlaylistToFavoriteAsync(CurrentUser.ID, CurrentPlaylist.ID);
-                fav_btn.Content = "Remove from favorites";
-            }
-            else
-            {
-                await client.RemoveFromPlaylistFavoriteAsync(CurrentUser.ID, CurrentPlaylist.ID);
-                fav_btn.Content = "Add to favorites";
-            }
-            UserPlaylistChanged?.Invoke();
-            client.Close();
-        }
-    }
+        }    }
 }

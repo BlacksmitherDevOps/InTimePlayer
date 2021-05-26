@@ -32,7 +32,7 @@ namespace InTime.Controls
             id = playlist.ID;
             main_image.Source = ConvertToImage(playlist.Image);
             playlist_name_tb.Text = playlist.Title;
-            author_name_tb.Text = playlist.Creator;
+            author_name_tb.Text = playlist.Creator.NickName;
         }
         BitmapSource ConvertToImage(byte[] arr)
         {

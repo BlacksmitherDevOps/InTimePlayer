@@ -184,6 +184,20 @@
           </xs:sequence>
         </xs:complexType>
       </xs:element>
+      <xs:element name="GetPlaylistInfoByID">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="ID" type="xs:int" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetPlaylistInfoByIDResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="GetPlaylistInfoByIDResult" nillable="true" type="q17:Song_Playlist" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
       <xs:element name="GetSingerFull">
         <xs:complexType>
           <xs:sequence>
@@ -194,7 +208,51 @@
       <xs:element name="GetSingerFullResponse">
         <xs:complexType>
           <xs:sequence>
-            <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="GetSingerFullResult" nillable="true" type="q17:Song_Singer" />
+            <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="GetSingerFullResult" nillable="true" type="q18:Song_Singer" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="AddPlaylistToFavorite">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="userID" type="xs:int" />
+            <xs:element minOccurs="0" name="playlistID" type="xs:int" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="AddPlaylistToFavoriteResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="AddPlaylistToFavoriteResult" type="xs:boolean" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="RemoveFromPlaylistFavorite">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="userID" type="xs:int" />
+            <xs:element minOccurs="0" name="playlistID" type="xs:int" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="RemoveFromPlaylistFavoriteResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="RemoveFromPlaylistFavoriteResult" type="xs:boolean" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetUserPlaylistsInfo">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="userID" type="xs:int" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetUserPlaylistsInfoResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="GetUserPlaylistsInfoResult" nillable="true" type="q19:ArrayOfSong_Playlist" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -206,7 +264,7 @@
       <xs:element name="GetAllSingersResponse">
         <xs:complexType>
           <xs:sequence>
-            <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="GetAllSingersResult" nillable="true" type="q18:ArrayOfSong_Singer" />
+            <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="GetAllSingersResult" nillable="true" type="q20:ArrayOfSong_Singer" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -218,7 +276,7 @@
       <xs:element name="GetRockTodayResponse">
         <xs:complexType>
           <xs:sequence>
-            <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="GetRockTodayResult" nillable="true" type="q19:ArrayOfSong_Playlist" />
+            <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="GetRockTodayResult" nillable="true" type="q21:ArrayOfSong_Playlist" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -230,7 +288,7 @@
       <xs:element name="GetPopTodayResponse">
         <xs:complexType>
           <xs:sequence>
-            <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="GetPopTodayResult" nillable="true" type="q20:ArrayOfSong_Playlist" />
+            <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="GetPopTodayResult" nillable="true" type="q22:ArrayOfSong_Playlist" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -242,7 +300,7 @@
       <xs:element name="GetHouseTodayResponse">
         <xs:complexType>
           <xs:sequence>
-            <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="GetHouseTodayResult" nillable="true" type="q21:ArrayOfSong_Playlist" />
+            <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="GetHouseTodayResult" nillable="true" type="q23:ArrayOfSong_Playlist" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -256,7 +314,7 @@
       <xs:element name="GetTrackStreamResponse">
         <xs:complexType>
           <xs:sequence>
-            <xs:element xmlns:q22="http://schemas.microsoft.com/Message" name="GetTrackStreamResult" type="q22:StreamBody" />
+            <xs:element xmlns:q24="http://schemas.microsoft.com/Message" name="GetTrackStreamResult" type="q24:StreamBody" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -268,7 +326,21 @@
       <xs:element name="TempFuncResponse">
         <xs:complexType>
           <xs:sequence>
-            <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="TempFuncResult" nillable="true" type="q23:Song_Playlist" />
+            <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="TempFuncResult" nillable="true" type="q25:Song_Playlist" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="AddPlaylist">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="new_Playlist" nillable="true" type="q26:Song_Playlist" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="AddPlaylistResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="AddPlaylistResult" type="xs:boolean" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -306,7 +378,7 @@
       <xs:element name="SearchResponse">
         <xs:complexType>
           <xs:sequence>
-            <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="SearchResult" nillable="true" type="q24:SearchResult" />
+            <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="SearchResult" nillable="true" type="q27:SearchResult" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -320,7 +392,7 @@
       <xs:element name="playlistResponse">
         <xs:complexType>
           <xs:sequence>
-            <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="playlistResult" nillable="true" type="q25:Song_Playlist" />
+            <xs:element xmlns:q28="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="playlistResult" nillable="true" type="q28:Song_Playlist" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -452,7 +524,7 @@
       <xs:complexType name="Song_Playlist">
         <xs:sequence>
           <xs:element minOccurs="0" name="CreationDate" type="xs:dateTime" />
-          <xs:element minOccurs="0" name="Creator" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Creator" nillable="true" type="tns:Client_User" />
           <xs:element minOccurs="0" name="Custom" type="xs:boolean" />
           <xs:element minOccurs="0" name="ID" type="xs:int" />
           <xs:element minOccurs="0" name="Image" nillable="true" type="xs:base64Binary" />
@@ -502,6 +574,12 @@
         </xs:sequence>
       </xs:complexType>
       <xs:element name="LoadPlaylistFailed" nillable="true" type="tns:LoadPlaylistFailed" />
+      <xs:complexType name="AddPlaylistFailed">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="AddPlaylistFailed" nillable="true" type="tns:AddPlaylistFailed" />
       <xs:complexType name="SearchResult">
         <xs:sequence>
           <xs:element minOccurs="0" name="Albums" nillable="true" type="tns:ArrayOfSinger_Album" />
@@ -617,11 +695,38 @@
   <wsdl:message name="IService1_GetPlaylistByID_LoadPlaylistFailedFault_FaultMessage">
     <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/PlayerService" name="detail" element="q7:LoadPlaylistFailed" />
   </wsdl:message>
+  <wsdl:message name="IService1_GetPlaylistInfoByID_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPlaylistInfoByID" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GetPlaylistInfoByID_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPlaylistInfoByIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GetPlaylistInfoByID_LoadPlaylistFailedFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/PlayerService" name="detail" element="q8:LoadPlaylistFailed" />
+  </wsdl:message>
   <wsdl:message name="IService1_GetSingerFull_InputMessage">
     <wsdl:part name="parameters" element="tns:GetSingerFull" />
   </wsdl:message>
   <wsdl:message name="IService1_GetSingerFull_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetSingerFullResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_AddPlaylistToFavorite_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddPlaylistToFavorite" />
+  </wsdl:message>
+  <wsdl:message name="IService1_AddPlaylistToFavorite_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddPlaylistToFavoriteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_RemoveFromPlaylistFavorite_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveFromPlaylistFavorite" />
+  </wsdl:message>
+  <wsdl:message name="IService1_RemoveFromPlaylistFavorite_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveFromPlaylistFavoriteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GetUserPlaylistsInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserPlaylistsInfo" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GetUserPlaylistsInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserPlaylistsInfoResponse" />
   </wsdl:message>
   <wsdl:message name="IService1_GetAllSingers_InputMessage">
     <wsdl:part name="parameters" element="tns:GetAllSingers" />
@@ -636,7 +741,7 @@
     <wsdl:part name="parameters" element="tns:GetRockTodayResponse" />
   </wsdl:message>
   <wsdl:message name="IService1_GetRockToday_LoadPlaylistFailedFault_FaultMessage">
-    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/PlayerService" name="detail" element="q8:LoadPlaylistFailed" />
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/PlayerService" name="detail" element="q9:LoadPlaylistFailed" />
   </wsdl:message>
   <wsdl:message name="IService1_GetPopToday_InputMessage">
     <wsdl:part name="parameters" element="tns:GetPopToday" />
@@ -645,7 +750,7 @@
     <wsdl:part name="parameters" element="tns:GetPopTodayResponse" />
   </wsdl:message>
   <wsdl:message name="IService1_GetPopToday_LoadPlaylistFailedFault_FaultMessage">
-    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/PlayerService" name="detail" element="q9:LoadPlaylistFailed" />
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/PlayerService" name="detail" element="q10:LoadPlaylistFailed" />
   </wsdl:message>
   <wsdl:message name="IService1_GetHouseToday_InputMessage">
     <wsdl:part name="parameters" element="tns:GetHouseToday" />
@@ -654,7 +759,7 @@
     <wsdl:part name="parameters" element="tns:GetHouseTodayResponse" />
   </wsdl:message>
   <wsdl:message name="IService1_GetHouseToday_LoadPlaylistFailedFault_FaultMessage">
-    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/PlayerService" name="detail" element="q10:LoadPlaylistFailed" />
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/PlayerService" name="detail" element="q11:LoadPlaylistFailed" />
   </wsdl:message>
   <wsdl:message name="IService1_GetTrackStream_InputMessage">
     <wsdl:part name="parameters" element="tns:GetTrackStream" />
@@ -669,7 +774,16 @@
     <wsdl:part name="parameters" element="tns:TempFuncResponse" />
   </wsdl:message>
   <wsdl:message name="IService1_TempFunc_LoginFailedFault_FaultMessage">
-    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/PlayerService" name="detail" element="q11:LoginFailed" />
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/PlayerService" name="detail" element="q12:LoginFailed" />
+  </wsdl:message>
+  <wsdl:message name="IService1_AddPlaylist_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddPlaylist" />
+  </wsdl:message>
+  <wsdl:message name="IService1_AddPlaylist_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddPlaylistResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_AddPlaylist_AddPlaylistFailedFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/PlayerService" name="detail" element="q13:AddPlaylistFailed" />
   </wsdl:message>
   <wsdl:message name="IService1_tmp_InputMessage">
     <wsdl:part name="parameters" element="tns:tmp" />
@@ -755,9 +869,26 @@
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetPlaylistByIDResponse" message="tns:IService1_GetPlaylistByID_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/IService1/GetPlaylistByIDLoadPlaylistFailedFault" name="LoadPlaylistFailedFault" message="tns:IService1_GetPlaylistByID_LoadPlaylistFailedFault_FaultMessage" />
     </wsdl:operation>
+    <wsdl:operation name="GetPlaylistInfoByID">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetPlaylistInfoByID" message="tns:IService1_GetPlaylistInfoByID_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetPlaylistInfoByIDResponse" message="tns:IService1_GetPlaylistInfoByID_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IService1/GetPlaylistInfoByIDLoadPlaylistFailedFault" name="LoadPlaylistFailedFault" message="tns:IService1_GetPlaylistInfoByID_LoadPlaylistFailedFault_FaultMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GetSingerFull">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetSingerFull" message="tns:IService1_GetSingerFull_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetSingerFullResponse" message="tns:IService1_GetSingerFull_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddPlaylistToFavorite">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/AddPlaylistToFavorite" message="tns:IService1_AddPlaylistToFavorite_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/AddPlaylistToFavoriteResponse" message="tns:IService1_AddPlaylistToFavorite_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveFromPlaylistFavorite">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/RemoveFromPlaylistFavorite" message="tns:IService1_RemoveFromPlaylistFavorite_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/RemoveFromPlaylistFavoriteResponse" message="tns:IService1_RemoveFromPlaylistFavorite_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserPlaylistsInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetUserPlaylistsInfo" message="tns:IService1_GetUserPlaylistsInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetUserPlaylistsInfoResponse" message="tns:IService1_GetUserPlaylistsInfo_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetAllSingers">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetAllSingers" message="tns:IService1_GetAllSingers_InputMessage" />
@@ -786,6 +917,11 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/TempFunc" message="tns:IService1_TempFunc_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/TempFuncResponse" message="tns:IService1_TempFunc_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/IService1/TempFuncLoginFailedFault" name="LoginFailedFault" message="tns:IService1_TempFunc_LoginFailedFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddPlaylist">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/AddPlaylist" message="tns:IService1_AddPlaylist_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/AddPlaylistResponse" message="tns:IService1_AddPlaylist_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IService1/AddPlaylistAddPlaylistFailedFault" name="AddPlaylistFailedFault" message="tns:IService1_AddPlaylist_AddPlaylistFailedFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="tmp">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/tmp" message="tns:IService1_tmp_InputMessage" />
@@ -944,8 +1080,47 @@
         <soap:fault use="literal" name="LoadPlaylistFailedFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
+    <wsdl:operation name="GetPlaylistInfoByID">
+      <soap:operation soapAction="http://tempuri.org/IService1/GetPlaylistInfoByID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="LoadPlaylistFailedFault">
+        <soap:fault use="literal" name="LoadPlaylistFailedFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
     <wsdl:operation name="GetSingerFull">
       <soap:operation soapAction="http://tempuri.org/IService1/GetSingerFull" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddPlaylistToFavorite">
+      <soap:operation soapAction="http://tempuri.org/IService1/AddPlaylistToFavorite" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveFromPlaylistFavorite">
+      <soap:operation soapAction="http://tempuri.org/IService1/RemoveFromPlaylistFavorite" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserPlaylistsInfo">
+      <soap:operation soapAction="http://tempuri.org/IService1/GetUserPlaylistsInfo" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -1017,6 +1192,18 @@
       </wsdl:output>
       <wsdl:fault name="LoginFailedFault">
         <soap:fault use="literal" name="LoginFailedFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AddPlaylist">
+      <soap:operation soapAction="http://tempuri.org/IService1/AddPlaylist" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="AddPlaylistFailedFault">
+        <soap:fault use="literal" name="AddPlaylistFailedFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="tmp">

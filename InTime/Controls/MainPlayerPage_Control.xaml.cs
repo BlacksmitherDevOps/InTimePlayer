@@ -26,6 +26,7 @@ namespace InTime.Controls
     {
         private AppState state;
         Window mainWindow;
+        Client_User profile;
         public MainPlayerPage_Control(Window window, Client_User user)
         {
             InitializeComponent();
@@ -53,6 +54,7 @@ namespace InTime.Controls
         #region Startupinit
         void InitUser(Client_User user)
         {
+            profile = user;
             ProfileEditItem.CurrentUser = user;
             Profile_tb.Text = user.NickName;
             AvatarBrush.ImageSource = ConvertToImage(user.Image);
@@ -78,28 +80,49 @@ namespace InTime.Controls
             recommendations_Control.Init();
             tape_panel.Child = recommendations_Control;
         }
+        async void ShowFavoritesBord()
+        {
+            //LoadingScreen();
+            //NoImageList_Control noImageList_Control = new NoImageList_Control();
+            //noImageList_Control.OpenSingerPage += Playlist_OpenSingerPage;
+            //noImageList_Control.UserPlaylistChanged += UserPlaylistChanged;
+            //Service1Client client = new Service1Client();
+            //Song_Playlist _Playlist = await client.GetPlaylistByIDAsync(id);
+            //client.Close();
+
+            //noImageList_Control.CurrentPlaylist = _Playlist;
+            //noImageList_Control.CurrentUser = profile;
+            //noImageList_Control.Init();
+            //tape_panel.Child = noImageList_Control;
+        }
         async void OpenPlaylist(int id)
         {
             PlaylistGrid playlist = new PlaylistGrid();
             playlist.OpenSingerPage += Playlist_OpenSingerPage;
+            playlist.UserPlaylistChanged += UserPlaylistChanged;
             Service1Client client = new Service1Client();
             Song_Playlist _Playlist = await client.GetPlaylistByIDAsync(id);
             client.Close();
+            
             playlist.CurrentPlaylist = _Playlist;
+            playlist.CurrentUser = profile;
             playlist.Init();
             tape_panel.Child = playlist;
         }
 
+        private async void UserPlaylistChanged()
+        {
+            Service1Client client = new Service1Client();
+            profile.Playlists = await client.GetUserPlaylistsInfoAsync(profile.ID);
+            client.Close();
+            PlaylistBox.ItemsSource = null;
+            PlaylistBox.ItemsSource = profile.Playlists;
+        }
+
         private async void Playlist_OpenSingerPage(int id)
         {
-            //LoadingScreen();
-
-            Service1Client client = new Service1Client();
-            Song_Singer singer;
-            singer = await client.GetSingerFullAsync(id);
-            SingerPage_Control singerPage_Control = new SingerPage_Control(singer);
-            singerPage_Control.ScrollCall += Grid_ScrollCall;
-            tape_panel.Child = singerPage_Control;
+            LoadingScreen();
+            OpenSingerPage(id);
         }
 
         private async void Recommendations_Control_OpenPlaylist(int id)
@@ -109,8 +132,12 @@ namespace InTime.Controls
         }
         async void OpenSingerPage(int id)
         {
-            
-            
+            Service1Client client = new Service1Client();
+            Song_Singer singer;
+            singer = await client.GetSingerFullAsync(id);
+            SingerPage_Control singerPage_Control = new SingerPage_Control(singer);
+            singerPage_Control.ScrollCall += Grid_ScrollCall;
+            tape_panel.Child = singerPage_Control;
         }
 
         #region PlaySong
@@ -261,6 +288,10 @@ namespace InTime.Controls
                 PlaylistBox.SelectedIndex = -1;
             }
             ((RadioButton)sender).IsChecked = true;
+            if (((RadioButton)sender).Content.ToString() == "Recomendations")
+                ShowRecomendsBord();
+            //if (((RadioButton)sender).Content.ToString() == "Favorites")
+                //ShowRecomendsBord();
         }
         private void PlaylistBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {

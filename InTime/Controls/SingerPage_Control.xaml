@@ -23,11 +23,11 @@
                 <ColumnDefinition Width="200"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Ellipse>
-                <Ellipse.Fill>
+            <Rectangle Margin="3,3,0,0">
+                <Rectangle.Fill>
                     <ImageBrush x:Name="img_brush"/>
-                </Ellipse.Fill>
-            </Ellipse>
+                </Rectangle.Fill>
+            </Rectangle>
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50"/>

@@ -424,6 +424,46 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+            <Style x:Key="item_Container" TargetType="{x:Type ListBoxItem}">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Foreground" Value="#FFFF0051"></Setter>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="25"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Rectangle Name="ckecked" VerticalAlignment="Center"
+                                           Height="30" Width="7" Fill="#FF1D1D1D"
+                                           HorizontalAlignment="Left" Grid.Column="0"/>
+                                <TextBlock Grid.Column="1"
+                                           Text="{Binding Title}" Foreground="{TemplateBinding Foreground}"
+                                           FontSize="16"/>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Trigger.EnterActions>
+                                        <BeginStoryboard Storyboard="{StaticResource ckecked_Selected_Animation}"/>
+                                    </Trigger.EnterActions>
+                                    <Trigger.ExitActions>
+                                        <BeginStoryboard Storyboard="{StaticResource ckecked_Unselected_Animation}"/>
+                                    </Trigger.ExitActions>
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Trigger.EnterActions>
+                                        <BeginStoryboard Storyboard="{StaticResource Text_Selected_Animation}"/>
+                                    </Trigger.EnterActions>
+                                    <Trigger.ExitActions>
+                                        <BeginStoryboard Storyboard="{StaticResource Text_Unselected_Animation}"/>
+                                    </Trigger.ExitActions>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
             <DataTemplate x:Key="itemSong_Template">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -471,7 +511,9 @@
                         </StackPanel>
                         <Grid Grid.Row="1">
                             <StackPanel x:Name="RadioBtnsPanel" Margin="0,15,0,0">
-                                <RadioButton Style="{StaticResource {x:Type ToggleButton}}" Content="Favorites" GroupName="System" Checked="ToggleButton_OnChecked" Background="{x:Null}"/>
+                                <RadioButton Style="{StaticResource {x:Type ToggleButton}}"
+                                             Content="Favorites" GroupName="System"
+                                             Checked="ToggleButton_OnChecked" Background="{x:Null}"/>
                                 <RadioButton Style="{StaticResource {x:Type ToggleButton}}" Content="Recomendations" GroupName="System" Checked="ToggleButton_OnChecked"/>
                                 <RadioButton Style="{StaticResource {x:Type ToggleButton}}" Content="Recently Listened" GroupName="System" Checked="ToggleButton_OnChecked"/>
                                 <RadioButton Style="{StaticResource {x:Type ToggleButton}}" Content="Albums" GroupName="System" Checked="ToggleButton_OnChecked"/>
@@ -489,7 +531,10 @@
                             </Grid.RowDefinitions>
                             <Label Content="Playlists" Grid.Row="0" VerticalAlignment="Top" Margin="15,0,0,0" FontSize="18"
                                    Foreground="White" FontFamily="Segoe UI Semibold" FontStyle="Italic"/>
-                            <ListBox x:Name="PlaylistBox" VerticalAlignment="Stretch" Grid.Row="1" BorderBrush="Transparent" SelectionChanged="PlaylistBox_OnSelectionChanged">
+                            <ListBox x:Name="PlaylistBox" ItemContainerStyle="{StaticResource item_Container}"
+                                     VerticalAlignment="Stretch" Grid.Row="1" 
+                                     BorderBrush="Transparent"
+                                     SelectionChanged="PlaylistBox_OnSelectionChanged">
                                 
                                 <ListBox.ContextMenu>
                                     <ContextMenu Background="#8d0d26" Foreground="White" Placement="Mouse" Padding="0">

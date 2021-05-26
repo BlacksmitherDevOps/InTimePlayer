@@ -22,6 +22,7 @@ namespace InTime
     public delegate void ScrollCall(bool flag);
     public delegate void OpenPlaylist(int id);
     public delegate void OpenSingerPage(int id);
+    public delegate void UserPlaylistChanged();
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
