@@ -19,6 +19,7 @@ using InTime.ServiceReference1;
 
 namespace InTime
 {
+    public delegate void DragStarted(int id,int _idPlaylist);
     public delegate void ScrollCall(bool flag);
     public delegate void OpenPlaylist(int id);
     public delegate void OpenSingerPage(int id);

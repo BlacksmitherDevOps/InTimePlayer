@@ -1118,6 +1118,51 @@ namespace InTime.ServiceReference1 {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="DeleteFailed", Namespace="http://schemas.datacontract.org/2004/07/PlayerService")]
+    [System.SerializableAttribute()]
+    public partial class DeleteFailed : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string MessageField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Message {
+            get {
+                return this.MessageField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MessageField, value) != true)) {
+                    this.MessageField = value;
+                    this.RaisePropertyChanged("Message");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AddPlaylistFailed", Namespace="http://schemas.datacontract.org/2004/07/PlayerService")]
     [System.SerializableAttribute()]
     public partial class AddPlaylistFailed : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -1341,6 +1386,7 @@ namespace InTime.ServiceReference1 {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(InTime.ServiceReference1.RegFailed))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(InTime.ServiceReference1.RecoverFailed))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(InTime.ServiceReference1.LoadPlaylistFailed))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(InTime.ServiceReference1.DeleteFailed))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(InTime.ServiceReference1.AddPlaylistFailed))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(InTime.ServiceReference1.SearchResult))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(byte[]))]
@@ -1388,11 +1434,43 @@ namespace InTime.ServiceReference1 {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/AddPlaylistToFavorite", ReplyAction="http://tempuri.org/IService1/AddPlaylistToFavoriteResponse")]
         System.Threading.Tasks.Task<bool> AddPlaylistToFavoriteAsync(int userID, int playlistID);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/AddTrackToFavorite", ReplyAction="http://tempuri.org/IService1/AddTrackToFavoriteResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(InTime.ServiceReference1.LoadPlaylistFailed), Action="http://tempuri.org/IService1/AddTrackToFavoriteLoadPlaylistFailedFault", Name="LoadPlaylistFailed", Namespace="http://schemas.datacontract.org/2004/07/PlayerService")]
+        bool AddTrackToFavorite(int userID, int trackID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/AddTrackToFavorite", ReplyAction="http://tempuri.org/IService1/AddTrackToFavoriteResponse")]
+        System.Threading.Tasks.Task<bool> AddTrackToFavoriteAsync(int userID, int trackID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/AddAlbumToFavorite", ReplyAction="http://tempuri.org/IService1/AddAlbumToFavoriteResponse")]
+        bool AddAlbumToFavorite(int userID, int playlistID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/AddAlbumToFavorite", ReplyAction="http://tempuri.org/IService1/AddAlbumToFavoriteResponse")]
+        System.Threading.Tasks.Task<bool> AddAlbumToFavoriteAsync(int userID, int playlistID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/CloneAlbumToFavoritePlaylist", ReplyAction="http://tempuri.org/IService1/CloneAlbumToFavoritePlaylistResponse")]
+        bool CloneAlbumToFavoritePlaylist(int userID, int albumID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/CloneAlbumToFavoritePlaylist", ReplyAction="http://tempuri.org/IService1/CloneAlbumToFavoritePlaylistResponse")]
+        System.Threading.Tasks.Task<bool> CloneAlbumToFavoritePlaylistAsync(int userID, int albumID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ClonePlaylistToFavoritePlaylist", ReplyAction="http://tempuri.org/IService1/ClonePlaylistToFavoritePlaylistResponse")]
+        bool ClonePlaylistToFavoritePlaylist(int userID, int playlistID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ClonePlaylistToFavoritePlaylist", ReplyAction="http://tempuri.org/IService1/ClonePlaylistToFavoritePlaylistResponse")]
+        System.Threading.Tasks.Task<bool> ClonePlaylistToFavoritePlaylistAsync(int userID, int playlistID);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/RemoveFromPlaylistFavorite", ReplyAction="http://tempuri.org/IService1/RemoveFromPlaylistFavoriteResponse")]
         bool RemoveFromPlaylistFavorite(int userID, int playlistID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/RemoveFromPlaylistFavorite", ReplyAction="http://tempuri.org/IService1/RemoveFromPlaylistFavoriteResponse")]
         System.Threading.Tasks.Task<bool> RemoveFromPlaylistFavoriteAsync(int userID, int playlistID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/RemovePlaylist", ReplyAction="http://tempuri.org/IService1/RemovePlaylistResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(InTime.ServiceReference1.DeleteFailed), Action="http://tempuri.org/IService1/RemovePlaylistDeleteFailedFault", Name="DeleteFailed", Namespace="http://schemas.datacontract.org/2004/07/PlayerService")]
+        bool RemovePlaylist(int playlistID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/RemovePlaylist", ReplyAction="http://tempuri.org/IService1/RemovePlaylistResponse")]
+        System.Threading.Tasks.Task<bool> RemovePlaylistAsync(int playlistID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetUserPlaylistsInfo", ReplyAction="http://tempuri.org/IService1/GetUserPlaylistsInfoResponse")]
         InTime.ServiceReference1.Song_Playlist[] GetUserPlaylistsInfo(int userID);
@@ -1647,12 +1725,52 @@ namespace InTime.ServiceReference1 {
             return base.Channel.AddPlaylistToFavoriteAsync(userID, playlistID);
         }
         
+        public bool AddTrackToFavorite(int userID, int trackID) {
+            return base.Channel.AddTrackToFavorite(userID, trackID);
+        }
+        
+        public System.Threading.Tasks.Task<bool> AddTrackToFavoriteAsync(int userID, int trackID) {
+            return base.Channel.AddTrackToFavoriteAsync(userID, trackID);
+        }
+        
+        public bool AddAlbumToFavorite(int userID, int playlistID) {
+            return base.Channel.AddAlbumToFavorite(userID, playlistID);
+        }
+        
+        public System.Threading.Tasks.Task<bool> AddAlbumToFavoriteAsync(int userID, int playlistID) {
+            return base.Channel.AddAlbumToFavoriteAsync(userID, playlistID);
+        }
+        
+        public bool CloneAlbumToFavoritePlaylist(int userID, int albumID) {
+            return base.Channel.CloneAlbumToFavoritePlaylist(userID, albumID);
+        }
+        
+        public System.Threading.Tasks.Task<bool> CloneAlbumToFavoritePlaylistAsync(int userID, int albumID) {
+            return base.Channel.CloneAlbumToFavoritePlaylistAsync(userID, albumID);
+        }
+        
+        public bool ClonePlaylistToFavoritePlaylist(int userID, int playlistID) {
+            return base.Channel.ClonePlaylistToFavoritePlaylist(userID, playlistID);
+        }
+        
+        public System.Threading.Tasks.Task<bool> ClonePlaylistToFavoritePlaylistAsync(int userID, int playlistID) {
+            return base.Channel.ClonePlaylistToFavoritePlaylistAsync(userID, playlistID);
+        }
+        
         public bool RemoveFromPlaylistFavorite(int userID, int playlistID) {
             return base.Channel.RemoveFromPlaylistFavorite(userID, playlistID);
         }
         
         public System.Threading.Tasks.Task<bool> RemoveFromPlaylistFavoriteAsync(int userID, int playlistID) {
             return base.Channel.RemoveFromPlaylistFavoriteAsync(userID, playlistID);
+        }
+        
+        public bool RemovePlaylist(int playlistID) {
+            return base.Channel.RemovePlaylist(playlistID);
+        }
+        
+        public System.Threading.Tasks.Task<bool> RemovePlaylistAsync(int playlistID) {
+            return base.Channel.RemovePlaylistAsync(playlistID);
         }
         
         public InTime.ServiceReference1.Song_Playlist[] GetUserPlaylistsInfo(int userID) {

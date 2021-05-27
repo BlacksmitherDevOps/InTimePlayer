@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.ServiceModel;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -26,7 +27,6 @@ namespace InTime.Controls
     {
         private AppState state;
         Window mainWindow;
-        Client_User profile;
         public MainPlayerPage_Control(Window window, Client_User user)
         {
             InitializeComponent();
@@ -37,7 +37,6 @@ namespace InTime.Controls
             ShowRecomendsBord();
         }
         /* Service methods
-
         AddNewSinger - добавить нового исполнителя
         AddNewTrack - добавить новый трек
         AddNewAlbum - добавить новый альбом
@@ -48,13 +47,11 @@ namespace InTime.Controls
         (Системная)DownloadFile - темп функция, используется для правок на сервере(загружает файл)
         Search - возвращает результат поиска
         GetSingerFull - врзвращает полную информацию об исполнителе со всеми альбомами и песнями
-
         */
 
         #region Startupinit
         void InitUser(Client_User user)
         {
-            profile = user;
             ProfileEditItem.CurrentUser = user;
             Profile_tb.Text = user.NickName;
             AvatarBrush.ImageSource = ConvertToImage(user.Image);
@@ -81,52 +78,50 @@ namespace InTime.Controls
             recommendations_Control.Init();
             tape_panel.Child = recommendations_Control;
         }
-        async void ShowFavoritesBord()
+        public async void ShowFavoritesBord()
         {
-            //LoadingScreen();
-            //NoImageList_Control noImageList_Control = new NoImageList_Control();
-            //noImageList_Control.OpenSingerPage += Playlist_OpenSingerPage;
-            //noImageList_Control.UserPlaylistChanged += UserPlaylistChanged;
-            //Service1Client client = new Service1Client();
-            //Song_Playlist _Playlist = await client.GetPlaylistByIDAsync(id);
-            //client.Close();
-
-            //noImageList_Control.CurrentPlaylist = _Playlist;
-            //noImageList_Control.CurrentUser = profile;
-            //noImageList_Control.Init();
-            //tape_panel.Child = noImageList_Control;
+            LoadingScreen();
+            NoImageList_Control noImageList_Control = new NoImageList_Control();
+            noImageList_Control.OpenSingerPage += Playlist_OpenSingerPage;
+            noImageList_Control.UserPlaylistChanged += UserPlaylistChanged;
+            Service1Client client = new Service1Client();
+            noImageList_Control.CurrentPlaylist = await client.GetFavoritePlaylistAsync(state.user.ID);
+            noImageList_Control.PlaylistsInfo = state.Playlists;
+            noImageList_Control.CurrentUser1 = state.user;
+            noImageList_Control.OnDragStarted += Playlist_OnDragStarted;
+            noImageList_Control.Init();
+            tape_panel.Child = noImageList_Control;
+            client.Close();
         }
+
         async void OpenPlaylist(int id)
         {
             PlaylistGrid playlist = new PlaylistGrid(state.user);
             playlist.PlaylistsInfo = state.Playlists;
             playlist.OpenSingerPage += Playlist_OpenSingerPage;
             playlist.UserPlaylistChanged += UserPlaylistChanged;
+            playlist.OnDragStarted += Playlist_OnDragStarted;
             Service1Client client = new Service1Client();
             Song_Playlist _Playlist = await client.GetPlaylistByIDAsync(id);
             client.Close();
-            
             playlist.CurrentPlaylist = _Playlist;
-            playlist.CurrentUser = profile;
+            playlist.CurrentUser = state.user;
             playlist.Init();
             tape_panel.Child = playlist;
         }
-
         private async void UserPlaylistChanged()
         {
             Service1Client client = new Service1Client();
-            profile.Playlists = await client.GetUserPlaylistsInfoAsync(profile.ID);
+            state.user.Playlists = await client.GetUserPlaylistsInfoAsync(state.user.ID);
             client.Close();
             PlaylistBox.ItemsSource = null;
-            PlaylistBox.ItemsSource = profile.Playlists;
+            PlaylistBox.ItemsSource = state.user.Playlists;
         }
-
         private async void Playlist_OpenSingerPage(int id)
         {
             LoadingScreen();
             OpenSingerPage(id);
         }
-
         private async void Recommendations_Control_OpenPlaylist(int id)
         {
             LoadingScreen();
@@ -237,7 +232,15 @@ namespace InTime.Controls
             }
         }
 
-      
+        private async void ShowAlbumsControl()
+        {
+            
+        }
+
+        private async void ShowRecentlyPlayedControl()
+        {
+
+        } 
         #region Sound
         /// <summary>
         /// Изменение состояния картинки громкости
@@ -292,17 +295,28 @@ namespace InTime.Controls
             ((RadioButton)sender).IsChecked = true;
             if (((RadioButton)sender).Content.ToString() == "Recomendations")
                 ShowRecomendsBord();
-            //if (((RadioButton)sender).Content.ToString() == "Favorites")
-                //ShowRecomendsBord();
+            else if (((RadioButton)sender).Content.ToString() == "Albums")
+                ShowRecomendsBord();
+            else if (((RadioButton)sender).Content.ToString() == "Recently listened")
+                ShowRecomendsBord();
+            else if (((RadioButton)sender).Content.ToString() == "Favorites")
+                ShowFavoritesBord();
         }
         private void PlaylistBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            foreach (var child in RadioBtnsPanel.Children)
+            if (PlaylistBox.SelectedIndex != -1)
             {
-                (child as RadioButton).IsChecked = false;
+                foreach (var child in RadioBtnsPanel.Children)
+                {
+                    (child as RadioButton).IsChecked = false;
+                }
+
+                OpenPlaylist((PlaylistBox.SelectedItem as Song_Playlist).ID);
             }
+
         }
 
+       
         #endregion
         #region MediaButtonsAnimation
 
@@ -516,8 +530,8 @@ namespace InTime.Controls
 
         private void AddPlaylistItemOnChangesAccepted()
         {
+            Console.WriteLine(AddPlaylistItem.Playlist.ID);
             state.playlists.Add(AddPlaylistItem.Playlist);
-
             PlaylistBox.ItemsSource = state.playlists;
             AddPlaylistItem.Playlist = new Song_Playlist();
             AddPlaylistItem.Playlist.Creator = state.user;
@@ -552,14 +566,37 @@ namespace InTime.Controls
         #endregion
         #region PlaylistsContextMenu
 
-        private void PlaylistDeleteMenu(object sender, RoutedEventArgs e)
+        private async void PlaylistDeleteMenu(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                Service1Client client = new Service1Client();
+                if (await client.DeletePlaylistAsync((PlaylistBox.SelectedItem as Song_Playlist).ID))
+                {
+                    state.Playlists.Remove((PlaylistBox.SelectedItem as Song_Playlist));
+                    if (PlaylistBox.SelectedIndex > 0)
+                    {
+                        OpenPlaylist((PlaylistBox.Items[PlaylistBox.SelectedIndex-1] as Song_Playlist).ID);
+                        PlaylistBox.SelectedIndex -= 1;
+                    }
+                    else
+                    {
+                        OpenPlaylist((PlaylistBox.Items[PlaylistBox.SelectedIndex+1] as Song_Playlist).ID);
+                        PlaylistBox.SelectedIndex += 1;
+                    }
+                    PlaylistBox.ItemsSource = state.Playlists;
+                    //PlaylistBox.Items.Remove(PlaylistBox.SelectedItem as Song_Playlist);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void PlaylistEditmenu(object sender, RoutedEventArgs e)
         {
-            AddPlaylistBtnClick(this,null);
+           AddPlaylistBtnClick(this,null);
         }
 
         #endregion
@@ -614,5 +651,87 @@ namespace InTime.Controls
         {
             PlaySongByID(21);
         }
+
+
+        private void RigtMouseBtnDown(object sender, MouseButtonEventArgs e)
+        {
+        }
+
+        #region DragDrop
+        private void Playlist_OnDragStarted(int id, int _idPlaylist)
+        {
+            foreach (RadioButton button in RadioBtnsPanel.Children)
+            {
+                if (button.Content.ToString() != "Favorites")
+                {
+                    button.IsEnabled = false;
+                    button.Foreground = new SolidColorBrush(Colors.Gray);
+                }
+            }
+            state.DraggedIndex = id;
+        }
+
+        private async void OnItemDrop(object sender, DragEventArgs e)
+        {
+            try
+            {
+                if (state.DraggedIndex != -1)
+                {
+                    Service1Client client = new Service1Client();
+                    Console.WriteLine(state.DraggedIndex);
+                    Console.WriteLine(((sender as ListBoxItem).Content as Song_Playlist).Title);
+                    Console.WriteLine(
+                        await client.AddSongToPlaylistAsync(state.DraggedIndex,
+                            ((sender as ListBoxItem).Content as Song_Playlist).ID));
+                    state.DraggedIndex = -1;
+                }
+            }
+            catch (FaultException<LoadPlaylistFailed> ex)
+            {
+                Console.WriteLine(ex.Detail.Message);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private async void FavoritesPlaylistDrop(object sender, DragEventArgs e)
+        {
+            try
+            {
+                if (state.DraggedIndex != -1)
+                {
+                    Service1Client client = new Service1Client();
+                    await client.AddTrackToFavoriteAsync(state.user.ID,
+                        state.DraggedIndex);
+                    state.DraggedIndex = -1;
+                }
+            }
+            catch (FaultException<LoadPlaylistFailed> ex)
+            {
+                Console.WriteLine(ex.Detail.Message);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void OwnerGridMouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Released)
+            {
+                foreach (RadioButton button in RadioBtnsPanel.Children)
+                {
+                    button.IsEnabled = true;
+                    button.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF0051"));
+                }
+            }
+        }
+
+
+        #endregion
+
     }
 }

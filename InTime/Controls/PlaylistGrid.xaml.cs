@@ -3,6 +3,8 @@ using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.Contracts;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +27,7 @@ namespace InTime.Controls
     /// </summary>
     public partial class PlaylistGrid : UserControl
     {
+        public event DragStarted OnDragStarted;
         public event ScrollCall ScrollCall;
         public event OpenSingerPage OpenSingerPage;
         public event UserPlaylistChanged UserPlaylistChanged; 
@@ -35,7 +38,11 @@ namespace InTime.Controls
         }
         public void Init()
         {
-            ImageSource = CurrentPlaylist.Image;
+            if (CurrentPlaylist.Image == null)
+            {
+                ImageSource = File.ReadAllBytes(Environment.CurrentDirectory.Substring(0, Environment.CurrentDirectory.LastIndexOf("InTime")) + @"InTime\Assets\playlisticon.png");
+            }
+            else ImageSource = CurrentPlaylist.Image;
             PlaylistName = CurrentPlaylist.Title;
             SongsCount = CurrentPlaylist.Songs.Length;
             SongList.ItemsSource = CurrentPlaylist.Songs;
@@ -43,7 +50,8 @@ namespace InTime.Controls
             playlistDur_tb.Text = GetDuration(CurrentPlaylist).ToString(@"hh\:mm\:ss");
             playlistCnt_tb.Text = CurrentPlaylist.Songs.Length.ToString();
             fav_btn.Content = CurrentUser.Playlists.Any(c => c.ID == CurrentPlaylist.ID) ? "Remove from favorites" : "Add to favorites";
-            
+            if (!User.Playlists.Contains(CurrentPlaylist)) SongMenu.Items.RemoveAt(0);
+
         }
         TimeSpan GetDuration(Song_Playlist playlist)
         {
@@ -314,6 +322,36 @@ namespace InTime.Controls
         private void ContextMenuOnMouseDown(object sender, MouseButtonEventArgs e)
         {
             
+        }
+
+        private void RemoveSongClick(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private async void AddSongToFavorites(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Service1Client client = new Service1Client();
+                await client.AddTrackToFavoriteAsync(User.ID, (SongList.SelectedItem as Song).ID);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                if (SongList.SelectedItem != null)
+                {
+                    OnDragStarted?.Invoke((SongList.SelectedItem as Song).ID,CurrentPlaylist.ID);
+                    DragDrop.DoDragDrop(SongList, (SongList.SelectedItem), DragDropEffects.Copy);
+                }
+            }
         }
     }
 }

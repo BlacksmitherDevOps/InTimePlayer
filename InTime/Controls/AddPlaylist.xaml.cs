@@ -63,6 +63,7 @@ namespace InTime.Controls
                     Service1Client client = new Service1Client();
                     Playlist.Title = PlaylistNameBox.Text;
                     Song_Playlist tmp = await client.AddPlaylistAsync(Playlist);
+                    Playlist = tmp;
                     OnChangesAccepted?.Invoke();
                     AddPlaylistErrorBox.Visibility = Visibility.Hidden;
                 }

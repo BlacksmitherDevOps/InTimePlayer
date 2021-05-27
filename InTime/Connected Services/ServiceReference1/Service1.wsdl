@@ -241,6 +241,66 @@
           </xs:sequence>
         </xs:complexType>
       </xs:element>
+      <xs:element name="AddTrackToFavorite">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="userID" type="xs:int" />
+            <xs:element minOccurs="0" name="trackID" type="xs:int" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="AddTrackToFavoriteResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="AddTrackToFavoriteResult" type="xs:boolean" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="AddAlbumToFavorite">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="userID" type="xs:int" />
+            <xs:element minOccurs="0" name="playlistID" type="xs:int" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="AddAlbumToFavoriteResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="AddAlbumToFavoriteResult" type="xs:boolean" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CloneAlbumToFavoritePlaylist">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="userID" type="xs:int" />
+            <xs:element minOccurs="0" name="albumID" type="xs:int" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CloneAlbumToFavoritePlaylistResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="CloneAlbumToFavoritePlaylistResult" type="xs:boolean" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ClonePlaylistToFavoritePlaylist">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="userID" type="xs:int" />
+            <xs:element minOccurs="0" name="playlistID" type="xs:int" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ClonePlaylistToFavoritePlaylistResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="ClonePlaylistToFavoritePlaylistResult" type="xs:boolean" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
       <xs:element name="RemoveFromPlaylistFavorite">
         <xs:complexType>
           <xs:sequence>
@@ -253,6 +313,20 @@
         <xs:complexType>
           <xs:sequence>
             <xs:element minOccurs="0" name="RemoveFromPlaylistFavoriteResult" type="xs:boolean" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="RemovePlaylist">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="playlistID" type="xs:int" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="RemovePlaylistResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="RemovePlaylistResult" type="xs:boolean" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -617,6 +691,12 @@
         </xs:sequence>
       </xs:complexType>
       <xs:element name="LoadPlaylistFailed" nillable="true" type="tns:LoadPlaylistFailed" />
+      <xs:complexType name="DeleteFailed">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="DeleteFailed" nillable="true" type="tns:DeleteFailed" />
       <xs:complexType name="AddPlaylistFailed">
         <xs:sequence>
           <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
@@ -768,11 +848,47 @@
   <wsdl:message name="IService1_AddPlaylistToFavorite_OutputMessage">
     <wsdl:part name="parameters" element="tns:AddPlaylistToFavoriteResponse" />
   </wsdl:message>
+  <wsdl:message name="IService1_AddTrackToFavorite_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddTrackToFavorite" />
+  </wsdl:message>
+  <wsdl:message name="IService1_AddTrackToFavorite_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddTrackToFavoriteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_AddTrackToFavorite_LoadPlaylistFailedFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/PlayerService" name="detail" element="q10:LoadPlaylistFailed" />
+  </wsdl:message>
+  <wsdl:message name="IService1_AddAlbumToFavorite_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddAlbumToFavorite" />
+  </wsdl:message>
+  <wsdl:message name="IService1_AddAlbumToFavorite_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddAlbumToFavoriteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_CloneAlbumToFavoritePlaylist_InputMessage">
+    <wsdl:part name="parameters" element="tns:CloneAlbumToFavoritePlaylist" />
+  </wsdl:message>
+  <wsdl:message name="IService1_CloneAlbumToFavoritePlaylist_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CloneAlbumToFavoritePlaylistResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_ClonePlaylistToFavoritePlaylist_InputMessage">
+    <wsdl:part name="parameters" element="tns:ClonePlaylistToFavoritePlaylist" />
+  </wsdl:message>
+  <wsdl:message name="IService1_ClonePlaylistToFavoritePlaylist_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ClonePlaylistToFavoritePlaylistResponse" />
+  </wsdl:message>
   <wsdl:message name="IService1_RemoveFromPlaylistFavorite_InputMessage">
     <wsdl:part name="parameters" element="tns:RemoveFromPlaylistFavorite" />
   </wsdl:message>
   <wsdl:message name="IService1_RemoveFromPlaylistFavorite_OutputMessage">
     <wsdl:part name="parameters" element="tns:RemoveFromPlaylistFavoriteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_RemovePlaylist_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemovePlaylist" />
+  </wsdl:message>
+  <wsdl:message name="IService1_RemovePlaylist_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemovePlaylistResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_RemovePlaylist_DeleteFailedFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/PlayerService" name="detail" element="q11:DeleteFailed" />
   </wsdl:message>
   <wsdl:message name="IService1_GetUserPlaylistsInfo_InputMessage">
     <wsdl:part name="parameters" element="tns:GetUserPlaylistsInfo" />
@@ -793,7 +909,7 @@
     <wsdl:part name="parameters" element="tns:GetRockTodayResponse" />
   </wsdl:message>
   <wsdl:message name="IService1_GetRockToday_LoadPlaylistFailedFault_FaultMessage">
-    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/PlayerService" name="detail" element="q10:LoadPlaylistFailed" />
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/PlayerService" name="detail" element="q12:LoadPlaylistFailed" />
   </wsdl:message>
   <wsdl:message name="IService1_GetPopToday_InputMessage">
     <wsdl:part name="parameters" element="tns:GetPopToday" />
@@ -802,7 +918,7 @@
     <wsdl:part name="parameters" element="tns:GetPopTodayResponse" />
   </wsdl:message>
   <wsdl:message name="IService1_GetPopToday_LoadPlaylistFailedFault_FaultMessage">
-    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/PlayerService" name="detail" element="q11:LoadPlaylistFailed" />
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/PlayerService" name="detail" element="q13:LoadPlaylistFailed" />
   </wsdl:message>
   <wsdl:message name="IService1_GetHouseToday_InputMessage">
     <wsdl:part name="parameters" element="tns:GetHouseToday" />
@@ -811,7 +927,7 @@
     <wsdl:part name="parameters" element="tns:GetHouseTodayResponse" />
   </wsdl:message>
   <wsdl:message name="IService1_GetHouseToday_LoadPlaylistFailedFault_FaultMessage">
-    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/PlayerService" name="detail" element="q12:LoadPlaylistFailed" />
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/PlayerService" name="detail" element="q14:LoadPlaylistFailed" />
   </wsdl:message>
   <wsdl:message name="IService1_GetTrackStream_InputMessage">
     <wsdl:part name="parameters" element="tns:GetTrackStream" />
@@ -826,7 +942,7 @@
     <wsdl:part name="parameters" element="tns:TempFuncResponse" />
   </wsdl:message>
   <wsdl:message name="IService1_TempFunc_LoginFailedFault_FaultMessage">
-    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/PlayerService" name="detail" element="q13:LoginFailed" />
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/PlayerService" name="detail" element="q15:LoginFailed" />
   </wsdl:message>
   <wsdl:message name="IService1_AddPlaylist_InputMessage">
     <wsdl:part name="parameters" element="tns:AddPlaylist" />
@@ -835,7 +951,7 @@
     <wsdl:part name="parameters" element="tns:AddPlaylistResponse" />
   </wsdl:message>
   <wsdl:message name="IService1_AddPlaylist_AddPlaylistFailedFault_FaultMessage">
-    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/PlayerService" name="detail" element="q14:AddPlaylistFailed" />
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/PlayerService" name="detail" element="q16:AddPlaylistFailed" />
   </wsdl:message>
   <wsdl:message name="IService1_AddSongToPlaylist_InputMessage">
     <wsdl:part name="parameters" element="tns:AddSongToPlaylist" />
@@ -951,9 +1067,31 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/AddPlaylistToFavorite" message="tns:IService1_AddPlaylistToFavorite_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/AddPlaylistToFavoriteResponse" message="tns:IService1_AddPlaylistToFavorite_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="AddTrackToFavorite">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/AddTrackToFavorite" message="tns:IService1_AddTrackToFavorite_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/AddTrackToFavoriteResponse" message="tns:IService1_AddTrackToFavorite_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IService1/AddTrackToFavoriteLoadPlaylistFailedFault" name="LoadPlaylistFailedFault" message="tns:IService1_AddTrackToFavorite_LoadPlaylistFailedFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddAlbumToFavorite">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/AddAlbumToFavorite" message="tns:IService1_AddAlbumToFavorite_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/AddAlbumToFavoriteResponse" message="tns:IService1_AddAlbumToFavorite_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CloneAlbumToFavoritePlaylist">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/CloneAlbumToFavoritePlaylist" message="tns:IService1_CloneAlbumToFavoritePlaylist_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/CloneAlbumToFavoritePlaylistResponse" message="tns:IService1_CloneAlbumToFavoritePlaylist_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ClonePlaylistToFavoritePlaylist">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/ClonePlaylistToFavoritePlaylist" message="tns:IService1_ClonePlaylistToFavoritePlaylist_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/ClonePlaylistToFavoritePlaylistResponse" message="tns:IService1_ClonePlaylistToFavoritePlaylist_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="RemoveFromPlaylistFavorite">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/RemoveFromPlaylistFavorite" message="tns:IService1_RemoveFromPlaylistFavorite_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/RemoveFromPlaylistFavoriteResponse" message="tns:IService1_RemoveFromPlaylistFavorite_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemovePlaylist">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/RemovePlaylist" message="tns:IService1_RemovePlaylist_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/RemovePlaylistResponse" message="tns:IService1_RemovePlaylist_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IService1/RemovePlaylistDeleteFailedFault" name="DeleteFailedFault" message="tns:IService1_RemovePlaylist_DeleteFailedFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetUserPlaylistsInfo">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetUserPlaylistsInfo" message="tns:IService1_GetUserPlaylistsInfo_InputMessage" />
@@ -1199,6 +1337,45 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="AddTrackToFavorite">
+      <soap:operation soapAction="http://tempuri.org/IService1/AddTrackToFavorite" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="LoadPlaylistFailedFault">
+        <soap:fault use="literal" name="LoadPlaylistFailedFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AddAlbumToFavorite">
+      <soap:operation soapAction="http://tempuri.org/IService1/AddAlbumToFavorite" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CloneAlbumToFavoritePlaylist">
+      <soap:operation soapAction="http://tempuri.org/IService1/CloneAlbumToFavoritePlaylist" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ClonePlaylistToFavoritePlaylist">
+      <soap:operation soapAction="http://tempuri.org/IService1/ClonePlaylistToFavoritePlaylist" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="RemoveFromPlaylistFavorite">
       <soap:operation soapAction="http://tempuri.org/IService1/RemoveFromPlaylistFavorite" style="document" />
       <wsdl:input>
@@ -1207,6 +1384,18 @@
       <wsdl:output>
         <soap:body use="literal" />
       </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemovePlaylist">
+      <soap:operation soapAction="http://tempuri.org/IService1/RemovePlaylist" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DeleteFailedFault">
+        <soap:fault use="literal" name="DeleteFailedFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="GetUserPlaylistsInfo">
       <soap:operation soapAction="http://tempuri.org/IService1/GetUserPlaylistsInfo" style="document" />

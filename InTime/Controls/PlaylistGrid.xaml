@@ -69,6 +69,7 @@
             </Storyboard>
 
             <Style x:Key="item_Container" TargetType="{x:Type ListBoxItem}">
+                <EventSetter Event="MouseMove" Handler="MouseMove"/>
                 <Setter Property="Background" Value="#FF2E2A2A"/>
                 <Setter Property="Foreground" Value="White"/>
                 <Setter Property="BorderThickness" Value="0,0,0,0"/>
@@ -224,16 +225,16 @@
             <TextBlock Grid.Column="4" Text="Duration" FontSize="20"
                        Margin="7,8,0,0" Foreground="#FFE6DDDD"/>
         </Grid>
-        <ListBox x:Name="SongList" ItemsSource="{Binding}" ItemContainerStyle="{StaticResource item_Container}"
+        <ListBox x:Name="SongList" ItemsSource="{Binding}" ItemContainerStyle="{StaticResource item_Container}" 
                  ItemTemplate="{StaticResource item_Template}" Grid.Row="2" Grid.ColumnSpan="2" ContextMenuOpening="OnContextMenuOpening">
             <ListBox.ContextMenu>
-                <ContextMenu Name="SongMenu">
-                    <MenuItem Header="Remove from this playlist"/>
-                    <MenuItem Header="Add to favorites"/>
-                    <Separator/>
-                    <MenuItem Name="Playlists" Header="Add to playlist">
+                <ContextMenu Name="SongMenu" Background="#8d0d26">
+                    <MenuItem Background="#8d0d26" Header="Remove from this playlist" Click="RemoveSongClick" />
+                    <MenuItem Background="#8d0d26" Header="Add to favorites" Click="AddSongToFavorites"/>
+                   
+                    <MenuItem Background="#8d0d26" Name="Playlists" Header="Add to playlist">
                     </MenuItem>
-                    <Separator/>
+                    
                 </ContextMenu>
             </ListBox.ContextMenu>
         </ListBox>

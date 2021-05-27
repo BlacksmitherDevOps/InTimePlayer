@@ -2,6 +2,7 @@
 using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,30 +27,49 @@ namespace InTime.Controls
         public event ScrollCall ScrollCall;
         public event OpenSingerPage OpenSingerPage;
         public event UserPlaylistChanged UserPlaylistChanged;
+        public event DragStarted OnDragStarted;
         public NoImageList_Control()
         {
             InitializeComponent();
         }
         public void Init()
         {
+            if(CurrentPlaylist!=null)
             SongList.ItemsSource = CurrentPlaylist.Songs;
             List_name.Text = CurrentPlaylist.Title;
+            if (CurrentPlaylist.Title != "Favorite tracks")
+            {
+                SongMenu.Items.RemoveAt(0);
+            }
         }
-        public Client_User CurrentUser
+        public Client_User CurrentUser1
         {
-            get { return (Client_User)GetValue(CurrentUserProperty); }
-            set { SetValue(CurrentUserProperty, value); }
+            get { return (Client_User)GetValue(CurrentUser1Property); }
+            set { SetValue(CurrentUser1Property, value); }
         }
 
-        public static readonly DependencyProperty CurrentUserProperty =
-            DependencyProperty.Register("CurrentUser", typeof(Client_User), typeof(PlaylistGrid));
+        public static readonly DependencyProperty CurrentUser1Property =
+            DependencyProperty.Register("CurrentUser1", typeof(Client_User), typeof(PlaylistGrid));
         public Song_Playlist CurrentPlaylist
         {
-            get { return (Song_Playlist)GetValue(PlaylistProperty); }
-            set { SetValue(PlaylistProperty, value); }
+            get { return (Song_Playlist)GetValue(CurrentPlaylistProperty); }
+            set { SetValue(CurrentPlaylistProperty, value); }
         }
-        public static readonly DependencyProperty PlaylistProperty =
-            DependencyProperty.Register("Playlist", typeof(Song_Playlist), typeof(PlaylistGrid));
+        public static readonly DependencyProperty CurrentPlaylistProperty =
+            DependencyProperty.Register("CurrentPlaylist", typeof(Song_Playlist), typeof(PlaylistGrid));
+
+
+
+        public ObservableCollection<Song_Playlist> PlaylistsInfo
+        {
+            get { return (ObservableCollection<Song_Playlist>)GetValue(PlaylistsInfoProperty); }
+            set { SetValue(PlaylistsInfoProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty PlaylistsInfoProperty =
+            DependencyProperty.Register("PlaylistsInfo", typeof(ObservableCollection<Song_Playlist>), typeof(NoImageList_Control));
+
 
 
         private void ListBoxItem_MouseEnter(object sender, MouseEventArgs e)
@@ -177,5 +197,50 @@ namespace InTime.Controls
             OnSinger = false;
             TextBlock textBlock = (TextBlock)sender;
             textBlock.TextDecorations = null;
-        }    }
+        }
+
+        private void SongListContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            Playlists.Items.Clear();
+            foreach (var song in PlaylistsInfo)
+            {
+                MenuItem tmp = new MenuItem();
+                tmp.Click += AddSongToPlaylist;
+                tmp.Header = song.Title;
+                tmp.Tag = song;
+                Playlists.Items.Add(tmp);
+            }
+        }
+
+        private void AddSongToPlaylist(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Service1Client client = new Service1Client();
+                client.AddSongToPlaylist((SongList.SelectedItem as Song).ID,
+                    ((sender as MenuItem).Tag as Song_Playlist).ID);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"{ex.Message}");
+            }
+        }
+
+        private void OnItemDrag(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                if (SongList.SelectedItem != null)
+                {
+                    OnDragStarted?.Invoke((SongList.SelectedItem as Song).ID, CurrentPlaylist.ID);
+                    DragDrop.DoDragDrop(SongList, (SongList.SelectedItem), DragDropEffects.Copy);
+                }
+            }
+        }
+
+        private void RemoveSongFromFavorites(object sender, RoutedEventArgs e)
+        {
+            
+        }
+    }
 }

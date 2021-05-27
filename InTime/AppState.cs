@@ -40,6 +40,7 @@ namespace InTime
             playlists = new ObservableCollection<Song_Playlist>(user.Playlists);
         }
 
+        public int DraggedIndex { get; set; }
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {
             if (PropertyChanged != null)

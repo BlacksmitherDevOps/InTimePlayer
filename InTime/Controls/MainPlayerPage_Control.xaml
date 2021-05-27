@@ -425,8 +425,10 @@
                 </Setter>
             </Style>
             <Style x:Key="item_Container" TargetType="{x:Type ListBoxItem}">
+                <EventSetter Event="Drop" Handler="OnItemDrop"></EventSetter>
                 <Setter Property="Background" Value="Transparent"/>
                 <Setter Property="Foreground" Value="#FFFF0051"></Setter>
+                <EventSetter Event="MouseRightButtonDown" Handler="RigtMouseBtnDown"></EventSetter>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type ListBoxItem}">
@@ -438,8 +440,8 @@
                                 <Rectangle Name="ckecked" VerticalAlignment="Center"
                                            Height="30" Width="7" Fill="#FF1D1D1D"
                                            HorizontalAlignment="Left" Grid.Column="0"/>
-                                <TextBlock Grid.Column="1"
-                                           Text="{Binding Title}" Foreground="{TemplateBinding Foreground}"
+                                <TextBlock Grid.Column="1"  
+                                           Text="{Binding Title}" Foreground="{TemplateBinding Foreground}" 
                                            FontSize="16"/>
                             </Grid>
                             <ControlTemplate.Triggers>
@@ -478,7 +480,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid Name="OwnerGrid" Background="#FF272626">
+    <Grid Name="OwnerGrid" Background="#FF272626" MouseMove="OwnerGridMouseMove">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="0"/>
@@ -511,8 +513,8 @@
                         </StackPanel>
                         <Grid Grid.Row="1">
                             <StackPanel x:Name="RadioBtnsPanel" Margin="0,15,0,0">
-                                <RadioButton Style="{StaticResource {x:Type ToggleButton}}"
-                                             Content="Favorites" GroupName="System"
+                                <RadioButton Style="{StaticResource {x:Type ToggleButton}}" AllowDrop="True"
+                                             Content="Favorites" GroupName="System" Drop="FavoritesPlaylistDrop"
                                              Checked="ToggleButton_OnChecked" Background="{x:Null}"/>
                                 <RadioButton Style="{StaticResource {x:Type ToggleButton}}" Content="Recomendations" GroupName="System" Checked="ToggleButton_OnChecked"/>
                                 <RadioButton Style="{StaticResource {x:Type ToggleButton}}" Content="Recently Listened" GroupName="System" Checked="ToggleButton_OnChecked"/>
@@ -533,7 +535,7 @@
                                    Foreground="White" FontFamily="Segoe UI Semibold" FontStyle="Italic"/>
                             <ListBox x:Name="PlaylistBox" ItemContainerStyle="{StaticResource item_Container}"
                                      VerticalAlignment="Stretch" Grid.Row="1" 
-                                     BorderBrush="Transparent"
+                                     BorderBrush="Transparent" AllowDrop="True"
                                      SelectionChanged="PlaylistBox_OnSelectionChanged">
                                 
                                 <ListBox.ContextMenu>

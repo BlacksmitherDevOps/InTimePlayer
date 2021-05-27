@@ -15,8 +15,8 @@
             <Style x:Key="text" TargetType="{x:Type TextBlock}">
                 <Setter Property="Height" Value="30"/>
                 <Setter Property="Width" Value="{Binding Path=Text.Lenght}"/>
-                <Setter Property="Foreground" Value="Red"/>
-                <Setter Property="FontSize" Value="22"/>
+                <Setter Property="Foreground" Value="#FFFF0051"/>
+                <Setter Property="FontSize" Value="44"/>
             </Style>
 
 
@@ -68,6 +68,7 @@
             </Storyboard>
 
             <Style x:Key="item_Container" TargetType="{x:Type ListBoxItem}">
+                <EventSetter Event="MouseMove" Handler="OnItemDrag"></EventSetter>
                 <Setter Property="Background" Value="#FF2E2A2A"/>
                 <Setter Property="Foreground" Value="White"/>
                 <Setter Property="BorderThickness" Value="0,0,0,0"/>
@@ -162,15 +163,15 @@
             <ColumnDefinition Width="233*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="60"/>
+            <RowDefinition Height="100"/>
             <RowDefinition Height="40"/>
             <RowDefinition MinHeight="230"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Grid.ColumnSpan="2">
             <Grid Grid.Column="1">
                 <Grid>
-                    <TextBlock x:Name="List_name" Margin="30,0,0,0" FontSize="24"
-                               Foreground="White" Style="{StaticResource text}"/>
+                    <TextBlock x:Name="List_name" Margin="60,10,0,10" VerticalAlignment="Center"
+                                Style="{StaticResource text}" Height="Auto"/>
                 </Grid>
             </Grid>
         </Grid>
@@ -193,8 +194,16 @@
             <TextBlock Grid.Column="4" Text="Duration" FontSize="20"
                        Margin="7,8,0,0" Foreground="#FFE6DDDD"/>
         </Grid>
-        <ListBox x:Name="SongList" ItemsSource="{Binding}" ItemContainerStyle="{StaticResource item_Container}"
-                 ItemTemplate="{StaticResource item_Template}" Grid.Row="2" Grid.ColumnSpan="2">
+        <ListBox  x:Name="SongList" ItemsSource="{Binding}" ItemContainerStyle="{StaticResource item_Container}"
+                 ItemTemplate="{StaticResource item_Template}" Grid.Row="2" Grid.ColumnSpan="2" ContextMenuOpening="SongListContextMenuOpening">
+            <ListBox.ContextMenu>
+                <ContextMenu Name="SongMenu" Background="#8d0d26">
+                    <MenuItem Background="#8d0d26" Header="Remove from favorites" Click="RemoveSongFromFavorites"/>
+                    <MenuItem Background="#8d0d26" Name="Playlists" Header="Add to playlist">
+                    </MenuItem>
+
+                </ContextMenu>
+            </ListBox.ContextMenu>
         </ListBox>
     </Grid>
 </UserControl>
