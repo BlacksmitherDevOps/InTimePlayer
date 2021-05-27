@@ -89,7 +89,6 @@
                                         CornerRadius="0"
                                         BorderThickness="{TemplateBinding BorderThickness}">
                                 <ContentPresenter HorizontalAlignment="Stretch" Margin="{TemplateBinding Padding}"/>
-                                
                             </Border>
                         </ControlTemplate>
                     </Setter.Value>
@@ -119,8 +118,9 @@
                                        Margin="7,3,0,0" TextTrimming="WordEllipsis"/>
                     <TextBlock Grid.Column="4" Text="{Binding Duration,StringFormat=mm\\:ss}" FontSize="20"
                                        Margin="7,3,0,0" TextTrimming="WordEllipsis"/>
-                    <Border Name="more_Bord" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <materialDesign:PackIcon Visibility="Hidden" Kind="DotsHorizontal" Width="25" Height="25"/>
+                    <Border Name="more_Bord" Grid.Column="5" Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                            MouseDown="ContextMenuOnMouseDown">
+                        <materialDesign:PackIcon Visibility="Hidden" Kind="DotsHorizontal" Width="25" Height="25" />
                     </Border>
                 </Grid>
             </DataTemplate>
@@ -225,7 +225,17 @@
                        Margin="7,8,0,0" Foreground="#FFE6DDDD"/>
         </Grid>
         <ListBox x:Name="SongList" ItemsSource="{Binding}" ItemContainerStyle="{StaticResource item_Container}"
-                 ItemTemplate="{StaticResource item_Template}" Grid.Row="2" Grid.ColumnSpan="2">
+                 ItemTemplate="{StaticResource item_Template}" Grid.Row="2" Grid.ColumnSpan="2" ContextMenuOpening="OnContextMenuOpening">
+            <ListBox.ContextMenu>
+                <ContextMenu Name="SongMenu">
+                    <MenuItem Header="Remove from this playlist"/>
+                    <MenuItem Header="Add to favorites"/>
+                    <Separator/>
+                    <MenuItem Name="Playlists" Header="Add to playlist">
+                    </MenuItem>
+                    <Separator/>
+                </ContextMenu>
+            </ListBox.ContextMenu>
         </ListBox>
         <Expander
             HorizontalAlignment="Stretch"

@@ -2,6 +2,7 @@
 using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using InTime.ServiceReference1;
 
 namespace InTime.Controls
 {
@@ -26,9 +28,10 @@ namespace InTime.Controls
         public event ScrollCall ScrollCall;
         public event OpenSingerPage OpenSingerPage;
         public event UserPlaylistChanged UserPlaylistChanged; 
-        public PlaylistGrid()
+        public PlaylistGrid(Client_User user)
         {
             InitializeComponent();
+            this.User = user;
         }
         public void Init()
         {
@@ -257,6 +260,60 @@ namespace InTime.Controls
             }
             UserPlaylistChanged?.Invoke();
             client.Close();
+            
+        }
+        public Client_User User
+        {
+            get { return (Client_User)GetValue(UserProperty); }
+            set { SetValue(UserProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for User.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty UserProperty =
+            DependencyProperty.Register("User", typeof(Client_User), typeof(PlaylistGrid));
+
+
+        private void OnContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            Playlists.Items.Clear();
+            foreach (var song in PlaylistsInfo)
+            {
+                MenuItem tmp = new MenuItem();
+                tmp.Click += AddToPlaylistClick;
+                tmp.Header = song.Title;
+                tmp.Tag = song;
+                Playlists.Items.Add(tmp);
+            }
+        }
+
+        private void AddToPlaylistClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Service1Client client = new Service1Client();
+                client.AddSongToPlaylist((SongList.SelectedItem as Song).ID,
+                    ((sender as MenuItem).Tag as Song_Playlist).ID);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"{ex.Message}");
+            }
+        }
+
+        public ObservableCollection<Song_Playlist> PlaylistsInfo
+        {
+            get { return (ObservableCollection<Song_Playlist>)GetValue(PlaylistsInfoProperty); }
+            set { SetValue(PlaylistsInfoProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty PlaylistsInfoProperty =
+            DependencyProperty.Register("PlaylistsInfo", typeof(ObservableCollection<Song_Playlist>), typeof(PlaylistGrid));
+
+
+        private void ContextMenuOnMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            
         }
     }
 }

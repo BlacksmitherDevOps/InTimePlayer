@@ -58,7 +58,8 @@ namespace InTime.Controls
             ProfileEditItem.CurrentUser = user;
             Profile_tb.Text = user.NickName;
             AvatarBrush.ImageSource = ConvertToImage(user.Image);
-            PlaylistBox.ItemsSource = user.Playlists;
+            PlaylistBox.ItemsSource = state.user.Playlists;
+            AddPlaylistItem.Playlist.Creator = user;
         }
         public BitmapSource ConvertToImage(byte[] arr)
         {
@@ -97,7 +98,8 @@ namespace InTime.Controls
         }
         async void OpenPlaylist(int id)
         {
-            PlaylistGrid playlist = new PlaylistGrid();
+            PlaylistGrid playlist = new PlaylistGrid(state.user);
+            playlist.PlaylistsInfo = state.Playlists;
             playlist.OpenSingerPage += Playlist_OpenSingerPage;
             playlist.UserPlaylistChanged += UserPlaylistChanged;
             Service1Client client = new Service1Client();
@@ -190,7 +192,7 @@ namespace InTime.Controls
         #endregion
         void testInfoBord()
         {
-            PlaylistGrid grid = new PlaylistGrid();
+            PlaylistGrid grid = new PlaylistGrid(state.user);
             grid.ScrollCall += Grid_ScrollCall;
             grid.PlaylistDuration=DateTime.Now;
             grid.PlaylistName = "Custom playlist";
@@ -485,11 +487,12 @@ namespace InTime.Controls
             BottomPanel.Opacity = 0.7;
             Panel.SetZIndex(GridContainer, 2);
             Panel.SetZIndex(AddPlaylistItem, 2);
+            
         }
 
         private void Window_OnPlaylistAdded(string name, string path)
         {
-            Console.WriteLine(name, "  ", path);
+            
         }
 
 
@@ -513,12 +516,15 @@ namespace InTime.Controls
 
         private void AddPlaylistItemOnChangesAccepted()
         {
-            Console.WriteLine($"{AddPlaylistItem.PlaylistName} {AddPlaylistItem.ImagePath}");
+            state.playlists.Add(AddPlaylistItem.Playlist);
+
+            PlaylistBox.ItemsSource = state.playlists;
+            AddPlaylistItem.Playlist = new Song_Playlist();
+            AddPlaylistItem.Playlist.Creator = state.user;
             ImageBrush ib = new ImageBrush();
             ib.ImageSource = new BitmapImage(new Uri(Environment.CurrentDirectory.Substring(0, Environment.CurrentDirectory.LastIndexOf("InTime")) + @"InTime\Assets\playlisticon.png"));
             AddPlaylistItem.PlaylistImg.Fill = ib;
             AddPlaylistItem.PlaylistNameBox.Text = "";
-            AddPlaylistItem.PlaylistName = "";
             AddPlaylistItem.Visibility = Visibility.Hidden;
             LeftPanel.Opacity = 1;
             CentralPanel.Opacity = 1;
@@ -529,11 +535,12 @@ namespace InTime.Controls
 
         private void AddPlaylistItemOnWindowClosed()
         {
+            AddPlaylistItem.Playlist = new Song_Playlist();
+            AddPlaylistItem.Playlist.Creator = state.user;
             ImageBrush ib = new ImageBrush();
             ib.ImageSource = new BitmapImage(new Uri(Environment.CurrentDirectory.Substring(0, Environment.CurrentDirectory.LastIndexOf("InTime")) + @"InTime\Assets\playlisticon.png"));
             AddPlaylistItem.PlaylistImg.Fill = ib;
             AddPlaylistItem.PlaylistNameBox.Text = "";
-            AddPlaylistItem.PlaylistName = "";
             AddPlaylistItem.Visibility = Visibility.Hidden;
             LeftPanel.Opacity = 1;
             CentralPanel.Opacity = 1;
