@@ -21,6 +21,10 @@ namespace InTime
 {
     public delegate void DragStarted(int id,int _idPlaylist);
     public delegate void ScrollCall(bool flag);
+    public delegate void PlaySong(Song song);
+    public delegate void CurrentPlaylistUPD(ListBox listBox);
+    public delegate void QueueUpdate(Queue<Song> list);
+    public delegate void PauseSong();
     public delegate void OpenPlaylist(int id);
     public delegate void OpenSingerPage(int id);
     public delegate void UserPlaylistChanged();

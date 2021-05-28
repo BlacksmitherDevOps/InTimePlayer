@@ -9,7 +9,8 @@
              Margin="20,10,20,10">
     <Grid x:Name="main_grid" Background="#FF403B3B"
           MouseEnter="main_grid_MouseEnter" MouseLeave="main_grid_MouseLeave" Cursor="Hand"
-          PreviewMouseWheel="main_grid_PreviewMouseWheel" MouseDown="main_grid_MouseDown">
+          PreviewMouseWheel="main_grid_PreviewMouseWheel" MouseMove="main_grid_MouseMove"
+          MouseLeftButtonDown="main_grid_MouseLeftButtonDown" MouseLeftButtonUp="main_grid_MouseDown">
         
         <Grid.RowDefinitions>
             <RowDefinition Height="4*"/>

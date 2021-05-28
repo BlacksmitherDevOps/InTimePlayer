@@ -30,7 +30,8 @@ namespace InTime.Controls
         {
             InitializeComponent();
             id = playlist.ID;
-            main_image.Source = ConvertToImage(playlist.Image);
+            if(playlist.Image != null)
+                main_image.Source = ConvertToImage(playlist.Image);
             playlist_name_tb.Text = playlist.Title;
             author_name_tb.Text = playlist.Creator.NickName;
         }
@@ -80,7 +81,18 @@ namespace InTime.Controls
 
         private void main_grid_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            OpenPlaylist?.Invoke(id);
+            if(click)
+                OpenPlaylist?.Invoke(id);
+        }
+        bool click;
+        private void main_grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            click = true;
+        }
+
+        private void main_grid_MouseMove(object sender, MouseEventArgs e)
+        {
+            click = false;
         }
     }
 }

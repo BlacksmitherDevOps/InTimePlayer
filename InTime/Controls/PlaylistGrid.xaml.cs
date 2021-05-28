@@ -27,7 +27,11 @@ namespace InTime.Controls
     /// </summary>
     public partial class PlaylistGrid : UserControl
     {
-        public event DragStarted OnDragStarted;
+        public event DragStarted OnDragStarted; 
+        public event CurrentPlaylistUPD CurrentListboxUPD; 
+        public event QueueUpdate QueueUpdate; 
+        public event PlaySong PlaySong;
+        public event PauseSong PauseSong;
         public event ScrollCall ScrollCall;
         public event OpenSingerPage OpenSingerPage;
         public event UserPlaylistChanged UserPlaylistChanged; 
@@ -49,7 +53,10 @@ namespace InTime.Controls
             playlistName_tb.Text = CurrentPlaylist.Title;
             playlistDur_tb.Text = GetDuration(CurrentPlaylist).ToString(@"hh\:mm\:ss");
             playlistCnt_tb.Text = CurrentPlaylist.Songs.Length.ToString();
-            fav_btn.Content = CurrentUser.Playlists.Any(c => c.ID == CurrentPlaylist.ID) ? "Remove from favorites" : "Add to favorites";
+
+            fav_btn.Visibility = CurrentUser.Playlists.Any(c => c.ID == CurrentPlaylist.ID) ? Visibility.Hidden : Visibility.Visible;
+            fav_btn.Content = CurrentUser.FavoritePlaylists.Any(c => c.ID == CurrentPlaylist.ID) ? "Remove from favorites" : "Add to favorites";
+
             if (!User.Playlists.Contains(CurrentPlaylist)) SongMenu.Items.RemoveAt(0);
 
         }
@@ -162,10 +169,6 @@ namespace InTime.Controls
         }
         private void ListBoxItem_Unselected(object sender, RoutedEventArgs e)
         {
-            
-            Border playBord = GetPlayBorder((ListBoxItem)sender);
-            if (playBord != null)
-                ((PackIcon)playBord.Child).Kind = PackIconKind.PlayCircleOutline;
             ListBoxItem_MouseLeave(sender, null);
         }
         private void ListBoxItem_Selected(object sender, RoutedEventArgs e)
@@ -175,13 +178,20 @@ namespace InTime.Controls
                 Song song = ((Song)((ListBoxItem)sender).Content);
                 Console.WriteLine(song.Singers[0]);
                 OpenSingerPage?.Invoke(song.Singers[0].ID);
-
                 return;
             }
+            Console.WriteLine(sender);
+            ListBoxItem_MouseEnter(sender, null);
             ((ListBoxItem)sender).Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB8FF8F"));
+            ((ListBoxItem)sender).Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF746767"));
             Border playBord = GetPlayBorder((ListBoxItem)sender);
+            Border moreBord = GetMoreBorder((ListBoxItem)sender);
             if (playBord != null)
-                ((PackIcon)playBord.Child).Kind = PackIconKind.PauseCircleOutline;
+            {
+                playBord.Child.Visibility = Visibility.Visible;
+                moreBord.Child.Visibility = Visibility.Visible;
+            }
+            CurrentListboxUPD?.Invoke((ListBox)FindParent<ListBox>((ListBoxItem)sender));
         }
         Border GetPlayBorder(ListBoxItem item)
         {
@@ -258,7 +268,7 @@ namespace InTime.Controls
             Service1Client client = new Service1Client();
             if (fav_btn.Content.ToString() != "Remove from favorites")
             {
-                await client.AddPlaylistToFavoriteAsync(CurrentUser.ID, CurrentPlaylist.ID);
+                await client.ClonePlaylistToFavoritePlaylistAsync(CurrentUser.ID, CurrentPlaylist.ID);
                 fav_btn.Content = "Remove from favorites";
             }
             else
@@ -351,6 +361,45 @@ namespace InTime.Controls
                     OnDragStarted?.Invoke((SongList.SelectedItem as Song).ID,CurrentPlaylist.ID);
                     DragDrop.DoDragDrop(SongList, (SongList.SelectedItem), DragDropEffects.Copy);
                 }
+            }
+        }
+        Border playBord;
+        private void PlayBord_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (playBord != null)
+            {
+                if (playBord != sender as Border)
+                    IconChange();
+            }
+
+            playBord = sender as Border;
+
+            QueueUpdate?.Invoke(CreateQueue());
+            IconChange();
+        }
+        Queue<Song> CreateQueue()
+        {
+            int index = SongList.SelectedIndex;
+            Queue<Song> songs = new Queue<Song>();
+            foreach (Song item in SongList.Items)
+            {
+                if (SongList.Items.IndexOf(item) >= index)
+                    songs.Enqueue(item);
+            }
+
+            return songs;
+        }
+        void IconChange()
+        {
+            if (((PackIcon)playBord.Child).Kind != PackIconKind.PauseCircleOutline)
+            {
+                PlaySong?.Invoke(SongList.SelectedItem as Song);
+                ((PackIcon)playBord.Child).Kind = PackIconKind.PauseCircleOutline;
+            }
+            else
+            {
+                PauseSong?.Invoke();
+                ((PackIcon)playBord.Child).Kind = PackIconKind.PlayCircleOutline;
             }
         }
     }

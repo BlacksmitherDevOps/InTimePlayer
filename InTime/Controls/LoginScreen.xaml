@@ -19,6 +19,14 @@
     </Window.Resources>
 
     <Grid Background="#FF2E2A2A">
+        <Border x:Name="loadBord" Visibility="Hidden" Panel.ZIndex="2" Opacity="0.5" Background="#FF2E2A2A">
+            <ProgressBar
+                Style="{StaticResource MaterialDesignCircularProgressBar}"
+                Value="0"
+                Foreground="White"
+                Width="50" Height="50"
+                IsIndeterminate="True" />
+        </Border>
         <Border Name="upper_bord" Background="Transparent" MouseDown="upper_bord_MouseDown"
                     MouseLeave="upper_bord_MouseLeave" MouseMove="upper_bord_MouseMove"
                     MouseUp="upper_bord_MouseUp" Height="50" 

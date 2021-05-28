@@ -26,7 +26,7 @@
                    MouseLeave="ImageRectangle_OnMouseLeave" Name="ImageRect" 
                    Panel.ZIndex="1" >
             <Rectangle.Fill>
-                <ImageBrush ImageSource="/Assets/song.jpg" ></ImageBrush>
+                <ImageBrush ImageSource="{Binding Image, ElementName=itemplate}" ></ImageBrush>
             </Rectangle.Fill>
         </Rectangle>
             <Grid Name="TextGrid" Grid.Column="1" Background="Transparent">

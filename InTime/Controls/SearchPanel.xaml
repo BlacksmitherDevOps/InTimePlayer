@@ -41,9 +41,13 @@
                     <TextBlock Text="Songs" FontSize="30" FontWeight="Bold"
                                HorizontalAlignment="Left" Margin="30,0,0,0"
                                Style="{StaticResource ForegroundTB_Style}"/>
-                    <TextBlock Text="View all" FontSize="28" 
-                               HorizontalAlignment="Right" Margin="0,0,30,0" 
+                    <Border Background="Transparent" Cursor="Hand" 
+                            MouseLeftButtonUp="Border_MouseLeftButtonUp" Margin="0,0,30,0">
+                        <TextBlock Text="View all" FontSize="28" 
+                               HorizontalAlignment="Right"
                                VerticalAlignment="Center" Style="{StaticResource AllSongs}"/>
+                    </Border>
+                    
                     <Separator VerticalAlignment="Bottom" Margin="0,0,10,0"
                                Background="#FFFF0051"/>
                 </Grid>

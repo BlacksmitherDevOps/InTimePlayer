@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Media;
 using System.Net;
 using System.ServiceModel;
 using System.Text;
@@ -78,6 +79,17 @@ namespace InTime.Controls
             recommendations_Control.Init();
             tape_panel.Child = recommendations_Control;
         }
+        async void ShowfavoritePlaylistsBord()
+        {
+            FavoritePlaylists favoritePlaylists = new FavoritePlaylists();
+            favoritePlaylists.OpenPlaylist += OpenPlaylist;
+            Service1Client client = new Service1Client();
+            favoritePlaylists.AddList(await client.GetFavoritePlaylistsAsync(state.user.ID));
+            favoritePlaylists.Init();
+            tape_panel.Child = favoritePlaylists;
+        }
+
+
         public async void ShowFavoritesBord()
         {
             LoadingScreen();
@@ -85,7 +97,27 @@ namespace InTime.Controls
             noImageList_Control.OpenSingerPage += Playlist_OpenSingerPage;
             noImageList_Control.UserPlaylistChanged += UserPlaylistChanged;
             Service1Client client = new Service1Client();
-            noImageList_Control.CurrentPlaylist = await client.GetFavoritePlaylistAsync(state.user.ID);
+            noImageList_Control.CurrentPlaylist = await client.GetFavoriteTracksPlaylistAsync(state.user.ID);
+            if (tape_panel.Child.GetType() != typeof(ProgressBar))
+                return;
+            noImageList_Control.PlaylistsInfo = state.Playlists;
+            noImageList_Control.CurrentUser1 = state.user;
+            noImageList_Control.OnDragStarted += Playlist_OnDragStarted;
+            noImageList_Control.Init();
+            tape_panel.Child = noImageList_Control;
+            client.Close();
+        }
+
+        public async void ShowRecentlyPlayedBord()
+        {
+            LoadingScreen();
+            NoImageList_Control noImageList_Control = new NoImageList_Control();
+            noImageList_Control.OpenSingerPage += Playlist_OpenSingerPage;
+            noImageList_Control.UserPlaylistChanged += UserPlaylistChanged;
+            Service1Client client = new Service1Client();
+            noImageList_Control.CurrentPlaylist = await client.GetRecentlyPlayedAsync(state.user.ID);
+            if (tape_panel.Child.GetType() != typeof(ProgressBar))
+                return;
             noImageList_Control.PlaylistsInfo = state.Playlists;
             noImageList_Control.CurrentUser1 = state.user;
             noImageList_Control.OnDragStarted += Playlist_OnDragStarted;
@@ -96,23 +128,67 @@ namespace InTime.Controls
 
         async void OpenPlaylist(int id)
         {
+            LoadingScreen();
             PlaylistGrid playlist = new PlaylistGrid(state.user);
             playlist.PlaylistsInfo = state.Playlists;
             playlist.OpenSingerPage += Playlist_OpenSingerPage;
             playlist.UserPlaylistChanged += UserPlaylistChanged;
             playlist.OnDragStarted += Playlist_OnDragStarted;
+            playlist.PlaySong += Playlist_PlaySong;
+            playlist.QueueUpdate += Playlist_QueueUpdate;
+            playlist.CurrentListboxUPD += Playlist_CurrentListboxUPD; ;
+            playlist.PauseSong += Playlist_PauseSong;
             Service1Client client = new Service1Client();
             Song_Playlist _Playlist = await client.GetPlaylistByIDAsync(id);
+            if (tape_panel.Child.GetType() != typeof(ProgressBar))
+                return;
             client.Close();
             playlist.CurrentPlaylist = _Playlist;
             playlist.CurrentUser = state.user;
             playlist.Init();
             tape_panel.Child = playlist;
         }
+
+        private void Playlist_CurrentListboxUPD(ListBox listBox)
+        {
+            state.current_ListBox = listBox;
+        }
+
+        private void Playlist_QueueUpdate(Queue<Song> list)
+        {
+            state.Queue = list;
+            foreach (Song item in state.Queue)
+            {
+                Console.WriteLine(item.Title);
+            }
+        }
+
+        private void Playlist_PauseSong()
+        {
+            player.Pause();
+        }
+        Song Current_Song;
+        private void Playlist_PlaySong(Song song)
+        {
+            if(Current_Song == null)
+            {
+                Current_Song = song;
+                PlaySongByID(Current_Song.ID);
+                return;
+            }
+            if (song.ID != Current_Song.ID)
+            {
+                Current_Song = song;
+                PlaySongByID(Current_Song.ID);
+            }
+            else player.Play();
+        }
+
         private async void UserPlaylistChanged()
         {
             Service1Client client = new Service1Client();
             state.user.Playlists = await client.GetUserPlaylistsInfoAsync(state.user.ID);
+            state.user.FavoritePlaylists = await client.GetUserFavoritePlaylistsInfoAsync(state.user.ID);
             client.Close();
             PlaylistBox.ItemsSource = null;
             PlaylistBox.ItemsSource = state.user.Playlists;
@@ -138,86 +214,94 @@ namespace InTime.Controls
         }
 
         #region PlaySong
+        MediaPlayer player = new MediaPlayer();
         async void PlaySongByID(int ID)
         {
             Service1Client client = new Service1Client();
-            PlayMp3FromUrl(await client.GetTrackStreamAsync(ID));
+            string path = Environment.CurrentDirectory + "\\temp.mp3";
+            UpdateBottomPanel();
+            byte[] file = await client.GetTrackAsync(ID);
+            if (state.Queue.Peek().ID != ID)
+                return;
+            File.WriteAllBytes(path, file);
+            if (state.Queue.Peek().ID != ID)
+                return;
+            PlaySong(path);
             client.Close();
         }
-        private Stream ms = new MemoryStream();
-        public async void PlayMp3FromUrl(Stream song_stream)
+        async void UpdateBottomPanel()
         {
-            new Thread(delegate (object o)
-            {
-                using (var stream = song_stream)
-                {
-                    byte[] buffer = new byte[65536]; // 64KB chunks
-                    int read;
-                    while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
-                    {
-                        var pos = ms.Position;
-                        ms.Position = ms.Length;
-                        ms.Write(buffer, 0, read);
-                        ms.Position = pos;
-                    }
-                }
-            }).Start();
+            singerBottomField.Text = Current_Song.Singers[0].Name;
+            songBottomField.Text = Current_Song.Title;
+            Service1Client client = new Service1Client();
+            songImg.Source = ConvertToImage(await client.GetAlbumImageAsync(Current_Song.Album.ID));
+            bottomDuration_slider.Maximum = Current_Song.Duration.TotalSeconds;
+            bottomMaxDuration_tb.Text = Current_Song.Duration.ToString(@"mm\:ss");
+        }
+        void PlaySong(string path)
+        {
+            player.Open(new Uri(path));
+            player.Volume = 0.3;
+            player.MediaEnded += Player_MediaEnded;
+            player.Play();
+        }
 
-            // Pre-buffering some data to allow NAudio to start playing
-            new Thread(delegate (object o)
+        private void Player_MediaEnded(object sender, EventArgs e)
+        {
+            state.Queue.Dequeue();
+            if (state.Queue.Count > 0)
             {
-                while (ms.Length < 65536 * 10)
-                Thread.Sleep(1000);
-
-            ms.Position = 0;
-            using (WaveStream blockAlignedStream = new BlockAlignReductionStream(WaveFormatConversionStream.CreatePcmStream(new Mp3FileReader(ms))))
-            {
-                using (WaveOut waveOut = new WaveOut(WaveCallbackInfo.FunctionCallback()))
-                {
-                    waveOut.Init(blockAlignedStream);
-                    waveOut.Play();
-                    while (waveOut.PlaybackState == PlaybackState.Playing)
-                    {
-                        System.Threading.Thread.Sleep(100);
-                    }
-                }
+                state.current_ListBox.SelectedIndex = state.current_ListBox.Items.IndexOf(state.Queue.Peek());
+                PlaySongByID(state.Queue.Peek().ID);
             }
-            }).Start();
+        }
+        private void Next_btn_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            player.Close();
+            Player_MediaEnded(null,null);
         }
         #endregion
-        void testInfoBord()
-        {
-            PlaylistGrid grid = new PlaylistGrid(state.user);
-            grid.ScrollCall += Grid_ScrollCall;
-            grid.PlaylistDuration=DateTime.Now;
-            grid.PlaylistName = "Custom playlist";
-            grid.SongsCount = 322;
-            List<PlaylistItem> lst = new List<PlaylistItem>();
-            lst.Add(new PlaylistItem { SongAlbum = "Best Album", SongArtist = "Rammstein", ID = 2, SongDuration = DateTime.Now, SongTitle = "Sonne" });
-            lst.Add(new PlaylistItem { SongAlbum = "Best Album", SongArtist = "Rammstein", ID = 2, SongDuration = DateTime.Now, SongTitle = "Sonne" });
-            lst.Add(new PlaylistItem { SongAlbum = "Best Album", SongArtist = "Rammstein", ID = 2, SongDuration = DateTime.Now, SongTitle = "Sonne" });
-            lst.Add(new PlaylistItem { SongAlbum = "Best Album", SongArtist = "Rammstein", ID = 2, SongDuration = DateTime.Now, SongTitle = "Sonne" });
-            lst.Add(new PlaylistItem { SongAlbum = "Best Album", SongArtist = "Rammstein", ID = 2, SongDuration = DateTime.Now, SongTitle = "Sonne" });
-            lst.Add(new PlaylistItem { SongAlbum = "Best Album", SongArtist = "Rammstein", ID = 2, SongDuration = DateTime.Now, SongTitle = "Sonne" });
-            lst.Add(new PlaylistItem { SongAlbum = "Best Album", SongArtist = "Rammstein", ID = 2, SongDuration = DateTime.Now, SongTitle = "Sonne" });
-            lst.Add(new PlaylistItem { SongAlbum = "Best Album", SongArtist = "Rammstein", ID = 2, SongDuration = DateTime.Now, SongTitle = "Sonne" });
-            lst.Add(new PlaylistItem { SongAlbum = "Best Album", SongArtist = "Rammstein", ID = 2, SongDuration = DateTime.Now, SongTitle = "Sonne" });
-            lst.Add(new PlaylistItem { SongAlbum = "Best Album", SongArtist = "Rammstein", ID = 2, SongDuration = DateTime.Now, SongTitle = "Sonne" });
-            lst.Add(new PlaylistItem { SongAlbum = "Best Album", SongArtist = "Rammstein", ID = 2, SongDuration = DateTime.Now, SongTitle = "Sonne" });
-            lst.Add(new PlaylistItem
-            { SongAlbum = "Best Album", SongArtist = "Rammstein", ID = 2, SongDuration = DateTime.Now, SongTitle = "Sonne" });
+        #region failed player
+        private Stream ms = new MemoryStream();
+        //public void PlayMp3FromUrl(Stream song_stream)
+        //{
+        //    new Thread(delegate (object o)
+        //    {
+        //        using (var stream = song_stream)
+        //        {
+        //            byte[] buffer = new byte[65536]; // 64KB chunks
+        //            int read;
+        //            while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
+        //            {
+        //                var pos = ms.Position;
+        //                ms.Position = ms.Length;
+        //                ms.Write(buffer, 0, read);
+        //                ms.Position = pos;
+        //            }
+        //        }
+        //    }).Start();
 
-            grid.SongList.ItemsSource = lst;
+        //    // Pre-buffering some data to allow NAudio to start playing
+        //    new Thread(delegate (object o)
+        //    {
+        //        while (ms.Length < 65536 * 10)
+        //        Thread.Sleep(1000);
 
-            grid.SimularSongList.Items.Add(new PlaylistItem
-            { SongAlbum = "Wahrheit Oder Pflicht", SongArtist = "Oomph!", ID = 2, SongDuration = DateTime.Now, SongTitle = "Augen Auf!" });
-            grid.SimularSongList.Items.Add(new PlaylistItem
-            { SongAlbum = "Wahrheit Oder Pflicht", SongArtist = "Oomph!", ID = 2, SongDuration = DateTime.Now, SongTitle = "Burn Your Eyes" });
-            grid.SimularSongList.Items.Add(new PlaylistItem
-            { SongAlbum = "Wahrheit Oder Pflicht", SongArtist = "Oomph!", ID = 2, SongDuration = DateTime.Now, SongTitle = "Dein Weg" });
-            tape_panel.Child = grid;
-        }
-
+        //    ms.Position = 0;
+        //    using (WaveStream blockAlignedStream = new BlockAlignReductionStream(WaveFormatConversionStream.CreatePcmStream(new Mp3FileReader(ms))))
+        //    {
+        //            waveOut = new WaveOut(WaveCallbackInfo.FunctionCallback());
+        //            waveOut.Init(blockAlignedStream);
+        //            waveOut.Play();
+        //            while (waveOut.PlaybackState == PlaybackState.Playing)
+        //            {
+        //                System.Threading.Thread.Sleep(100);
+        //            }
+        //    }
+        //    }).Start();
+        //}
+        WaveOut waveOut;
+        #endregion
         private void Grid_ScrollCall(bool flag)
         {
             if (!flag)
@@ -267,6 +351,8 @@ namespace InTime.Controls
         }
         private void SoundSlider_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
+            if (state == null)
+                return;
             if (SoundSlider.Value < 30)
             {
                 state.sound = SoundState.LowSound;
@@ -296,9 +382,9 @@ namespace InTime.Controls
             if (((RadioButton)sender).Content.ToString() == "Recomendations")
                 ShowRecomendsBord();
             else if (((RadioButton)sender).Content.ToString() == "Albums")
-                ShowRecomendsBord();
-            else if (((RadioButton)sender).Content.ToString() == "Recently listened")
-                ShowRecomendsBord();
+                ShowfavoritePlaylistsBord();
+            else if (((RadioButton)sender).Content.ToString() == "Recently Listened")
+                ShowRecentlyPlayedBord();
             else if (((RadioButton)sender).Content.ToString() == "Favorites")
                 ShowFavoritesBord();
         }
@@ -733,5 +819,6 @@ namespace InTime.Controls
 
         #endregion
 
+       
     }
 }

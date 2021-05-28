@@ -97,7 +97,7 @@ namespace InTime.Controls
                 return;
             for (int i = 0; i < songs.Length && i < 4; i++)
             {
-                AddGenres(songs[i]);
+                AddSong(songs[i]);
             }
         }
         public void AddArtists(Song_Singer[] singers)
@@ -111,10 +111,12 @@ namespace InTime.Controls
                 AddArtist(singers[i]);
             }
         }
-        void AddSong(Song song)
+        async void AddSong(Song song)
         {
+            Service1Client client = new Service1Client();
+            song.Image = await client.GetAlbumImageAsync(song.Album.ID);
             SearchItem Item = new SearchItem();
-            //Item4.Image = @"C:\Player\InTimePlayer\InTime\Controls\3E-zsSjyGLU.jpg";
+            Item.Image = song.Image;
             Item.Title = song.Title;
             Item.Artist = song.Singers.First().Name;
             Item.Height = 80;
@@ -152,6 +154,11 @@ namespace InTime.Controls
             Item.VerticalAlignment = VerticalAlignment.Center;
             GetFreeSlot(AlbumsGrid, Item);
             AlbumsGrid.Children.Add(Item);
+        }
+
+        private void Border_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+
         }
     }
 }

@@ -46,10 +46,6 @@ namespace InTime.Controls
             ScrollCall?.Invoke(flag);
         }
 
-        void Create_Playlist_Item()
-        {
-            
-        }
         Point coord = new Point();
         private void panel_MouseMove(object sender, MouseEventArgs e)
         {

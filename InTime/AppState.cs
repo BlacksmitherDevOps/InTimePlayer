@@ -8,6 +8,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using InTime.ServiceReference1;
 
 namespace InTime
@@ -16,7 +17,9 @@ namespace InTime
     {
         public SoundState sound;
         public Client_User user;
+        public ListBox current_ListBox;
         public ObservableCollection<Song_Playlist> playlists;
+        public Queue<Song> Queue;
 
         public event PropertyChangedEventHandler PropertyChanged;
 

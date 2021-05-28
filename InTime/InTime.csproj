@@ -129,6 +129,9 @@
     <Compile Include="Controls\AlbumGrid.xaml.cs">
       <DependentUpon>AlbumGrid.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\FavoritePlaylists.xaml.cs">
+      <DependentUpon>FavoritePlaylists.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\LoginScreen.xaml.cs">
       <DependentUpon>LoginScreen.xaml</DependentUpon>
     </Compile>
@@ -173,6 +176,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\AlbumGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\FavoritePlaylists.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -270,9 +277,6 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\ServiceReference1\InTime.ServiceReference1.Singer_Album.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\ServiceReference1\InTime.ServiceReference1.Song.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\ServiceReference1\InTime.ServiceReference1.Song_Playlist.datasource">

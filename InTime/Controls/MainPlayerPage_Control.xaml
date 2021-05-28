@@ -532,7 +532,7 @@
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
                             <Label Content="Playlists" Grid.Row="0" VerticalAlignment="Top" Margin="15,0,0,0" FontSize="18"
-                                   Foreground="White" FontFamily="Segoe UI Semibold" FontStyle="Italic"/>
+                                   Foreground="White" FontFamily="Segoe UI Semibold"/>
                             <ListBox x:Name="PlaylistBox" ItemContainerStyle="{StaticResource item_Container}"
                                      VerticalAlignment="Stretch" Grid.Row="1" 
                                      BorderBrush="Transparent" AllowDrop="True"
@@ -565,7 +565,7 @@
                             MouseUp="upper_bord_MouseUp">
                         <Border Height="40" Grid.Column="0"
                             CornerRadius="20" Background="Transparent"
-                            HorizontalAlignment="Stretch"
+                            HorizontalAlignment="Center" 
                             BorderThickness="2" Width="350" BorderBrush="#FFFF0051">
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -658,17 +658,17 @@
                 <Grid Background="#FF27263C">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="60"/>
-                        <ColumnDefinition MinWidth="100" MaxWidth="200"/>
+                        <ColumnDefinition MinWidth="100"  MaxWidth="200"/>
                         <ColumnDefinition />
                         <ColumnDefinition Width="300"/>
                     </Grid.ColumnDefinitions>
-                    <Image Source="3E-zsSjyGLU.jpg" Margin="5" Grid.Column="0"/>
+                    <Image x:Name="songImg" Source="3E-zsSjyGLU.jpg" Margin="5" Grid.Column="0"/>
                     <Grid Grid.Column="1">
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <TextBlock Text="Singer" Foreground="White" FontSize="18" Margin="10,0,0,0" 
+                        <TextBlock x:Name="singerBottomField" Text="Singer" Foreground="White" FontSize="18" Margin="10,0,0,0" 
                                    VerticalAlignment="Center" HorizontalAlignment="Left"
                                    FontWeight="Medium">
                             <TextBlock.Style>
@@ -685,7 +685,7 @@
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
-                        <TextBlock Text="Track name" Foreground="White" FontSize="18" Margin="10,0,0,0"
+                        <TextBlock x:Name="songBottomField" Text="Track name" Foreground="White" FontSize="18" Margin="10,0,0,0"
                                    VerticalAlignment="Top" HorizontalAlignment="Left" FontWeight="Medium" Grid.Row="2"/>
                     </Grid>
                     <Grid Grid.Column="2">
@@ -718,7 +718,7 @@
                             </Border>
 
                             <!--Next button settings-->
-                            <Border x:Name="Next_btn" Grid.Column="3" Style="{StaticResource BottomButtonsBorder_Style}">
+                            <Border x:Name="Next_btn" Grid.Column="3" Style="{StaticResource BottomButtonsBorder_Style}" MouseLeftButtonUp="Next_btn_MouseLeftButtonUp">
                                 <materialDesign:PackIcon Kind="SkipNext" Foreground="#FF784242" Width="30" Height="30"
                                                          VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </Border>
@@ -728,15 +728,15 @@
                                                          VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </Border>
                         </Grid>
-                        <Grid Grid.Row="1" Margin="100,0,100,0">
+                        <Grid Grid.Row="1" >
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="50"/>
                                 <ColumnDefinition/>
-                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="5*"/>
+                                <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock x:Name="CurrrentTimeText" HorizontalAlignment="Right" VerticalAlignment="Center" Text="0:00" Foreground="#FFFF0051" FontSize="14" Grid.Column="0"/>
-                            <Slider  Height="5" HorizontalAlignment="Stretch" Margin="20,0,20,0" Style="{StaticResource Horizontal_Slider}" Grid.Column="1"/>
-                            <TextBlock Text="3:42" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="14" Foreground="#FFFF0051" Grid.Column="2"/>
+                            <TextBlock x:Name="bottomCurrentDuration_tb" HorizontalAlignment="Right" VerticalAlignment="Center" Text="0:00" Foreground="#FFFF0051" FontSize="14" Grid.Column="0"/>
+                            <Slider x:Name="bottomDuration_slider" Height="5" HorizontalAlignment="Stretch" Margin="20,0,20,0" Style="{StaticResource Horizontal_Slider}" Grid.Column="1"/>
+                            <TextBlock x:Name="bottomMaxDuration_tb" Text="3:42" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="14" Foreground="#FFFF0051" Grid.Column="2"/>
                         </Grid>
                     </Grid>
                     <Grid Grid.Column="3">
@@ -745,7 +745,7 @@
                                 MouseLeftButtonUp="SoundIcon_OnMouseDown">
                                 <materialDesign:PackIcon Name="sound_icon"  Width="25" Height="25" Kind="VolumeMedium" Foreground="#FFFF0051"/>
                             </Border>
-                            <Slider Name="SoundSlider" Tag="true" Maximum="100" Minimum="0" HorizontalAlignment="Left" VerticalAlignment="Center" 
+                            <Slider Name="SoundSlider" Value="50" Tag="true" Maximum="100" Minimum="0" HorizontalAlignment="Left" VerticalAlignment="Center" 
                                 Style="{StaticResource Horizontal_Slider}" Width="145"
                                 ValueChanged="SoundSlider_OnValueChanged"/>
                         </StackPanel>

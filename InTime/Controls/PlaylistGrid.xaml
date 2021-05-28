@@ -105,14 +105,14 @@
                         <ColumnDefinition Width="100"/>
                         <ColumnDefinition Width="50"/>
                     </Grid.ColumnDefinitions>
-                    <Border x:Name="PlayBord" Visibility="Visible"  Grid.Column="0">
+                    <Border x:Name="PlayBord" Visibility="Visible" Background="Transparent" MouseLeftButtonUp="PlayBord_MouseDown" Grid.Column="0">
                         <materialDesign:PackIcon x:Name="PlayBtn" Visibility="Hidden" Kind="PlayCircleOutline" Width="30" Height="30"
                                                      VerticalAlignment="Center" HorizontalAlignment="Center"
                                                      Foreground="White"/>
                     </Border>
                     <TextBlock Text="{Binding Title}" Grid.Column="1" FontSize="20"
                                        Margin="7,3,0,0" TextTrimming="WordEllipsis"/>
-                    <TextBlock Grid.Column="2" Text="{Binding Singers[0].Name}" FontSize="20" TextTrimming="WordEllipsis"
+                    <TextBlock Grid.Column="2" Text="{Binding Singers[0].Name}" FontSize="20" HorizontalAlignment="Left" TextTrimming="WordEllipsis"
                                        Margin="7,3,0,0" MouseEnter="TextBlock_MouseEnter" MouseLeave="TextBlock_MouseLeave"
                                        Cursor="Hand"/>
                     <TextBlock Grid.Column="3" Text="{Binding Album.Title}" FontSize="20"
@@ -201,8 +201,8 @@
                         <TextBlock Text="Songs count : " Foreground="White" Style="{StaticResource text}"/>
                         <TextBlock Text="6" Foreground="White" Style="{StaticResource text}"  Name="playlistCnt_tb"/>
                     </StackPanel>
-                    <Button x:Name="fav_btn" Content="Add to favorite" Grid.Row="1" Width="180"
-                            HorizontalAlignment="Right" Click="fav_btn_Click"/>
+                    <Button x:Name="fav_btn" Content="Add to favorite" Margin="0,0,20,0" Grid.Row="1" Width="180"
+                            HorizontalAlignment="Right" FontSize="16" Click="fav_btn_Click"/>
                 </Grid>
             </Grid>
         </Grid>

@@ -66,48 +66,7 @@ namespace InTime.Controls
         }
         public static readonly DependencyProperty UserNameProperty =
             DependencyProperty.Register("UserName", typeof(string), typeof(Recommendations_Control));
-        async void RequestRock()
-        {
-            try
-            {
-                Service1Client client = new Service1Client();
-                AddList("Rock Today!", (await client.GetRockTodayAsync()).ToList());
-                AddList("Chill with Pop Music~~", (await client.GetPopTodayAsync()).ToList());
-                AddList("Dance!", (await client.GetHouseTodayAsync()).ToList());
-                client.Close();
-            }
-            catch (FaultException<LoadPlaylistFailed> exception)
-            {
-                Console.WriteLine(exception.Detail.Message);
-            }
-            
-        }
-        async void RequestPop()
-        {
-            try
-            {
-            Service1Client client = new Service1Client();
-            AddList("Chill with Pop Music~~", (await client.GetPopTodayAsync()).ToList());
-            client.Close();
-            }
-            catch (FaultException<LoadPlaylistFailed> exception)
-            {
-                Console.WriteLine(exception.Detail.Message);
-            }
-        }
-        async void RequestHouse()
-        {
-            try
-            {
-                Service1Client client = new Service1Client();
-                AddList("Dance!", (await client.GetHouseTodayAsync()).ToList());
-                client.Close();
-            }
-            catch (FaultException<LoadPlaylistFailed> exception)
-            {
-                Console.WriteLine(exception.Detail.Message);
-            }
-}
+   
         private void Playlist_Scroller_ScrollCall(bool flag)
         {
             ScrollCall?.Invoke(flag);
