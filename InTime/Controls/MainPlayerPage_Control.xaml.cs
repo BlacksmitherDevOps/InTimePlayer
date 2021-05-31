@@ -166,16 +166,11 @@ namespace InTime.Controls
 
         private void Playlist_OnSongPlaying(Song_Playlist playlist, int songId,Song song)
         {
-            if (state.player.HasAudio)
-            {
-                state.player.Play();
-            }
-            else
-            {
+                Console.WriteLine(songId);
+                Console.WriteLine(playlist.Songs[1].ID);
                 state.currentSong = song;
                 state.currentPlaylist = playlist;
                 PlaySongByID(songId);
-            }
             
         }
 
@@ -207,6 +202,8 @@ namespace InTime.Controls
             singerPage_Control.ScrollCall += Grid_ScrollCall;
             tape_panel.Child = singerPage_Control;
             state.Current_Tab = singerPage_Control;
+            singerPage_Control.AlbumPlay += Playlist_OnSongPlaying;
+            singerPage_Control.AlbumPause += Playlist_OnSongPaused;
         }
 
         #region PlaySong

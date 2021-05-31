@@ -25,6 +25,8 @@ namespace InTime.Controls
     public partial class SingerPage_Control : UserControl
     {
         public event ScrollCall ScrollCall;
+        public event PlaySongFromPlaylist AlbumPlay;
+        public event PauseSong AlbumPause;
         public SingerPage_Control(Song_Singer singer)
         {
             InitializeComponent();
@@ -56,6 +58,19 @@ namespace InTime.Controls
             albumGrid.ScrollCall += AlbumGrid_ScrollCall;
             albumGrid.Margin = new Thickness(0, 0, 0, 50);
             albums_panel.Children.Add(albumGrid);
+            albumGrid.OnSongPlaying += AlbumGrid_OnSongPlaying;
+            albumGrid.OnSongPaused += AlbumGrid_OnSongPaused;
+        }
+
+        private void AlbumGrid_OnSongPaused()
+        {
+            AlbumPause?.Invoke();
+        }
+
+        private void AlbumGrid_OnSongPlaying(Song_Playlist playlist, int songId, Song song)
+        {
+            Console.WriteLine("asd");
+            AlbumPlay?.Invoke(playlist,songId,song);
         }
 
         private void AlbumGrid_ScrollCall(bool flag)
