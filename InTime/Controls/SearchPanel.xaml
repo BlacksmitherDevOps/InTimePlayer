@@ -41,8 +41,9 @@
                     <TextBlock Text="Songs" FontSize="30" FontWeight="Bold"
                                HorizontalAlignment="Left" Margin="30,0,0,0"
                                Style="{StaticResource ForegroundTB_Style}"/>
-                    <Border Background="Transparent" Cursor="Hand" 
-                            MouseLeftButtonUp="Border_MouseLeftButtonUp" Margin="0,0,30,0">
+                    <Border x:Name="ViewAll_Songs" Background="Transparent" Cursor="Hand" 
+                            MouseLeftButtonUp="ViewAll_Songs_MouseLeftButtonUp" HorizontalAlignment="Right"
+                            Margin="0,0,30,0">
                         <TextBlock Text="View all" FontSize="28" 
                                HorizontalAlignment="Right"
                                VerticalAlignment="Center" Style="{StaticResource AllSongs}"/>
@@ -72,9 +73,13 @@
                     <TextBlock Text="Artists" FontSize="30" FontWeight="Bold"
                                HorizontalAlignment="Left" Margin="30,0,0,0"
                                Style="{StaticResource ForegroundTB_Style}"/>
-                    <TextBlock Text="View all" FontSize="28"
+                    <Border x:Name="ViewAll_Singers" Background="Transparent" Cursor="Hand" 
+                            MouseLeftButtonUp="ViewAll_Singers_MouseLeftButtonUp" HorizontalAlignment="Right"
+                            Margin="0,0,30,0">
+                        <TextBlock Text="View all" FontSize="28"
                                HorizontalAlignment="Right" Margin="0,0,30,0" 
                                VerticalAlignment="Center" Style="{StaticResource AllSongs}"/>
+                    </Border>
                     <Separator VerticalAlignment="Bottom" Margin="10,0,0,0"
                                Background="#FFFF0051"/>
                 </Grid>
@@ -98,9 +103,13 @@
                     <TextBlock Text="Albums" FontSize="30" FontWeight="Bold"
                                HorizontalAlignment="Left" 
                                Style="{StaticResource ForegroundTB_Style}" Margin="30,0,0,0"/>
+                    <Border x:Name="ViewAll_Albums" Background="Transparent" Cursor="Hand" 
+                            MouseLeftButtonUp="ViewAll_Albums_MouseLeftButtonUp"  Margin="0,0,30,0"
+                            HorizontalAlignment="Right">
                     <TextBlock Text="View all" FontSize="28"
-                               HorizontalAlignment="Right" Margin="0,0,30,0" 
+                               HorizontalAlignment="Right" 
                                VerticalAlignment="Center" Style="{StaticResource AllSongs}"/>
+                    </Border>
                     <Separator VerticalAlignment="Bottom" Margin="0,0,10,0"
                                Background="#FFFF0051"/>
                 </Grid>
@@ -121,12 +130,16 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
-                    <TextBlock Text="Genres" FontSize="30" FontWeight="Bold"
+                    <TextBlock Text="Playlists" FontSize="30" FontWeight="Bold"
                                HorizontalAlignment="Left" 
                                Style="{StaticResource ForegroundTB_Style}" Margin="30,0,0,0"/>
-                    <TextBlock Text="View all" FontSize="28"
+                    <Border x:Name="ViewAll_Playlists" Background="Transparent" Cursor="Hand" 
+                            MouseLeftButtonUp="ViewAll_Playlists_MouseLeftButtonUp"  Margin="0,0,30,0"
+                            HorizontalAlignment="Right">
+                        <TextBlock Text="View all" FontSize="28"
                                HorizontalAlignment="Right" Margin="0,0,30,0" 
                                VerticalAlignment="Center" Style="{StaticResource AllSongs}"/>
+                    </Border>
                     <Separator VerticalAlignment="Bottom" Margin="10,0,0,0"
                                Background="#FFFF5656"/>
                 </Grid>

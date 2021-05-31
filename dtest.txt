@@ -1,0 +1,75 @@
+ .gitattributes                                     |   63 [32m+[m
+ .gitignore                                         |  340 [32m++++[m
+ InTime.sln                                         |   25 [32m+[m
+ InTime/AdditionalResources.cs                      |   38 [32m+[m
+ InTime/App.config                                  |   20 [32m+[m
+ InTime/App.xaml                                    |   16 [32m+[m
+ InTime/App.xaml.cs                                 |   17 [32m+[m
+ InTime/AppState.cs                                 |   55 [32m+[m
+ InTime/Assets/LowSoundPurple.png                   |  Bin [31m0[m -> [32m4038[m bytes
+ InTime/Assets/LowSoundRed.png                      |  Bin [31m0[m -> [32m4145[m bytes
+ InTime/Assets/MaxVolumePurple.png                  |  Bin [31m0[m -> [32m7046[m bytes
+ InTime/Assets/MaxVolumeRed.png                     |  Bin [31m0[m -> [32m6225[m bytes
+ InTime/Assets/MidSoundPurple.png                   |  Bin [31m0[m -> [32m11006[m bytes
+ InTime/Assets/MidSoundRed.png                      |  Bin [31m0[m -> [32m10465[m bytes
+ InTime/Assets/MutedPurple.png                      |  Bin [31m0[m -> [32m4736[m bytes
+ InTime/Assets/MutedRed.png                         |  Bin [31m0[m -> [32m4240[m bytes
+ InTime/Assets/icons.xaml                           |   53 [32m+[m
+ InTime/Assets/playbutton.png                       |  Bin [31m0[m -> [32m31423[m bytes
+ InTime/Assets/playlisticon.png                     |  Bin [31m0[m -> [32m18064[m bytes
+ InTime/Assets/profile.jpg                          |  Bin [31m0[m -> [32m4186[m bytes
+ InTime/Assets/song.jpg                             |  Bin [31m0[m -> [32m18170[m bytes
+ ...InTime.ServiceReference1.Client_User.datasource |   10 [32m+[m
+ ...nTime.ServiceReference1.SearchResult.datasource |   10 [32m+[m
+ ...nTime.ServiceReference1.Singer_Album.datasource |   10 [32m+[m
+ ...Time.ServiceReference1.Song_Playlist.datasource |   10 [32m+[m
+ ...InTime.ServiceReference1.Song_Singer.datasource |   10 [32m+[m
+ .../ServiceReference1/Reference.cs                 | 1957 [32m++++++++++++++++++++[m
+ .../ServiceReference1/Reference.svcmap             |   31 [32m+[m
+ .../ServiceReference1/Service1.wsdl                | 1686 [32m+++++++++++++++++[m
+ .../ServiceReference1/configuration.svcinfo        |   10 [32m+[m
+ .../ServiceReference1/configuration91.svcinfo      |  201 [32m++[m
+ InTime/Controls/3E-zsSjyGLU.jpg                    |  Bin [31m0[m -> [32m74139[m bytes
+ .../Controls/64eb0176b8ec007e2c0ffa65a92c8dc0.gif  |  Bin [31m0[m -> [32m4786242[m bytes
+ InTime/Controls/AddPlaylist.xaml                   |   94 [32m+[m
+ InTime/Controls/AddPlaylist.xaml.cs                |  164 [32m++[m
+ InTime/Controls/AlbumGrid.xaml                     |  191 [32m++[m
+ InTime/Controls/AlbumGrid.xaml.cs                  |  152 [32m++[m
+ InTime/Controls/FavoritePlaylists.xaml             |   28 [32m+[m
+ InTime/Controls/FavoritePlaylists.xaml.cs          |   49 [32m+[m
+ InTime/Controls/LoginScreen.xaml                   |  582 [32m++++++[m
+ InTime/Controls/LoginScreen.xaml.cs                |  574 [32m++++++[m
+ InTime/Controls/MainPlayerPage_Control.xaml        |  757 [32m++++++++[m
+ InTime/Controls/MainPlayerPage_Control.xaml.cs     |  824 [32m+++++++++[m
+ InTime/Controls/NoImageList_Control.xaml           |  209 [32m+++[m
+ InTime/Controls/NoImageList_Control.xaml.cs        |  246 [32m+++[m
+ InTime/Controls/PlaylistGrid.xaml                  |  256 [32m+++[m
+ InTime/Controls/PlaylistGrid.xaml.cs               |  406 [32m++++[m
+ InTime/Controls/Playlist_Item_Control.xaml         |   29 [32m+[m
+ InTime/Controls/Playlist_Item_Control.xaml.cs      |   98 [32m+[m
+ InTime/Controls/Playlist_Scroller.xaml             |   37 [32m+[m
+ InTime/Controls/Playlist_Scroller.xaml.cs          |  154 [32m++[m
+ InTime/Controls/ProfileEdit.xaml                   |  181 [32m++[m
+ InTime/Controls/ProfileEdit.xaml.cs                |  226 [32m+++[m
+ InTime/Controls/Recommendations_Control.xaml       |   31 [32m+[m
+ InTime/Controls/Recommendations_Control.xaml.cs    |   75 [32m+[m
+ InTime/Controls/SearchItem.xaml                    |   45 [32m+[m
+ InTime/Controls/SearchItem.xaml.cs                 |   95 [32m+[m
+ InTime/Controls/SearchPanel.xaml                   |  147 [32m++[m
+ InTime/Controls/SearchPanel.xaml.cs                |  167 [32m++[m
+ InTime/Controls/SingerPage_Control.xaml            |   55 [32m+[m
+ InTime/Controls/SingerPage_Control.xaml.cs         |  137 [32m++[m
+ InTime/Controls/SingleSearcItem.xaml               |   40 [32m+[m
+ InTime/Controls/SingleSearcItem.xaml.cs            |   85 [32m+[m
+ InTime/InTime.csproj                               |  367 [32m++++[m
+ InTime/MainWindow.xaml                             |   20 [32m+[m
+ InTime/MainWindow.xaml.cs                          |   64 [32m+[m
+ InTime/Properties/AssemblyInfo.cs                  |   55 [32m+[m
+ InTime/Properties/Resources.Designer.cs            |   70 [32m+[m
+ InTime/Properties/Resources.resx                   |  117 [32m++[m
+ InTime/Properties/Settings.Designer.cs             |   29 [32m+[m
+ InTime/Properties/Settings.settings                |    7 [32m+[m
+ InTime/packages.config                             |   16 [32m+[m
+ InTime/tempPlaylist.cs                             |   13 [32m+[m
+ InTime/tempSong.cs                                 |   16 [32m+[m
+ 74 files changed, 11470 insertions(+)

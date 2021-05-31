@@ -1,26 +1,17 @@
-﻿using InTime.ServiceReference1;
+﻿using InTime.Controls.Rectangular_Item_Panels;
+using InTime.Controls.Rectangular_Items;
+using InTime.ServiceReference1;
 using MaterialDesignThemes.Wpf;
 using NAudio.Wave;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Media;
-using System.Net;
 using System.ServiceModel;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace InTime.Controls
 {
@@ -85,7 +76,6 @@ namespace InTime.Controls
             favoritePlaylists.OpenPlaylist += OpenPlaylist;
             Service1Client client = new Service1Client();
             favoritePlaylists.AddList(await client.GetFavoritePlaylistsAsync(state.user.ID));
-            favoritePlaylists.Init();
             tape_panel.Child = favoritePlaylists;
         }
 
@@ -93,16 +83,11 @@ namespace InTime.Controls
         public async void ShowFavoritesBord()
         {
             LoadingScreen();
-            NoImageList_Control noImageList_Control = new NoImageList_Control();
-            noImageList_Control.OpenSingerPage += Playlist_OpenSingerPage;
-            noImageList_Control.UserPlaylistChanged += UserPlaylistChanged;
+            NoImageList_Control noImageList_Control = Init_NoImageList_Control();
             Service1Client client = new Service1Client();
             noImageList_Control.CurrentPlaylist = await client.GetFavoriteTracksPlaylistAsync(state.user.ID);
             if (tape_panel.Child.GetType() != typeof(ProgressBar))
                 return;
-            noImageList_Control.PlaylistsInfo = state.Playlists;
-            noImageList_Control.CurrentUser1 = state.user;
-            noImageList_Control.OnDragStarted += Playlist_OnDragStarted;
             noImageList_Control.Init();
             tape_panel.Child = noImageList_Control;
             client.Close();
@@ -111,21 +96,27 @@ namespace InTime.Controls
         public async void ShowRecentlyPlayedBord()
         {
             LoadingScreen();
-            NoImageList_Control noImageList_Control = new NoImageList_Control();
-            noImageList_Control.OpenSingerPage += Playlist_OpenSingerPage;
-            noImageList_Control.UserPlaylistChanged += UserPlaylistChanged;
+            NoImageList_Control noImageList_Control = Init_NoImageList_Control();
             Service1Client client = new Service1Client();
             noImageList_Control.CurrentPlaylist = await client.GetRecentlyPlayedAsync(state.user.ID);
             if (tape_panel.Child.GetType() != typeof(ProgressBar))
                 return;
-            noImageList_Control.PlaylistsInfo = state.Playlists;
-            noImageList_Control.CurrentUser1 = state.user;
-            noImageList_Control.OnDragStarted += Playlist_OnDragStarted;
             noImageList_Control.Init();
             tape_panel.Child = noImageList_Control;
             client.Close();
         }
+        NoImageList_Control Init_NoImageList_Control()
+        {
+            NoImageList_Control noImageList_Control = new NoImageList_Control();
+            noImageList_Control.OpenSingerPage += Playlist_OpenSingerPage;
+            noImageList_Control.UserPlaylistChanged += UserPlaylistChanged;
+            noImageList_Control.OnDragStarted += Playlist_OnDragStarted;
+            noImageList_Control.ScrollCall += Grid_ScrollCall;
 
+            noImageList_Control.PlaylistsInfo = state.Playlists;
+            noImageList_Control.CurrentUser1 = state.user;
+            return noImageList_Control;
+        }
         async void OpenPlaylist(int id)
         {
             LoadingScreen();
@@ -135,7 +126,6 @@ namespace InTime.Controls
             playlist.UserPlaylistChanged += UserPlaylistChanged;
             playlist.OnDragStarted += Playlist_OnDragStarted;
             playlist.PlaySong += Playlist_PlaySong;
-            playlist.QueueUpdate += Playlist_QueueUpdate;
             playlist.CurrentListboxUPD += Playlist_CurrentListboxUPD; ;
             playlist.PauseSong += Playlist_PauseSong;
             Service1Client client = new Service1Client();
@@ -152,15 +142,6 @@ namespace InTime.Controls
         private void Playlist_CurrentListboxUPD(ListBox listBox)
         {
             state.current_ListBox = listBox;
-        }
-
-        private void Playlist_QueueUpdate(Queue<Song> list)
-        {
-            state.Queue = list;
-            foreach (Song item in state.Queue)
-            {
-                Console.WriteLine(item.Title);
-            }
         }
 
         private void Playlist_PauseSong()
@@ -552,15 +533,112 @@ namespace InTime.Controls
                 Service1Client client = new Service1Client();
                 SearchResult searchResult = await client.SearchAsync(Search.Text);
                 client.Close();
-                Console.WriteLine(searchResult.Songs.Length);
+
+                //prop
+                searchPanel.Search_Str = searchResult.Search_Str;
                 searchPanel.AddSongs(searchResult.Songs);
                 searchPanel.AddArtists(searchResult.Singers);
-                searchPanel.AddGenres(searchResult.GenreSongs);
+                searchPanel.AddGenres(searchResult.Playlists);
                 searchPanel.AddAlbums(searchResult.Albums);
+
+                //events
+                searchPanel.ViewAllSongs += SearchPanel_ViewAllSongs;
+                searchPanel.ViewAllAlbums += SearchPanel_ViewAllAlbums;
+                searchPanel.ViewAllSingers += SearchPanel_ViewAllSingers;
+                searchPanel.ViewAllPlaylists += SearchPanel_ViewAllPlaylists;
+
                 tape_panel.Child = null;
                 tape_panel.Child = searchPanel;
             }
         }
+
+        private async void SearchPanel_ViewAllPlaylists(string search_str)
+        {
+            LoadingScreen();
+            Service1Client client = new Service1Client();
+            var list = await client.Search_GetAllPlaylistsAsync(search_str);
+            client.Close();
+
+            if (tape_panel.Child.GetType() != typeof(ProgressBar))
+                return;
+
+            SearchResult_Playlists_Panel playlist_page = new SearchResult_Playlists_Panel();
+            playlist_page.AddList(list);
+            playlist_page.OpenPlaylist += Recommendations_Control_OpenPlaylist;
+
+            tape_panel.Child = null;
+            tape_panel.Child = playlist_page;
+        }
+
+        private async void SearchPanel_ViewAllSingers(string search_str)
+        {
+            LoadingScreen();
+            Service1Client client = new Service1Client();
+            var list = await client.Search_GetAllSongSingersAsync(search_str);
+            client.Close();
+
+            if (tape_panel.Child.GetType() != typeof(ProgressBar))
+                return;
+
+            SearchResult_Singers_Panel singer_Panel = new SearchResult_Singers_Panel();
+            singer_Panel.AddList(list);
+            singer_Panel.OpenSingerPage += Playlist_OpenSingerPage;
+
+            tape_panel.Child = null;
+            tape_panel.Child = singer_Panel;
+        }
+
+        private async void SearchPanel_ViewAllAlbums(string search_str)
+        {
+            LoadingScreen();
+            Service1Client client = new Service1Client();
+            var list = await client.Search_GetAllSingerAlbumsAsync(search_str);
+            client.Close();
+
+            if (tape_panel.Child.GetType() != typeof(ProgressBar))
+                return;
+
+            SearchResult_Albums_Panel albums_Panel = new SearchResult_Albums_Panel();
+            albums_Panel.AddList(list);
+            albums_Panel.OpenAlbum += Albums_Panel_OpenAlbum;
+
+            tape_panel.Child = null;
+            tape_panel.Child = albums_Panel;
+        }
+
+        private async void Albums_Panel_OpenAlbum(int id)
+        {
+            LoadingScreen();
+            Service1Client client = new Service1Client();
+            var album = await client.GetAlbumAsync(id);
+            client.Close();
+
+            if (tape_panel.Child.GetType() != typeof(ProgressBar))
+                return;
+
+            AlbumGrid albumGrid = new AlbumGrid(album);
+            albumGrid.ScrollCall += Grid_ScrollCall;
+
+            tape_panel.Child = null;
+            tape_panel.Child = albumGrid;
+        }
+
+
+        private async void SearchPanel_ViewAllSongs(string search_str)
+        {
+            LoadingScreen();
+            Service1Client client = new Service1Client();
+            var list = await client.Search_GetAllSongsAsync(search_str);
+            client.Close();
+
+            if (tape_panel.Child.GetType() != typeof(ProgressBar))
+                return;
+            NoImageList_Control noImageList_Control = Init_NoImageList_Control();
+            noImageList_Control.CurrentPlaylist = list;
+            noImageList_Control.Init();
+            tape_panel.Child = noImageList_Control;
+        }
+
         void LoadingScreen()
         {
             tape_panel.Child = null;

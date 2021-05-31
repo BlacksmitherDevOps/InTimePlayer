@@ -1,29 +1,26 @@
-﻿<UserControl x:Class="InTime.Controls.Playlist_Item_Control"
+﻿<UserControl x:Class="InTime.Controls.Rectangular_Items.Album_Item_Control"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:local="clr-namespace:InTime.Controls"
+             xmlns:local="clr-namespace:InTime.Controls.Rectangular_Items"
              mc:Ignorable="d" 
-             Margin="20,10,20,10">
+             Margin="20,10,20,10" Width="220">
     <Grid x:Name="main_grid" Background="#FF403B3B"
           MouseEnter="main_grid_MouseEnter" MouseLeave="main_grid_MouseLeave" Cursor="Hand"
           PreviewMouseWheel="main_grid_PreviewMouseWheel" MouseMove="main_grid_MouseMove"
           MouseLeftButtonDown="main_grid_MouseLeftButtonDown" MouseLeftButtonUp="main_grid_MouseDown">
-        
+
         <Grid.RowDefinitions>
             <RowDefinition Height="4*"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-        <materialDesign:PackIcon Kind="PlayCircleOutline" Grid.Row="0" Visibility="Hidden"
-                                 HorizontalAlignment="Center" Foreground="White"
-                                 Width="40" Height="40" Panel.ZIndex="2"
-                                 Grid.Column="0" VerticalAlignment="Center"
-                                 Name="PlayIco" MouseEnter="PlayIcoMouseEnter"/>
         <Image Name="main_image" Margin="15,10,15,10" Width="190" Height="220"/>
-        <TextBlock Grid.Row="1" Margin="15,5,15,0" Foreground="White" FontSize="20" Text="Title" x:Name="playlist_name_tb" FontFamily="Arial Rounded MT Bold"/>
+        <TextBlock Grid.Row="1" Margin="15,5,15,0" Foreground="White" FontSize="20" TextTrimming="WordEllipsis"
+                   Text="Title" x:Name="playlist_name_tb" FontFamily="Arial Rounded MT Bold"/>
         <TextBlock Grid.Row="2" Margin="15,5,15,5" Foreground="#FFFF0051" FontSize="16" Text="Author" x:Name="author_name_tb"/>
     </Grid>
+
 </UserControl>

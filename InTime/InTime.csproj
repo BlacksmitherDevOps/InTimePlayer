@@ -141,7 +141,7 @@
     <Compile Include="Controls\PlaylistGrid.xaml.cs">
       <DependentUpon>PlaylistGrid.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Playlist_Item_Control.xaml.cs">
+    <Compile Include="Controls\Rectangular_Items\Playlist_Item_Control.xaml.cs">
       <DependentUpon>Playlist_Item_Control.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Playlist_Scroller.xaml.cs">
@@ -152,6 +152,21 @@
     </Compile>
     <Compile Include="Controls\Recommendations_Control.xaml.cs">
       <DependentUpon>Recommendations_Control.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Rectangular_Items\Album_Item_Control.xaml.cs">
+      <DependentUpon>Album_Item_Control.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Rectangular_Items\Singer_Item_Control.xaml.cs">
+      <DependentUpon>Singer_Item_Control.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Rectangular_Item_Panels\SearchResult_Albums_Panel.xaml.cs">
+      <DependentUpon>SearchResult_Albums_Panel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Rectangular_Item_Panels\SearchResult_Playlists_Panel.xaml.cs">
+      <DependentUpon>SearchResult_Playlists_Panel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Rectangular_Item_Panels\SearchResult_Singers_Panel.xaml.cs">
+      <DependentUpon>SearchResult_Singers_Panel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\SearchItem.xaml.cs">
       <DependentUpon>SearchItem.xaml</DependentUpon>
@@ -199,7 +214,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\Playlist_Item_Control.xaml">
+    <Page Include="Controls\Rectangular_Items\Playlist_Item_Control.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -212,6 +227,26 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Recommendations_Control.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Rectangular_Items\Album_Item_Control.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Rectangular_Items\Singer_Item_Control.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Rectangular_Item_Panels\SearchResult_Albums_Panel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Rectangular_Item_Panels\SearchResult_Playlists_Panel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Rectangular_Item_Panels\SearchResult_Singers_Panel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
