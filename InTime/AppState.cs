@@ -54,6 +54,7 @@ namespace InTime
             player = new MediaPlayer();
             player.Volume = 0.7;
             playTimer = new DispatcherTimer();
+            currentPlaylist = new Song_Playlist();
             IsPlaying = false;
             repeat = RepeatState.NoRepeat;
             Current_Tab = null;

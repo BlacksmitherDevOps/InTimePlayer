@@ -5,6 +5,7 @@ using MaterialDesignThemes.Wpf;
 using NAudio.Wave;
 using System;
 using System.IO;
+using System.Linq;
 using System.Resources;
 using System.ServiceModel;
 using System.Windows;
@@ -136,14 +137,19 @@ namespace InTime.Controls
             if (tape_panel.Child.GetType() != typeof(ProgressBar))
                 return;
             client.Close();
-
-
             playlist.PlaylistsInfo = state.Playlists;
             playlist.CurrentPlaylist = _Playlist;
             playlist.CurrentUser = state.user;
             playlist.Init();
             tape_panel.Child = playlist;
             state.Current_Tab = playlist;
+            if (playlist.SongList.SelectedIndex < 0)
+            {
+                if (playlist.CurrentPlaylist.ID == state.currentPlaylist.ID)
+                {
+                    playlist.SongList.SelectedIndex = playlist.CurrentPlaylist.Songs.ToList().IndexOf(playlist.CurrentPlaylist.Songs.Where(n => n.ID == state.currentSong.ID).First());
+                }
+            }
         }
 
         private void Playlist_OnSongPaused()
