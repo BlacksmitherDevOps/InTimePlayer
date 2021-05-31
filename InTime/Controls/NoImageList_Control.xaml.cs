@@ -28,6 +28,8 @@ namespace InTime.Controls
         public event OpenSingerPage OpenSingerPage;
         public event UserPlaylistChanged UserPlaylistChanged;
         public event DragStarted OnDragStarted;
+        public event PlaySongFromPlaylist OnSongPlaying;
+        public event PauseSongFromPlaylist OnSongPaused;
         public NoImageList_Control()
         {
             InitializeComponent();
@@ -241,6 +243,34 @@ namespace InTime.Controls
         private void RemoveSongFromFavorites(object sender, RoutedEventArgs e)
         {
             
+        }
+        Border playBord;
+        private void PlayBord_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
+            if (playBord != null)
+            {
+                if (playBord != sender as Border)
+                    IconChange();
+            }
+
+            playBord = sender as Border;
+
+            IconChange();
+        }
+
+        void IconChange()
+        {
+            if (((PackIcon)playBord.Child).Kind != PackIconKind.PauseCircleOutline)
+            {
+                OnSongPlaying?.Invoke(CurrentPlaylist, (SongList.SelectedItem as Song).ID, (SongList.SelectedItem as Song));
+                ((PackIcon)playBord.Child).Kind = PackIconKind.PauseCircleOutline;
+            }
+            else
+            {
+                OnSongPaused?.Invoke();
+                ((PackIcon)playBord.Child).Kind = PackIconKind.PlayCircleOutline;
+            }
         }
     }
 }

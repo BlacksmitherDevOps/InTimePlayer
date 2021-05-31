@@ -13,6 +13,13 @@ namespace InTime
         HighSound
     }
 
+   public enum RepeatState
+   {
+       NoRepeat,
+       RepeatPlaylist,
+       RepeatSong
+       
+   }
    public class PlaylistItem
     {
         public int ID { get; set; }

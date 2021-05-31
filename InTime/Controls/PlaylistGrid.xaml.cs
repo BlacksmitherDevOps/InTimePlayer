@@ -34,7 +34,9 @@ namespace InTime.Controls
         public event PauseSong PauseSong;
         public event ScrollCall ScrollCall;
         public event OpenSingerPage OpenSingerPage;
-        public event UserPlaylistChanged UserPlaylistChanged; 
+        public event UserPlaylistChanged UserPlaylistChanged;
+        public event PlaySongFromPlaylist OnSongPlaying;
+        public event PauseSongFromPlaylist OnSongPaused;
         public PlaylistGrid(Client_User user)
         {
             InitializeComponent();
@@ -374,31 +376,19 @@ namespace InTime.Controls
 
             playBord = sender as Border;
 
-            QueueUpdate?.Invoke(CreateQueue());
             IconChange();
         }
-        Queue<Song> CreateQueue()
-        {
-            int index = SongList.SelectedIndex;
-            Queue<Song> songs = new Queue<Song>();
-            foreach (Song item in SongList.Items)
-            {
-                if (SongList.Items.IndexOf(item) >= index)
-                    songs.Enqueue(item);
-            }
-
-            return songs;
-        }
+        
         void IconChange()
         {
             if (((PackIcon)playBord.Child).Kind != PackIconKind.PauseCircleOutline)
             {
-                PlaySong?.Invoke(SongList.SelectedItem as Song);
+                OnSongPlaying?.Invoke(CurrentPlaylist, (SongList.SelectedItem as Song).ID, (SongList.SelectedItem as Song));
                 ((PackIcon)playBord.Child).Kind = PackIconKind.PauseCircleOutline;
             }
             else
             {
-                PauseSong?.Invoke();
+                OnSongPaused?.Invoke();
                 ((PackIcon)playBord.Child).Kind = PackIconKind.PlayCircleOutline;
             }
         }

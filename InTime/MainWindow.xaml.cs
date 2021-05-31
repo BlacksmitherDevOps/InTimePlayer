@@ -36,6 +36,10 @@ namespace InTime
     public delegate void OpenAlbum(int id);
     public delegate void OpenSingerPage(int id);
     public delegate void UserPlaylistChanged();
+
+    public delegate void PlaySongFromPlaylist(Song_Playlist playlist, int songId,Song song);
+    public delegate void PauseSongFromPlaylist();
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>

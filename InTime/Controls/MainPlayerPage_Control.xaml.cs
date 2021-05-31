@@ -5,13 +5,16 @@ using MaterialDesignThemes.Wpf;
 using NAudio.Wave;
 using System;
 using System.IO;
+using System.Resources;
 using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 
 namespace InTime.Controls
 {
@@ -78,8 +81,6 @@ namespace InTime.Controls
             favoritePlaylists.AddList(await client.GetFavoritePlaylistsAsync(state.user.ID));
             tape_panel.Child = favoritePlaylists;
         }
-
-
         public async void ShowFavoritesBord()
         {
             LoadingScreen();
@@ -90,9 +91,9 @@ namespace InTime.Controls
                 return;
             noImageList_Control.Init();
             tape_panel.Child = noImageList_Control;
+            state.Current_Tab = noImageList_Control;
             client.Close();
         }
-
         public async void ShowRecentlyPlayedBord()
         {
             LoadingScreen();
@@ -112,23 +113,23 @@ namespace InTime.Controls
             noImageList_Control.UserPlaylistChanged += UserPlaylistChanged;
             noImageList_Control.OnDragStarted += Playlist_OnDragStarted;
             noImageList_Control.ScrollCall += Grid_ScrollCall;
-
+            noImageList_Control.OnSongPlaying += Playlist_OnSongPlaying;
+            noImageList_Control.OnSongPaused+= Playlist_OnSongPaused;
             noImageList_Control.PlaylistsInfo = state.Playlists;
             noImageList_Control.CurrentUser1 = state.user;
             return noImageList_Control;
         }
         async void OpenPlaylist(int id)
         {
+            
             LoadingScreen();
             PlaylistGrid playlist = new PlaylistGrid(state.user);
             playlist.OpenSingerPage += Playlist_OpenSingerPage;
             playlist.UserPlaylistChanged += UserPlaylistChanged;
             playlist.OnDragStarted += Playlist_OnDragStarted;
-            playlist.PlaySong += Playlist_PlaySong;
-            playlist.CurrentListboxUPD += Playlist_CurrentListboxUPD; ;
-            playlist.PauseSong += Playlist_PauseSong;
             playlist.ScrollCall += Grid_ScrollCall;
-
+            playlist.OnSongPlaying += Playlist_OnSongPlaying;
+            playlist.OnSongPaused += Playlist_OnSongPaused;
 
             Service1Client client = new Service1Client();
             Song_Playlist _Playlist = await client.GetPlaylistByIDAsync(id);
@@ -142,32 +143,23 @@ namespace InTime.Controls
             playlist.CurrentUser = state.user;
             playlist.Init();
             tape_panel.Child = playlist;
+            state.Current_Tab = playlist;
         }
 
-        private void Playlist_CurrentListboxUPD(ListBox listBox)
+        private void Playlist_OnSongPaused()
         {
-            state.current_ListBox = listBox;
+            if (state.player.CanPause)
+                state.player.Pause();
         }
 
-        private void Playlist_PauseSong()
+        private void Playlist_OnSongPlaying(Song_Playlist playlist, int songId,Song song)
         {
-            player.Pause();
-        }
-        Song Current_Song;
-        private void Playlist_PlaySong(Song song)
-        {
-            if(Current_Song == null)
-            {
-                Current_Song = song;
-                PlaySongByID(Current_Song.ID);
-                return;
-            }
-            if (song.ID != Current_Song.ID)
-            {
-                Current_Song = song;
-                PlaySongByID(Current_Song.ID);
-            }
-            else player.Play();
+            Console.WriteLine(playlist);
+            Console.WriteLine(songId);
+            Console.WriteLine(song);
+            state.currentSong = song;
+            state.currentPlaylist = playlist;
+            PlaySongByID(songId);
         }
 
         private async void UserPlaylistChanged()
@@ -197,97 +189,177 @@ namespace InTime.Controls
             SingerPage_Control singerPage_Control = new SingerPage_Control(singer);
             singerPage_Control.ScrollCall += Grid_ScrollCall;
             tape_panel.Child = singerPage_Control;
+            state.Current_Tab = singerPage_Control;
         }
 
         #region PlaySong
-        MediaPlayer player = new MediaPlayer();
         async void PlaySongByID(int ID)
         {
+            if (state.player.CanPause)
+            {
+                state.player.Pause();
+                state.player.Close();
+                state.playTimer.Tick -= PlayTimer_Tick;
+            }
             Service1Client client = new Service1Client();
             string path = Environment.CurrentDirectory + "\\temp.mp3";
-            UpdateBottomPanel();
             byte[] file = await client.GetTrackAsync(ID);
-            if (state.Queue.Peek().ID != ID)
-                return;
             File.WriteAllBytes(path, file);
-            if (state.Queue.Peek().ID != ID)
-                return;
             PlaySong(path);
             client.Close();
         }
-        async void UpdateBottomPanel()
-        {
-            singerBottomField.Text = Current_Song.Singers[0].Name;
-            songBottomField.Text = Current_Song.Title;
-            Service1Client client = new Service1Client();
-            songImg.Source = ConvertToImage(await client.GetAlbumImageAsync(Current_Song.Album.ID));
-            bottomDuration_slider.Maximum = Current_Song.Duration.TotalSeconds;
-            bottomMaxDuration_tb.Text = Current_Song.Duration.ToString(@"mm\:ss");
-        }
         void PlaySong(string path)
         {
-            player.Open(new Uri(path));
-            player.Volume = 0.3;
-            player.MediaEnded += Player_MediaEnded;
-            player.Play();
+            state.player.Stop();
+            state.player.Open(new Uri(path));
+            state.player.MediaOpened += Player_MediaOpened;
+            state.player.MediaEnded += Player_MediaEnded;
+            state.player.Play();
+        }
+
+        private async void Player_MediaOpened(object sender, EventArgs e)
+        {
+            Service1Client client = new Service1Client();
+            try
+            {
+                foreach (Song_Singer singer in state.currentSong.Singers)
+                {
+                    singerBottomField.Text=singer==state.currentSong.Singers[state.currentSong.Singers.Length-1]? singer.Name:singer.Name + ",";
+                }
+                songBottomField.Text = state.currentSong.Title;
+                bottomMaxDuration_tb.Text = state.currentSong.Duration.ToString(@"mm\:ss");
+                songImg.Source = ConvertToImage(await client.GetAlbumImageAsync(state.currentSong.Album.ID));
+                bottomDuration_slider.Value = 0;
+                bottomDuration_slider.Maximum = state.player.NaturalDuration.TimeSpan.TotalSeconds;
+                state.playTimer.Interval = TimeSpan.FromSeconds(1);
+                state.playTimer.Tick += PlayTimer_Tick;
+                Console.WriteLine(bottomDuration_slider.Value);
+                Console.WriteLine(bottomDuration_slider.Maximum);
+                state.playTimer.Start();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void PlayTimer_Tick(object sender, EventArgs e)
+        {
+            if (state.player.Position.Seconds < 10)
+                bottomCurrentDuration_tb.Text = $"{state.player.Position.Minutes}:" + $"0{state.player.Position.Seconds}";
+            else
+            {
+                bottomCurrentDuration_tb.Text = $"{state.player.Position.Minutes}:" + $"{state.player.Position.Seconds}";
+            }
+
+            Console.WriteLine(bottomDuration_slider.Value);
+            bottomDuration_slider.Value += 1;
         }
 
         private void Player_MediaEnded(object sender, EventArgs e)
         {
-            state.Queue.Dequeue();
-            if (state.Queue.Count > 0)
-            {
-                state.current_ListBox.SelectedIndex = state.current_ListBox.Items.IndexOf(state.Queue.Peek());
-                PlaySongByID(state.Queue.Peek().ID);
-            }
+           
         }
         private void Next_btn_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            player.Close();
-            Player_MediaEnded(null,null);
+            if (state.player.HasAudio)
+            {
+                state.playTimer.Stop();
+                if (Array.IndexOf(state.currentPlaylist.Songs, state.currentSong) ==
+                    state.currentPlaylist.Songs.Length - 1)
+                {
+                    Playlist_OnSongPlaying(state.currentPlaylist, state.currentPlaylist.Songs[0].ID,
+                        state.currentPlaylist.Songs[0]);
+                    ChangeIndex("0");
+                }
+                else
+                {
+                    Playlist_OnSongPlaying(state.currentPlaylist,
+                        state.currentPlaylist.Songs[Array.IndexOf(state.currentPlaylist.Songs, state.currentSong) + 1].ID,
+                        state.currentPlaylist.Songs[Array.IndexOf(state.currentPlaylist.Songs, state.currentSong) + 1]);
+                    ChangeIndex("+");
+                }
+            }
+        }
+        private void Prev_btn_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (state.player.HasAudio)
+            {
+                state.playTimer.Stop();
+                if (state.player.Position >= TimeSpan.FromSeconds(5))
+                {
+                    bottomCurrentDuration_tb.Text = "0:00";
+                    state.player.Position = TimeSpan.FromSeconds(0);
+                    bottomDuration_slider.Value = 0;
+                    state.playTimer.Start();
+                }
+                else
+                {
+                    if (state.currentSong == state.currentPlaylist.Songs[0])
+                    {
+                        bottomCurrentDuration_tb.Text = "0:00";
+                        state.player.Position = TimeSpan.FromSeconds(0);
+                        bottomDuration_slider.Value = 0;
+                        state.playTimer.Start();
+                    }
+                    else
+                    {
+                        Playlist_OnSongPlaying(state.currentPlaylist,
+                            state.currentPlaylist.Songs[Array.IndexOf(state.currentPlaylist.Songs, state.currentSong) - 1].ID,
+                            state.currentPlaylist.Songs[Array.IndexOf(state.currentPlaylist.Songs, state.currentSong) - 1]);
+                        ChangeIndex("-");
+                    }
+
+                }
+            }
         }
         #endregion
-        #region failed player
-        private Stream ms = new MemoryStream();
-        //public void PlayMp3FromUrl(Stream song_stream)
-        //{
-        //    new Thread(delegate (object o)
-        //    {
-        //        using (var stream = song_stream)
-        //        {
-        //            byte[] buffer = new byte[65536]; // 64KB chunks
-        //            int read;
-        //            while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
-        //            {
-        //                var pos = ms.Position;
-        //                ms.Position = ms.Length;
-        //                ms.Write(buffer, 0, read);
-        //                ms.Position = pos;
-        //            }
-        //        }
-        //    }).Start();
 
-        //    // Pre-buffering some data to allow NAudio to start playing
-        //    new Thread(delegate (object o)
-        //    {
-        //        while (ms.Length < 65536 * 10)
-        //        Thread.Sleep(1000);
+        private void ChangeIndex(string value)
+        {
+            if (state.Current_Tab != null)
+            {
+                if (state.Current_Tab is PlaylistGrid)
+                {
+                    if ((state.Current_Tab as PlaylistGrid).SongList.SelectedIndex >= 0)
+                    {
+                        if (((state.Current_Tab as PlaylistGrid).CurrentPlaylist) == state.currentPlaylist)
+                        {
+                            Console.WriteLine(value);
+                            (state.Current_Tab as PlaylistGrid).SongList.SelectedIndex = value == "0"?0: value == "+"?
+                                (state.Current_Tab as PlaylistGrid).SongList.SelectedIndex+1 :
+                                (state.Current_Tab as PlaylistGrid).SongList.SelectedIndex - 1;
+                            Console.WriteLine((state.Current_Tab as PlaylistGrid).SongList.SelectedIndex);
+                        }
+                    }
+                }
+                else if (state.Current_Tab is NoImageList_Control)
+                {
+                    Console.WriteLine("No image list");
+                    if ((state.Current_Tab as NoImageList_Control).SongList.SelectedIndex >= 0)
+                    {
+                        Console.WriteLine(((state.Current_Tab as NoImageList_Control).SongList.SelectedItem as Song)
+                            .Title);
+                    }
+                }
+                else if (state.Current_Tab is SingerPage_Control)
+                {
+                    Console.WriteLine("Singer page");
+                    foreach (var child in (state.Current_Tab as SingerPage_Control).albums_panel.Children)
+                    {
+                        if (child is AlbumGrid)
+                        {
+                            if ((child as AlbumGrid).songs_lb.SelectedIndex >= 0)
+                            {
+                                Console.WriteLine(((child as AlbumGrid).songs_lb.SelectedItem as Song).Title);
+                            }
+                        }
+                    }
+                }
 
-        //    ms.Position = 0;
-        //    using (WaveStream blockAlignedStream = new BlockAlignReductionStream(WaveFormatConversionStream.CreatePcmStream(new Mp3FileReader(ms))))
-        //    {
-        //            waveOut = new WaveOut(WaveCallbackInfo.FunctionCallback());
-        //            waveOut.Init(blockAlignedStream);
-        //            waveOut.Play();
-        //            while (waveOut.PlaybackState == PlaybackState.Playing)
-        //            {
-        //                System.Threading.Thread.Sleep(100);
-        //            }
-        //    }
-        //    }).Start();
-        //}
-        WaveOut waveOut;
-        #endregion
+            }
+        }
+
         private void Grid_ScrollCall(bool flag)
         {
             if (!flag)
@@ -312,48 +384,55 @@ namespace InTime.Controls
 
         } 
         #region Sound
-        /// <summary>
-        /// Изменение состояния картинки громкости
-        /// SoundIcon_OnMouseEnter - при наведении на иконку
-        /// SoundIcon_OnMouseDown - при нажатии на нее
-        /// SoundIcon_OnMouseLeave - при выводе курсора за пределы картинки
-        /// SoundSlider_OnValueChanged - при изменении громкости
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void SoundIcon_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
             string tag=(string)SoundSlider.Tag;
             if (tag=="true")
             {
                 sound_icon.Kind = PackIconKind.VolumeOff;
+                SoundSlider.Value = 0;
+                state.player.IsMuted = true;
                 SoundSlider.Tag = "false";
             }
             else
             {
-                SoundSlider_OnValueChanged(null,null);
+                //SoundSlider_OnValueChanged(null,null);
+                state.player.IsMuted = false;
+                SoundSlider.Value = state.player.Volume;
+                Console.WriteLine(state.player.Volume);
                 SoundSlider.Tag = "true";
             }
         }
         private void SoundSlider_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (state == null)
+            {
                 return;
-            if (SoundSlider.Value < 30)
-            {
-                state.sound = SoundState.LowSound;
-                sound_icon.Kind = PackIconKind.VolumeLow;
             }
-            else if (SoundSlider.Value >= 30 && SoundSlider.Value <= 70)
+            else
             {
-                state.sound = SoundState.MidSound;
-                sound_icon.Kind = PackIconKind.VolumeMedium;
+                if (SoundSlider.Value != 0)
+                {
+                    if (SoundSlider.Value < 0.3 && SoundSlider.Value > 0)
+                    {
+                        state.sound = SoundState.LowSound;
+                        sound_icon.Kind = PackIconKind.VolumeLow;
+                    }
+                    else if (SoundSlider.Value >= 0.3 && SoundSlider.Value <= 0.7)
+                    {
+                        state.sound = SoundState.MidSound;
+                        sound_icon.Kind = PackIconKind.VolumeMedium;
+                    }
+                    else if (SoundSlider.Value > 0.7)
+                    {
+                        state.sound = SoundState.HighSound;
+                        sound_icon.Kind = PackIconKind.VolumeHigh;
+                    }
+
+                    state.player.Volume = SoundSlider.Value;
+                }
             }
-            else if (SoundSlider.Value > 70)
-            {
-                state.sound = SoundState.HighSound;
-                sound_icon.Kind = PackIconKind.VolumeHigh;
-            }
+           
         }
         #endregion
         #region LeftPanelLists
@@ -818,7 +897,53 @@ namespace InTime.Controls
 
         private async void Play_btn_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            PlaySongByID(21);
+                    if (state.Current_Tab != null)
+                    {
+                        if (state.Current_Tab is PlaylistGrid)
+                        {
+                             if((state.Current_Tab as PlaylistGrid).SongList.SelectedIndex>=0)
+                             {
+                                 if (((state.Current_Tab as PlaylistGrid).CurrentPlaylist) == state.currentPlaylist)
+                                 {
+                                     Song new_song = ((state.Current_Tab as PlaylistGrid).SongList.SelectedItem as Song);
+                                     Playlist_OnSongPlaying(state.currentPlaylist, new_song.ID, new_song);
+                                 }
+                                else
+                                 {
+
+                                     Song new_song = ((state.Current_Tab as PlaylistGrid).SongList.SelectedItem as Song);
+                                     Song_Playlist new_playlist = (state.Current_Tab as PlaylistGrid).CurrentPlaylist;
+                                    Playlist_OnSongPlaying(new_playlist, new_song.ID, new_song);
+                                }
+                             }
+                        }
+                        else if (state.Current_Tab is NoImageList_Control)
+                        {
+                            Console.WriteLine("No image list");
+                            if ((state.Current_Tab as NoImageList_Control).SongList.SelectedIndex >= 0)
+                            {
+                                Console.WriteLine(((state.Current_Tab as NoImageList_Control).SongList.SelectedItem as Song)
+                                    .Title);
+                            }
+                        }
+                        else if (state.Current_Tab is SingerPage_Control)
+                        {
+                            Console.WriteLine("Singer page");
+                            foreach (var child in (state.Current_Tab as SingerPage_Control).albums_panel.Children)
+                            {
+                                if (child is AlbumGrid)
+                                {
+                                    if ((child as AlbumGrid).songs_lb.SelectedIndex >= 0)
+                                    {
+                                        Console.WriteLine(((child as AlbumGrid).songs_lb.SelectedItem as Song).Title);
+                                    }
+                                }
+                            }
+                        }
+                
+                    }
+            
+            //PlaySongByID(21);
         }
 
 
@@ -902,6 +1027,30 @@ namespace InTime.Controls
 
         #endregion
 
-       
+        #region SongSlider
+
+        private void BottomDuration_slider_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (!state.dragStarted)
+            {
+                state.player.Position = TimeSpan.FromSeconds(bottomDuration_slider.Value);
+                state.dragStarted = true;
+            }
+        }
+
+        private void BottomDuration_slider_OnDragStarted(object sender, DragStartedEventArgs e)
+        {
+            state.dragStarted = true;
+        }
+
+        private void BottomDuration_slider_OnDragCompleted(object sender, DragCompletedEventArgs e)
+        {
+            bottomDuration_slider.Value = ((Slider)sender).Value;
+            state.dragStarted = false;
+        }
+
+        #endregion
+
+        
     }
 }

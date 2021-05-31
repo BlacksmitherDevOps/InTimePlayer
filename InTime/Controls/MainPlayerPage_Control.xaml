@@ -707,7 +707,7 @@
                                                          VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </Border>
                             <!---Prev button setttings-->
-                            <Border x:Name="Prev_btn" Grid.Column="1" Style="{StaticResource BottomButtonsBorder_Style}">
+                            <Border x:Name="Prev_btn" Grid.Column="1" MouseLeftButtonDown="Prev_btn_OnMouseLeftButtonDown" Style="{StaticResource BottomButtonsBorder_Style}">
                                 <materialDesign:PackIcon Kind="SkipPrevious" Foreground="#FF784242" Width="30" Height="30"
                                                          VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </Border>
@@ -735,7 +735,9 @@
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <TextBlock x:Name="bottomCurrentDuration_tb" HorizontalAlignment="Right" VerticalAlignment="Center" Text="0:00" Foreground="#FFFF0051" FontSize="14" Grid.Column="0"/>
-                            <Slider x:Name="bottomDuration_slider" Height="5" HorizontalAlignment="Stretch" Margin="20,0,20,0" Style="{StaticResource Horizontal_Slider}" Grid.Column="1"/>
+                            <Slider x:Name="bottomDuration_slider" Height="5" HorizontalAlignment="Stretch" Margin="20,0,20,0" Style="{StaticResource Horizontal_Slider}" Grid.Column="1"
+                                    ValueChanged="BottomDuration_slider_OnValueChanged" Thumb.DragStarted="BottomDuration_slider_OnDragStarted"
+                                    Thumb.DragCompleted="BottomDuration_slider_OnDragCompleted"/>
                             <TextBlock x:Name="bottomMaxDuration_tb" Text="3:42" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="14" Foreground="#FFFF0051" Grid.Column="2"/>
                         </Grid>
                     </Grid>
@@ -745,7 +747,7 @@
                                 MouseLeftButtonUp="SoundIcon_OnMouseDown">
                                 <materialDesign:PackIcon Name="sound_icon"  Width="25" Height="25" Kind="VolumeMedium" Foreground="#FFFF0051"/>
                             </Border>
-                            <Slider Name="SoundSlider" Value="50" Tag="true" Maximum="100" Minimum="0" HorizontalAlignment="Left" VerticalAlignment="Center" 
+                            <Slider Name="SoundSlider" Value="0.7" Tag="true" Maximum="1" Minimum="0" HorizontalAlignment="Left" VerticalAlignment="Center" 
                                 Style="{StaticResource Horizontal_Slider}" Width="145"
                                 ValueChanged="SoundSlider_OnValueChanged"/>
                         </StackPanel>
