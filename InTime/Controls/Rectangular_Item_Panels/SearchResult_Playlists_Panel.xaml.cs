@@ -14,15 +14,15 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace InTime.Controls
+namespace InTime.Controls.Rectangular_Item_Panels
 {
     /// <summary>
-    /// Логика взаимодействия для FavoritePlaylists.xaml
+    /// Логика взаимодействия для SearchResult_Playlists_Panel.xaml
     /// </summary>
-    public partial class FavoritePlaylists : UserControl
+    public partial class SearchResult_Playlists_Panel : UserControl
     {
         public event OpenPlaylist OpenPlaylist;
-        public FavoritePlaylists()
+        public SearchResult_Playlists_Panel()
         {
             InitializeComponent();
         }
@@ -31,12 +31,12 @@ namespace InTime.Controls
             foreach (var item in playlists)
             {
                 Playlist_Item_Control item_Control = new Playlist_Item_Control(item);
-                item_Control.OpenPlaylist += Item_Control_OpenPlaylist;
+                item_Control.OpenPlaylist += Item_Control_OpenAlbum;
                 panel.Children.Add(item_Control);
             }
         }
 
-        private void Item_Control_OpenPlaylist(int id)
+        private void Item_Control_OpenAlbum(int id)
         {
             OpenPlaylist?.Invoke(id);
         }

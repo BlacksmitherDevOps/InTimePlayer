@@ -21,11 +21,15 @@ namespace InTime.Controls
     /// </summary>
     public partial class SearchPanel : UserControl
     {
+        public event ViewAllSongs ViewAllSongs;
+        public event ViewAllSingers ViewAllSingers;
+        public event ViewAllAlbums ViewAllAlbums;
+        public event ViewAllPlaylists ViewAllPlaylists;
         public SearchPanel()
         {
             InitializeComponent();
         }
-
+        public string Search_Str { get; set; }
         public void AddSongs(Song[] songs)
         {
             if (songs == null)
@@ -89,7 +93,7 @@ namespace InTime.Controls
                 AddAlbums(albums[i]);
             }
         }
-        public void AddGenres(Song[] songs)
+        public void AddGenres(Song_Playlist[] songs)
         {
             if (songs == null)
                 return;
@@ -97,7 +101,7 @@ namespace InTime.Controls
                 return;
             for (int i = 0; i < songs.Length && i < 4; i++)
             {
-                AddSong(songs[i]);
+                AddGenres(songs[i]);
             }
         }
         public void AddArtists(Song_Singer[] singers)
@@ -134,11 +138,12 @@ namespace InTime.Controls
             GetFreeSlot(ArtistGrid, Item);
             ArtistGrid.Children.Add(Item);
         }
-        void AddGenres(Song song)
+        void AddGenres(Song_Playlist playlist)
         {
-            SingleSearchItem Item = new SingleSearchItem();
-            //Item1.Image = @"C:\Player\InTimePlayer\InTime\Controls\3E-zsSjyGLU.jpg";
-            Item.Title = song.Genre;
+            SearchItem Item = new SearchItem();
+            Item.Image = playlist.Image;
+            Item.Title = "";
+            Item.Artist = playlist.Title;
             Item.Height = 80;
             Item.VerticalAlignment = VerticalAlignment.Center;
             GetFreeSlot(GenresGrid, Item);
@@ -156,9 +161,24 @@ namespace InTime.Controls
             AlbumsGrid.Children.Add(Item);
         }
 
-        private void Border_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void ViewAll_Albums_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
+            ViewAllAlbums?.Invoke(Search_Str);
+        }
 
+        private void ViewAll_Songs_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            ViewAllSongs?.Invoke(Search_Str);
+        }
+
+        private void ViewAll_Singers_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            ViewAllSingers?.Invoke(Search_Str);
+        }
+
+        private void ViewAll_Playlists_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            ViewAllPlaylists?.Invoke(Search_Str);
         }
     }
 }

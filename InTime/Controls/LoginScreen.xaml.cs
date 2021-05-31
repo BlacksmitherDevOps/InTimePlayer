@@ -554,7 +554,7 @@ namespace InTime.Controls
             try
             {
                 loadBord.Visibility = Visibility.Visible;
-                //await client.DownloadFileAsync(File.ReadAllBytes("d:\\rrk.jpg"));
+                //await client.AddGenrePlaylistAsync(new Song_Playlist { Title="Metal", Image= File.ReadAllBytes("d:\\met.jpg") });
                 //await client.tmpAsync(File.ReadAllBytes("d:\\ger.jpg"));
                 OnWindowClosed?.Invoke(await client.TryLoginAsync(new Login_User { Image = null, ExtensionData = null, Login = "BogdanLysenkoLox", Password = "dsa", Email = null }));
                 this.Close();

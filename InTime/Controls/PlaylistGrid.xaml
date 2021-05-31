@@ -4,7 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:InTime.Controls"
+             xmlns:local="clr-namespace:InTime.Controls.Rectangular_Items"
              mc:Ignorable="d" 
              Name="_Playlist"
              d:DesignHeight="500" d:DesignWidth="1190">
@@ -226,7 +226,8 @@
                        Margin="7,8,0,0" Foreground="#FFE6DDDD"/>
         </Grid>
         <ListBox x:Name="SongList" ItemsSource="{Binding}" ItemContainerStyle="{StaticResource item_Container}" 
-                 ItemTemplate="{StaticResource item_Template}" Grid.Row="2" Grid.ColumnSpan="2" ContextMenuOpening="OnContextMenuOpening">
+                 ItemTemplate="{StaticResource item_Template}" Grid.Row="2" Grid.ColumnSpan="2" 
+                 ContextMenuOpening="OnContextMenuOpening" PreviewMouseWheel="ListBoxItem_PreviewMouseWheel">
             <ListBox.ContextMenu>
                 <ContextMenu Name="SongMenu" Background="#8d0d26">
                     <MenuItem Background="#8d0d26" Header="Remove from this playlist" Click="RemoveSongClick" />

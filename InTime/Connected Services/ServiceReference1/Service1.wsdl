@@ -486,6 +486,76 @@
           </xs:sequence>
         </xs:complexType>
       </xs:element>
+      <xs:element name="AddGenrePlaylist">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="new_Playlist" nillable="true" type="q29:Song_Playlist" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="AddGenrePlaylistResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="AddGenrePlaylistResult" nillable="true" type="q30:Song_Playlist" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Search_GetAllSongs">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="search_str" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Search_GetAllSongsResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="Search_GetAllSongsResult" nillable="true" type="q31:Song_Playlist" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Search_GetAllSongSingers">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="search_str" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Search_GetAllSongSingersResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q32="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="Search_GetAllSongSingersResult" nillable="true" type="q32:ArrayOfSong_Singer" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Search_GetAllSingerAlbums">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="search_str" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Search_GetAllSingerAlbumsResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q33="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="Search_GetAllSingerAlbumsResult" nillable="true" type="q33:ArrayOfSinger_Album" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Search_GetAllPlaylists">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="search_str" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Search_GetAllPlaylistsResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q34="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="Search_GetAllPlaylistsResult" nillable="true" type="q34:ArrayOfSong_Playlist" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
       <xs:element name="AddSongToPlaylist">
         <xs:complexType>
           <xs:sequence>
@@ -527,18 +597,6 @@
           <xs:sequence />
         </xs:complexType>
       </xs:element>
-      <xs:element name="DownloadFile">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element minOccurs="0" name="arr" nillable="true" type="xs:base64Binary" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="DownloadFileResponse">
-        <xs:complexType>
-          <xs:sequence />
-        </xs:complexType>
-      </xs:element>
       <xs:element name="Search">
         <xs:complexType>
           <xs:sequence>
@@ -549,7 +607,7 @@
       <xs:element name="SearchResponse">
         <xs:complexType>
           <xs:sequence>
-            <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="SearchResult" nillable="true" type="q29:SearchResult" />
+            <xs:element xmlns:q35="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="SearchResult" nillable="true" type="q35:SearchResult" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -563,7 +621,7 @@
       <xs:element name="playlistResponse">
         <xs:complexType>
           <xs:sequence>
-            <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="playlistResult" nillable="true" type="q30:Song_Playlist" />
+            <xs:element xmlns:q36="http://schemas.datacontract.org/2004/07/PlayerService" minOccurs="0" name="playlistResult" nillable="true" type="q36:Song_Playlist" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -762,7 +820,8 @@
       <xs:complexType name="SearchResult">
         <xs:sequence>
           <xs:element minOccurs="0" name="Albums" nillable="true" type="tns:ArrayOfSinger_Album" />
-          <xs:element minOccurs="0" name="GenreSongs" nillable="true" type="tns:ArrayOfSong" />
+          <xs:element minOccurs="0" name="Playlists" nillable="true" type="tns:ArrayOfSong_Playlist" />
+          <xs:element minOccurs="0" name="Search_Str" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="Singers" nillable="true" type="tns:ArrayOfSong_Singer" />
           <xs:element minOccurs="0" name="Songs" nillable="true" type="tns:ArrayOfSong" />
         </xs:sequence>
@@ -1036,6 +1095,51 @@
   <wsdl:message name="IService1_AddPlaylist_AddPlaylistFailedFault_FaultMessage">
     <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/PlayerService" name="detail" element="q17:AddPlaylistFailed" />
   </wsdl:message>
+  <wsdl:message name="IService1_AddGenrePlaylist_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddGenrePlaylist" />
+  </wsdl:message>
+  <wsdl:message name="IService1_AddGenrePlaylist_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddGenrePlaylistResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_AddGenrePlaylist_AddPlaylistFailedFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/PlayerService" name="detail" element="q18:AddPlaylistFailed" />
+  </wsdl:message>
+  <wsdl:message name="IService1_Search_GetAllSongs_InputMessage">
+    <wsdl:part name="parameters" element="tns:Search_GetAllSongs" />
+  </wsdl:message>
+  <wsdl:message name="IService1_Search_GetAllSongs_OutputMessage">
+    <wsdl:part name="parameters" element="tns:Search_GetAllSongsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_Search_GetAllSongs_LoadPlaylistFailedFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/PlayerService" name="detail" element="q19:LoadPlaylistFailed" />
+  </wsdl:message>
+  <wsdl:message name="IService1_Search_GetAllSongSingers_InputMessage">
+    <wsdl:part name="parameters" element="tns:Search_GetAllSongSingers" />
+  </wsdl:message>
+  <wsdl:message name="IService1_Search_GetAllSongSingers_OutputMessage">
+    <wsdl:part name="parameters" element="tns:Search_GetAllSongSingersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_Search_GetAllSongSingers_LoadPlaylistFailedFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/PlayerService" name="detail" element="q20:LoadPlaylistFailed" />
+  </wsdl:message>
+  <wsdl:message name="IService1_Search_GetAllSingerAlbums_InputMessage">
+    <wsdl:part name="parameters" element="tns:Search_GetAllSingerAlbums" />
+  </wsdl:message>
+  <wsdl:message name="IService1_Search_GetAllSingerAlbums_OutputMessage">
+    <wsdl:part name="parameters" element="tns:Search_GetAllSingerAlbumsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_Search_GetAllSingerAlbums_LoadPlaylistFailedFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/PlayerService" name="detail" element="q21:LoadPlaylistFailed" />
+  </wsdl:message>
+  <wsdl:message name="IService1_Search_GetAllPlaylists_InputMessage">
+    <wsdl:part name="parameters" element="tns:Search_GetAllPlaylists" />
+  </wsdl:message>
+  <wsdl:message name="IService1_Search_GetAllPlaylists_OutputMessage">
+    <wsdl:part name="parameters" element="tns:Search_GetAllPlaylistsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_Search_GetAllPlaylists_LoadPlaylistFailedFault_FaultMessage">
+    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/PlayerService" name="detail" element="q22:LoadPlaylistFailed" />
+  </wsdl:message>
   <wsdl:message name="IService1_AddSongToPlaylist_InputMessage">
     <wsdl:part name="parameters" element="tns:AddSongToPlaylist" />
   </wsdl:message>
@@ -1053,12 +1157,6 @@
   </wsdl:message>
   <wsdl:message name="IService1_tmp_OutputMessage">
     <wsdl:part name="parameters" element="tns:tmpResponse" />
-  </wsdl:message>
-  <wsdl:message name="IService1_DownloadFile_InputMessage">
-    <wsdl:part name="parameters" element="tns:DownloadFile" />
-  </wsdl:message>
-  <wsdl:message name="IService1_DownloadFile_OutputMessage">
-    <wsdl:part name="parameters" element="tns:DownloadFileResponse" />
   </wsdl:message>
   <wsdl:message name="IService1_Search_InputMessage">
     <wsdl:part name="parameters" element="tns:Search" />
@@ -1230,6 +1328,31 @@
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/AddPlaylistResponse" message="tns:IService1_AddPlaylist_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/IService1/AddPlaylistAddPlaylistFailedFault" name="AddPlaylistFailedFault" message="tns:IService1_AddPlaylist_AddPlaylistFailedFault_FaultMessage" />
     </wsdl:operation>
+    <wsdl:operation name="AddGenrePlaylist">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/AddGenrePlaylist" message="tns:IService1_AddGenrePlaylist_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/AddGenrePlaylistResponse" message="tns:IService1_AddGenrePlaylist_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IService1/AddGenrePlaylistAddPlaylistFailedFault" name="AddPlaylistFailedFault" message="tns:IService1_AddGenrePlaylist_AddPlaylistFailedFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Search_GetAllSongs">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/Search_GetAllSongs" message="tns:IService1_Search_GetAllSongs_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/Search_GetAllSongsResponse" message="tns:IService1_Search_GetAllSongs_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IService1/Search_GetAllSongsLoadPlaylistFailedFault" name="LoadPlaylistFailedFault" message="tns:IService1_Search_GetAllSongs_LoadPlaylistFailedFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Search_GetAllSongSingers">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/Search_GetAllSongSingers" message="tns:IService1_Search_GetAllSongSingers_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/Search_GetAllSongSingersResponse" message="tns:IService1_Search_GetAllSongSingers_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IService1/Search_GetAllSongSingersLoadPlaylistFailedFault" name="LoadPlaylistFailedFault" message="tns:IService1_Search_GetAllSongSingers_LoadPlaylistFailedFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Search_GetAllSingerAlbums">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/Search_GetAllSingerAlbums" message="tns:IService1_Search_GetAllSingerAlbums_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/Search_GetAllSingerAlbumsResponse" message="tns:IService1_Search_GetAllSingerAlbums_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IService1/Search_GetAllSingerAlbumsLoadPlaylistFailedFault" name="LoadPlaylistFailedFault" message="tns:IService1_Search_GetAllSingerAlbums_LoadPlaylistFailedFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Search_GetAllPlaylists">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/Search_GetAllPlaylists" message="tns:IService1_Search_GetAllPlaylists_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/Search_GetAllPlaylistsResponse" message="tns:IService1_Search_GetAllPlaylists_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IService1/Search_GetAllPlaylistsLoadPlaylistFailedFault" name="LoadPlaylistFailedFault" message="tns:IService1_Search_GetAllPlaylists_LoadPlaylistFailedFault_FaultMessage" />
+    </wsdl:operation>
     <wsdl:operation name="AddSongToPlaylist">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/AddSongToPlaylist" message="tns:IService1_AddSongToPlaylist_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/AddSongToPlaylistResponse" message="tns:IService1_AddSongToPlaylist_OutputMessage" />
@@ -1241,10 +1364,6 @@
     <wsdl:operation name="tmp">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/tmp" message="tns:IService1_tmp_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/tmpResponse" message="tns:IService1_tmp_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="DownloadFile">
-      <wsdl:input wsaw:Action="http://tempuri.org/IService1/DownloadFile" message="tns:IService1_DownloadFile_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IService1/DownloadFileResponse" message="tns:IService1_DownloadFile_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="Search">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/Search" message="tns:IService1_Search_InputMessage" />
@@ -1623,6 +1742,66 @@
         <soap:fault use="literal" name="AddPlaylistFailedFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
+    <wsdl:operation name="AddGenrePlaylist">
+      <soap:operation soapAction="http://tempuri.org/IService1/AddGenrePlaylist" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="AddPlaylistFailedFault">
+        <soap:fault use="literal" name="AddPlaylistFailedFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Search_GetAllSongs">
+      <soap:operation soapAction="http://tempuri.org/IService1/Search_GetAllSongs" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="LoadPlaylistFailedFault">
+        <soap:fault use="literal" name="LoadPlaylistFailedFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Search_GetAllSongSingers">
+      <soap:operation soapAction="http://tempuri.org/IService1/Search_GetAllSongSingers" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="LoadPlaylistFailedFault">
+        <soap:fault use="literal" name="LoadPlaylistFailedFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Search_GetAllSingerAlbums">
+      <soap:operation soapAction="http://tempuri.org/IService1/Search_GetAllSingerAlbums" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="LoadPlaylistFailedFault">
+        <soap:fault use="literal" name="LoadPlaylistFailedFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Search_GetAllPlaylists">
+      <soap:operation soapAction="http://tempuri.org/IService1/Search_GetAllPlaylists" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="LoadPlaylistFailedFault">
+        <soap:fault use="literal" name="LoadPlaylistFailedFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
     <wsdl:operation name="AddSongToPlaylist">
       <soap:operation soapAction="http://tempuri.org/IService1/AddSongToPlaylist" style="document" />
       <wsdl:input>
@@ -1643,15 +1822,6 @@
     </wsdl:operation>
     <wsdl:operation name="tmp">
       <soap:operation soapAction="http://tempuri.org/IService1/tmp" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="DownloadFile">
-      <soap:operation soapAction="http://tempuri.org/IService1/DownloadFile" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

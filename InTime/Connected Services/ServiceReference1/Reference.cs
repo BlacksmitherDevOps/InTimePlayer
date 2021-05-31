@@ -1251,7 +1251,10 @@ namespace InTime.ServiceReference1 {
         private InTime.ServiceReference1.Singer_Album[] AlbumsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private InTime.ServiceReference1.Song[] GenreSongsField;
+        private InTime.ServiceReference1.Song_Playlist[] PlaylistsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string Search_StrField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private InTime.ServiceReference1.Song_Singer[] SingersField;
@@ -1283,14 +1286,27 @@ namespace InTime.ServiceReference1 {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public InTime.ServiceReference1.Song[] GenreSongs {
+        public InTime.ServiceReference1.Song_Playlist[] Playlists {
             get {
-                return this.GenreSongsField;
+                return this.PlaylistsField;
             }
             set {
-                if ((object.ReferenceEquals(this.GenreSongsField, value) != true)) {
-                    this.GenreSongsField = value;
-                    this.RaisePropertyChanged("GenreSongs");
+                if ((object.ReferenceEquals(this.PlaylistsField, value) != true)) {
+                    this.PlaylistsField = value;
+                    this.RaisePropertyChanged("Playlists");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Search_Str {
+            get {
+                return this.Search_StrField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Search_StrField, value) != true)) {
+                    this.Search_StrField = value;
+                    this.RaisePropertyChanged("Search_Str");
                 }
             }
         }
@@ -1562,6 +1578,41 @@ namespace InTime.ServiceReference1 {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/AddPlaylist", ReplyAction="http://tempuri.org/IService1/AddPlaylistResponse")]
         System.Threading.Tasks.Task<InTime.ServiceReference1.Song_Playlist> AddPlaylistAsync(InTime.ServiceReference1.Song_Playlist new_Playlist);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/AddGenrePlaylist", ReplyAction="http://tempuri.org/IService1/AddGenrePlaylistResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(InTime.ServiceReference1.AddPlaylistFailed), Action="http://tempuri.org/IService1/AddGenrePlaylistAddPlaylistFailedFault", Name="AddPlaylistFailed", Namespace="http://schemas.datacontract.org/2004/07/PlayerService")]
+        InTime.ServiceReference1.Song_Playlist AddGenrePlaylist(InTime.ServiceReference1.Song_Playlist new_Playlist);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/AddGenrePlaylist", ReplyAction="http://tempuri.org/IService1/AddGenrePlaylistResponse")]
+        System.Threading.Tasks.Task<InTime.ServiceReference1.Song_Playlist> AddGenrePlaylistAsync(InTime.ServiceReference1.Song_Playlist new_Playlist);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/Search_GetAllSongs", ReplyAction="http://tempuri.org/IService1/Search_GetAllSongsResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(InTime.ServiceReference1.LoadPlaylistFailed), Action="http://tempuri.org/IService1/Search_GetAllSongsLoadPlaylistFailedFault", Name="LoadPlaylistFailed", Namespace="http://schemas.datacontract.org/2004/07/PlayerService")]
+        InTime.ServiceReference1.Song_Playlist Search_GetAllSongs(string search_str);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/Search_GetAllSongs", ReplyAction="http://tempuri.org/IService1/Search_GetAllSongsResponse")]
+        System.Threading.Tasks.Task<InTime.ServiceReference1.Song_Playlist> Search_GetAllSongsAsync(string search_str);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/Search_GetAllSongSingers", ReplyAction="http://tempuri.org/IService1/Search_GetAllSongSingersResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(InTime.ServiceReference1.LoadPlaylistFailed), Action="http://tempuri.org/IService1/Search_GetAllSongSingersLoadPlaylistFailedFault", Name="LoadPlaylistFailed", Namespace="http://schemas.datacontract.org/2004/07/PlayerService")]
+        InTime.ServiceReference1.Song_Singer[] Search_GetAllSongSingers(string search_str);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/Search_GetAllSongSingers", ReplyAction="http://tempuri.org/IService1/Search_GetAllSongSingersResponse")]
+        System.Threading.Tasks.Task<InTime.ServiceReference1.Song_Singer[]> Search_GetAllSongSingersAsync(string search_str);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/Search_GetAllSingerAlbums", ReplyAction="http://tempuri.org/IService1/Search_GetAllSingerAlbumsResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(InTime.ServiceReference1.LoadPlaylistFailed), Action="http://tempuri.org/IService1/Search_GetAllSingerAlbumsLoadPlaylistFailedFault", Name="LoadPlaylistFailed", Namespace="http://schemas.datacontract.org/2004/07/PlayerService")]
+        InTime.ServiceReference1.Singer_Album[] Search_GetAllSingerAlbums(string search_str);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/Search_GetAllSingerAlbums", ReplyAction="http://tempuri.org/IService1/Search_GetAllSingerAlbumsResponse")]
+        System.Threading.Tasks.Task<InTime.ServiceReference1.Singer_Album[]> Search_GetAllSingerAlbumsAsync(string search_str);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/Search_GetAllPlaylists", ReplyAction="http://tempuri.org/IService1/Search_GetAllPlaylistsResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(InTime.ServiceReference1.LoadPlaylistFailed), Action="http://tempuri.org/IService1/Search_GetAllPlaylistsLoadPlaylistFailedFault", Name="LoadPlaylistFailed", Namespace="http://schemas.datacontract.org/2004/07/PlayerService")]
+        InTime.ServiceReference1.Song_Playlist[] Search_GetAllPlaylists(string search_str);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/Search_GetAllPlaylists", ReplyAction="http://tempuri.org/IService1/Search_GetAllPlaylistsResponse")]
+        System.Threading.Tasks.Task<InTime.ServiceReference1.Song_Playlist[]> Search_GetAllPlaylistsAsync(string search_str);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/AddSongToPlaylist", ReplyAction="http://tempuri.org/IService1/AddSongToPlaylistResponse")]
         bool AddSongToPlaylist(int songID, int playlistID);
         
@@ -1579,12 +1630,6 @@ namespace InTime.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/tmp", ReplyAction="http://tempuri.org/IService1/tmpResponse")]
         System.Threading.Tasks.Task tmpAsync(byte[] img);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/DownloadFile", ReplyAction="http://tempuri.org/IService1/DownloadFileResponse")]
-        void DownloadFile(byte[] arr);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/DownloadFile", ReplyAction="http://tempuri.org/IService1/DownloadFileResponse")]
-        System.Threading.Tasks.Task DownloadFileAsync(byte[] arr);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/Search", ReplyAction="http://tempuri.org/IService1/SearchResponse")]
         InTime.ServiceReference1.SearchResult Search(string searchStr);
@@ -1906,6 +1951,46 @@ namespace InTime.ServiceReference1 {
             return base.Channel.AddPlaylistAsync(new_Playlist);
         }
         
+        public InTime.ServiceReference1.Song_Playlist AddGenrePlaylist(InTime.ServiceReference1.Song_Playlist new_Playlist) {
+            return base.Channel.AddGenrePlaylist(new_Playlist);
+        }
+        
+        public System.Threading.Tasks.Task<InTime.ServiceReference1.Song_Playlist> AddGenrePlaylistAsync(InTime.ServiceReference1.Song_Playlist new_Playlist) {
+            return base.Channel.AddGenrePlaylistAsync(new_Playlist);
+        }
+        
+        public InTime.ServiceReference1.Song_Playlist Search_GetAllSongs(string search_str) {
+            return base.Channel.Search_GetAllSongs(search_str);
+        }
+        
+        public System.Threading.Tasks.Task<InTime.ServiceReference1.Song_Playlist> Search_GetAllSongsAsync(string search_str) {
+            return base.Channel.Search_GetAllSongsAsync(search_str);
+        }
+        
+        public InTime.ServiceReference1.Song_Singer[] Search_GetAllSongSingers(string search_str) {
+            return base.Channel.Search_GetAllSongSingers(search_str);
+        }
+        
+        public System.Threading.Tasks.Task<InTime.ServiceReference1.Song_Singer[]> Search_GetAllSongSingersAsync(string search_str) {
+            return base.Channel.Search_GetAllSongSingersAsync(search_str);
+        }
+        
+        public InTime.ServiceReference1.Singer_Album[] Search_GetAllSingerAlbums(string search_str) {
+            return base.Channel.Search_GetAllSingerAlbums(search_str);
+        }
+        
+        public System.Threading.Tasks.Task<InTime.ServiceReference1.Singer_Album[]> Search_GetAllSingerAlbumsAsync(string search_str) {
+            return base.Channel.Search_GetAllSingerAlbumsAsync(search_str);
+        }
+        
+        public InTime.ServiceReference1.Song_Playlist[] Search_GetAllPlaylists(string search_str) {
+            return base.Channel.Search_GetAllPlaylists(search_str);
+        }
+        
+        public System.Threading.Tasks.Task<InTime.ServiceReference1.Song_Playlist[]> Search_GetAllPlaylistsAsync(string search_str) {
+            return base.Channel.Search_GetAllPlaylistsAsync(search_str);
+        }
+        
         public bool AddSongToPlaylist(int songID, int playlistID) {
             return base.Channel.AddSongToPlaylist(songID, playlistID);
         }
@@ -1928,14 +2013,6 @@ namespace InTime.ServiceReference1 {
         
         public System.Threading.Tasks.Task tmpAsync(byte[] img) {
             return base.Channel.tmpAsync(img);
-        }
-        
-        public void DownloadFile(byte[] arr) {
-            base.Channel.DownloadFile(arr);
-        }
-        
-        public System.Threading.Tasks.Task DownloadFileAsync(byte[] arr) {
-            return base.Channel.DownloadFileAsync(arr);
         }
         
         public InTime.ServiceReference1.SearchResult Search(string searchStr) {
