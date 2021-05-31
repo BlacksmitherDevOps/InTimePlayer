@@ -138,9 +138,8 @@ namespace InTime.Controls
             GetFreeSlot(ArtistGrid, Item);
             ArtistGrid.Children.Add(Item);
         }
-        async void AddGenres(Song_Playlist playlist)
+        void AddGenres(Song_Playlist playlist)
         {
-            Service1Client client = new Service1Client();
             SearchItem Item = new SearchItem();
             Item.Image = playlist.Image;
             Item.Title = "";

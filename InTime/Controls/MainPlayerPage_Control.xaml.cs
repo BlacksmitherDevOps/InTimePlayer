@@ -121,18 +121,23 @@ namespace InTime.Controls
         {
             LoadingScreen();
             PlaylistGrid playlist = new PlaylistGrid(state.user);
-            playlist.PlaylistsInfo = state.Playlists;
             playlist.OpenSingerPage += Playlist_OpenSingerPage;
             playlist.UserPlaylistChanged += UserPlaylistChanged;
             playlist.OnDragStarted += Playlist_OnDragStarted;
             playlist.PlaySong += Playlist_PlaySong;
             playlist.CurrentListboxUPD += Playlist_CurrentListboxUPD; ;
             playlist.PauseSong += Playlist_PauseSong;
+            playlist.ScrollCall += Grid_ScrollCall;
+
+
             Service1Client client = new Service1Client();
             Song_Playlist _Playlist = await client.GetPlaylistByIDAsync(id);
             if (tape_panel.Child.GetType() != typeof(ProgressBar))
                 return;
             client.Close();
+
+
+            playlist.PlaylistsInfo = state.Playlists;
             playlist.CurrentPlaylist = _Playlist;
             playlist.CurrentUser = state.user;
             playlist.Init();

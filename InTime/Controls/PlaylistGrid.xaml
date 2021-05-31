@@ -226,7 +226,8 @@
                        Margin="7,8,0,0" Foreground="#FFE6DDDD"/>
         </Grid>
         <ListBox x:Name="SongList" ItemsSource="{Binding}" ItemContainerStyle="{StaticResource item_Container}" 
-                 ItemTemplate="{StaticResource item_Template}" Grid.Row="2" Grid.ColumnSpan="2" ContextMenuOpening="OnContextMenuOpening">
+                 ItemTemplate="{StaticResource item_Template}" Grid.Row="2" Grid.ColumnSpan="2" 
+                 ContextMenuOpening="OnContextMenuOpening" PreviewMouseWheel="ListBoxItem_PreviewMouseWheel">
             <ListBox.ContextMenu>
                 <ContextMenu Name="SongMenu" Background="#8d0d26">
                     <MenuItem Background="#8d0d26" Header="Remove from this playlist" Click="RemoveSongClick" />
