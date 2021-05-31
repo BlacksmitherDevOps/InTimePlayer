@@ -193,7 +193,6 @@ namespace InTime.Controls
                 playBord.Child.Visibility = Visibility.Visible;
                 moreBord.Child.Visibility = Visibility.Visible;
             }
-            CurrentListboxUPD?.Invoke((ListBox)FindParent<ListBox>((ListBoxItem)sender));
         }
         Border GetPlayBorder(ListBoxItem item)
         {

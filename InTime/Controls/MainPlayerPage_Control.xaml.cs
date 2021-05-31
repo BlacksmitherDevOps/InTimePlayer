@@ -201,7 +201,11 @@ namespace InTime.Controls
             Service1Client client = new Service1Client();
             string path = Environment.CurrentDirectory + "\\temp.mp3";
             byte[] file = await client.GetTrackAsync(ID);
+            if (state.currentSong.ID != ID)
+                return;
             File.WriteAllBytes(path, file);
+            if (state.currentSong.ID != ID)
+                return;
             PlaySong(path);
             client.Close();
         }

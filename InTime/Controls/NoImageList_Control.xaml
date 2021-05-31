@@ -105,14 +105,15 @@
                         <ColumnDefinition Width="100"/>
                         <ColumnDefinition Width="50"/>
                     </Grid.ColumnDefinitions>
-                    <Border x:Name="PlayBord" Visibility="Visible"  Grid.Column="0" MouseLeftButtonDown="PlayBord_OnMouseLeftButtonDown">
+                    <Border x:Name="PlayBord" Visibility="Visible" Background="Transparent"
+                            Grid.Column="0" MouseLeftButtonUp="PlayBord_OnMouseLeftButtonDown">
                         <materialDesign:PackIcon x:Name="PlayBtn" Visibility="Hidden" Kind="PlayCircleOutline" Width="30" Height="30"
                                                      VerticalAlignment="Center" HorizontalAlignment="Center"
                                                      Foreground="White"/>
                     </Border>
                     <TextBlock Text="{Binding Title}" Grid.Column="1" FontSize="20"
                                        Margin="7,3,0,0" TextTrimming="WordEllipsis"/>
-                    <TextBlock Grid.Column="2" Text="{Binding Singers[0].Name}" FontSize="20" TextTrimming="WordEllipsis"
+                    <TextBlock Grid.Column="2" Text="{Binding Singers[0].Name}" HorizontalAlignment="Left" FontSize="20" TextTrimming="WordEllipsis"
                                        Margin="7,3,0,0" MouseEnter="TextBlock_MouseEnter" MouseLeave="TextBlock_MouseLeave"
                                        Cursor="Hand"/>
                     <TextBlock Grid.Column="3" Text="{Binding Album.Title}" FontSize="20"

@@ -110,10 +110,6 @@ namespace InTime.Controls
         }
         private void ListBoxItem_Unselected(object sender, RoutedEventArgs e)
         {
-
-            Border playBord = GetPlayBorder((ListBoxItem)sender);
-            if (playBord != null)
-                ((PackIcon)playBord.Child).Kind = PackIconKind.PlayCircleOutline;
             ListBoxItem_MouseLeave(sender, null);
         }
         private void ListBoxItem_Selected(object sender, RoutedEventArgs e)
@@ -123,13 +119,19 @@ namespace InTime.Controls
                 Song song = ((Song)((ListBoxItem)sender).Content);
                 Console.WriteLine(song.Singers[0]);
                 OpenSingerPage?.Invoke(song.Singers[0].ID);
-
                 return;
             }
+            Console.WriteLine(sender);
+            ListBoxItem_MouseEnter(sender, null);
             ((ListBoxItem)sender).Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB8FF8F"));
+            ((ListBoxItem)sender).Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF746767"));
             Border playBord = GetPlayBorder((ListBoxItem)sender);
+            Border moreBord = GetMoreBorder((ListBoxItem)sender);
             if (playBord != null)
-                ((PackIcon)playBord.Child).Kind = PackIconKind.PauseCircleOutline;
+            {
+                playBord.Child.Visibility = Visibility.Visible;
+                moreBord.Child.Visibility = Visibility.Visible;
+            }
         }
         Border GetPlayBorder(ListBoxItem item)
         {
