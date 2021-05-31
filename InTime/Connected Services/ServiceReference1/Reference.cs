@@ -1418,10 +1418,10 @@ namespace InTime.ServiceReference1 {
         System.Threading.Tasks.Task<InTime.ServiceReference1.Singer_Album> GetAlbumAsync(int ID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetTrack", ReplyAction="http://tempuri.org/IService1/GetTrackResponse")]
-        byte[] GetTrack(int ID);
+        byte[] GetTrack(int userID, int songID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetTrack", ReplyAction="http://tempuri.org/IService1/GetTrackResponse")]
-        System.Threading.Tasks.Task<byte[]> GetTrackAsync(int ID);
+        System.Threading.Tasks.Task<byte[]> GetTrackAsync(int userID, int songID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetAlbumImage", ReplyAction="http://tempuri.org/IService1/GetAlbumImageResponse")]
         byte[] GetAlbumImage(int ID);
@@ -1567,10 +1567,10 @@ namespace InTime.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetSpecialForYou", ReplyAction="http://tempuri.org/IService1/GetSpecialForYouResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(InTime.ServiceReference1.LoadPlaylistFailed), Action="http://tempuri.org/IService1/GetSpecialForYouLoadPlaylistFailedFault", Name="LoadPlaylistFailed", Namespace="http://schemas.datacontract.org/2004/07/PlayerService")]
-        string[] GetSpecialForYou(int userID);
+        InTime.ServiceReference1.Song_Playlist[] GetSpecialForYou(int userID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetSpecialForYou", ReplyAction="http://tempuri.org/IService1/GetSpecialForYouResponse")]
-        System.Threading.Tasks.Task<string[]> GetSpecialForYouAsync(int userID);
+        System.Threading.Tasks.Task<InTime.ServiceReference1.Song_Playlist[]> GetSpecialForYouAsync(int userID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetTrackStream", ReplyAction="http://tempuri.org/IService1/GetTrackStreamResponse")]
         System.IO.Stream GetTrackStream(int ID);
@@ -1772,12 +1772,12 @@ namespace InTime.ServiceReference1 {
             return base.Channel.GetAlbumAsync(ID);
         }
         
-        public byte[] GetTrack(int ID) {
-            return base.Channel.GetTrack(ID);
+        public byte[] GetTrack(int userID, int songID) {
+            return base.Channel.GetTrack(userID, songID);
         }
         
-        public System.Threading.Tasks.Task<byte[]> GetTrackAsync(int ID) {
-            return base.Channel.GetTrackAsync(ID);
+        public System.Threading.Tasks.Task<byte[]> GetTrackAsync(int userID, int songID) {
+            return base.Channel.GetTrackAsync(userID, songID);
         }
         
         public byte[] GetAlbumImage(int ID) {
@@ -1956,11 +1956,11 @@ namespace InTime.ServiceReference1 {
             return base.Channel.GetAllGenresAsync();
         }
         
-        public string[] GetSpecialForYou(int userID) {
+        public InTime.ServiceReference1.Song_Playlist[] GetSpecialForYou(int userID) {
             return base.Channel.GetSpecialForYou(userID);
         }
         
-        public System.Threading.Tasks.Task<string[]> GetSpecialForYouAsync(int userID) {
+        public System.Threading.Tasks.Task<InTime.ServiceReference1.Song_Playlist[]> GetSpecialForYouAsync(int userID) {
             return base.Channel.GetSpecialForYouAsync(userID);
         }
         

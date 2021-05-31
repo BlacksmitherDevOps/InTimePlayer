@@ -4,6 +4,7 @@ using InTime.ServiceReference1;
 using MaterialDesignThemes.Wpf;
 using NAudio.Wave;
 using System;
+using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.Linq;
 using System.Resources;
@@ -28,7 +29,7 @@ namespace InTime.Controls
             InitializeComponent();
             state = new AppState(user);
             mainWindow = window;
-            
+
             InitUser(user);
             ShowRecomendsBord();
         }
@@ -46,19 +47,13 @@ namespace InTime.Controls
         */
 
         #region Startupinit
-        async void InitUser(Client_User user)
+        void InitUser(Client_User user)
         {
             ProfileEditItem.CurrentUser = user;
             Profile_tb.Text = user.NickName;
             AvatarBrush.ImageSource = ConvertToImage(user.Image);
             PlaylistBox.ItemsSource = state.user.Playlists;
             AddPlaylistItem.Playlist.Creator = user;
-            Service1Client client = new Service1Client();
-            string[] s = await client.GetSpecialForYouAsync(user.ID);
-            foreach (var item in s)
-            {
-                Console.WriteLine(item);
-            }
         }
         public BitmapSource ConvertToImage(byte[] arr)
         {
@@ -77,7 +72,7 @@ namespace InTime.Controls
             recommendations_Control.ScrollCall += Grid_ScrollCall;
             recommendations_Control.UserName = ProfileEditItem.CurrentUser.NickName;
             recommendations_Control.OpenPlaylist += Recommendations_Control_OpenPlaylist;
-            recommendations_Control.Init();
+            recommendations_Control.Init(state.user.ID);
             tape_panel.Child = recommendations_Control;
         }
         async void ShowfavoritePlaylistsBord()
@@ -97,6 +92,12 @@ namespace InTime.Controls
             if (tape_panel.Child.GetType() != typeof(ProgressBar))
                 return;
             noImageList_Control.Init();
+            if (noImageList_Control.CurrentPlaylist.ID == state.currentPlaylist.ID && noImageList_Control.SongList.SelectedIndex < 0&&state.currentSong!=null)
+            {
+                noImageList_Control.SongList.SelectedIndex = noImageList_Control.CurrentPlaylist.Songs.ToList()
+                    .IndexOf(noImageList_Control.CurrentPlaylist.Songs.Where(n => n.ID == state.currentSong.ID)
+                        .First());
+            }
             tape_panel.Child = noImageList_Control;
             state.Current_Tab = noImageList_Control;
             client.Close();
@@ -137,7 +138,6 @@ namespace InTime.Controls
             playlist.ScrollCall += Grid_ScrollCall;
             playlist.OnSongPlaying += Playlist_OnSongPlaying;
             playlist.OnSongPaused += Playlist_OnSongPaused;
-
             Service1Client client = new Service1Client();
             Song_Playlist _Playlist = await client.GetPlaylistByIDAsync(id);
             if (tape_panel.Child.GetType() != typeof(ProgressBar))
@@ -166,10 +166,12 @@ namespace InTime.Controls
 
         private void Playlist_OnSongPlaying(Song_Playlist playlist, int songId,Song song)
         {
-
-            state.currentSong = song;
-            state.currentPlaylist = playlist;
-            PlaySongByID(songId);
+                Console.WriteLine(songId);
+                Console.WriteLine(playlist.Songs[1].ID);
+                state.currentSong = song;
+                state.currentPlaylist = playlist;
+                PlaySongByID(songId);
+            
         }
 
         private async void UserPlaylistChanged()
@@ -200,6 +202,8 @@ namespace InTime.Controls
             singerPage_Control.ScrollCall += Grid_ScrollCall;
             tape_panel.Child = singerPage_Control;
             state.Current_Tab = singerPage_Control;
+            singerPage_Control.AlbumPlay += Playlist_OnSongPlaying;
+            singerPage_Control.AlbumPause += Playlist_OnSongPaused;
         }
 
         #region PlaySong
@@ -213,7 +217,7 @@ namespace InTime.Controls
             }
             Service1Client client = new Service1Client();
             string path = Environment.CurrentDirectory + "\\temp.mp3";
-            byte[] file = await client.GetTrackAsync(ID);
+            byte[] file = await client.GetTrackAsync(state.user.ID, ID);
             if (state.currentSong.ID != ID)
                 return;
             File.WriteAllBytes(path, file);
@@ -270,7 +274,16 @@ namespace InTime.Controls
 
         private void Player_MediaEnded(object sender, EventArgs e)
         {
-           
+            if (state.repeat == RepeatState.NoRepeat)
+            {
+                Next_btn_MouseLeftButtonUp(this, null);
+            }
+            else
+            {
+                Playlist_OnSongPlaying(state.currentPlaylist,
+                    state.currentPlaylist.Songs[Array.IndexOf(state.currentPlaylist.Songs, state.currentSong)].ID,
+                    state.currentPlaylist.Songs[Array.IndexOf(state.currentPlaylist.Songs, state.currentSong)]);
+            }
         }
         private void Next_btn_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
@@ -486,7 +499,14 @@ namespace InTime.Controls
 
         private void BottomButtonsBorder_MouseLeave(object sender, MouseEventArgs e)
         {
-            ((PackIcon)((Border)sender).Child).Foreground.BeginAnimation(SolidColorBrush.ColorProperty, new ColorAnimation((Color)ColorConverter.ConvertFromString("#FF784242"), TimeSpan.FromSeconds(0.1)));
+            if(((Border)sender)!= Repeat_btn)
+            {
+                ((PackIcon)((Border)sender).Child).Foreground.BeginAnimation(SolidColorBrush.ColorProperty, new ColorAnimation((Color)ColorConverter.ConvertFromString("#FF784242"), TimeSpan.FromSeconds(0.1)));
+            }
+            else if (state.repeat != RepeatState.RepeatSong)
+            {
+                ((PackIcon)((Border)sender).Child).Foreground.BeginAnimation(SolidColorBrush.ColorProperty, new ColorAnimation((Color)ColorConverter.ConvertFromString("#FF784242"), TimeSpan.FromSeconds(0.1)));
+            }
 
         }
 
@@ -762,7 +782,17 @@ namespace InTime.Controls
             BottomPanel.Opacity = 0.7;
             Panel.SetZIndex(GridContainer, 2);
             Panel.SetZIndex(AddPlaylistItem, 2);
-            
+            if (AddPlaylistItem.IsEdited)
+            {
+                AddPlaylistItem.Playlist=PlaylistBox.SelectedItem as Song_Playlist;
+                AddPlaylistItem.PlaylistNameBox.Text =(PlaylistBox.SelectedItem as Song_Playlist).Title;
+                if ((PlaylistBox.SelectedItem as Song_Playlist).Image != null)
+                {
+                    ImageBrush img = new ImageBrush();
+                    img.ImageSource = ConvertToImage((PlaylistBox.SelectedItem as Song_Playlist).Image);
+                    AddPlaylistItem.PlaylistImg.Fill = img;
+                }
+            }
         }
 
         private void Window_OnPlaylistAdded(string name, string path)
@@ -791,8 +821,21 @@ namespace InTime.Controls
 
         private void AddPlaylistItemOnChangesAccepted()
         {
-            Console.WriteLine(AddPlaylistItem.Playlist.ID);
-            state.playlists.Add(AddPlaylistItem.Playlist);
+            if (!AddPlaylistItem.IsEdited)
+            {
+                state.playlists.Add(AddPlaylistItem.Playlist);
+                PlaylistBox.ItemsSource = state.playlists;
+            }
+            else
+            {
+                state.playlists[state.playlists.IndexOf(PlaylistBox.SelectedItem as Song_Playlist)]=AddPlaylistItem.Playlist;
+                if (AddPlaylistItem._IsImageEdited)
+                {
+                    (state.Current_Tab as PlaylistGrid).ImageSource = AddPlaylistItem.Playlist.Image;
+                    (state.Current_Tab as PlaylistGrid).playlistName_tb.Text = AddPlaylistItem.Playlist.Title;
+                }
+                AddPlaylistItem.IsEdited = false;
+            }
             PlaylistBox.ItemsSource = state.playlists;
             AddPlaylistItem.Playlist = new Song_Playlist();
             AddPlaylistItem.Playlist.Creator = state.user;
@@ -856,7 +899,8 @@ namespace InTime.Controls
         }
 
         private void PlaylistEditmenu(object sender, RoutedEventArgs e)
-        {
+        { 
+            AddPlaylistItem.IsEdited = true;
            AddPlaylistBtnClick(this,null);
         }
 
@@ -946,6 +990,7 @@ namespace InTime.Controls
                             {
                                 if (child is AlbumGrid)
                                 {
+                                    
                                     if ((child as AlbumGrid).songs_lb.SelectedIndex >= 0)
                                     {
                                         Console.WriteLine(((child as AlbumGrid).songs_lb.SelectedItem as Song).Title);
@@ -1064,6 +1109,18 @@ namespace InTime.Controls
 
         #endregion
 
-        
+
+        private void Repeat_btnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (state.repeat == RepeatState.NoRepeat)
+            {
+                state.repeat = RepeatState.RepeatSong;
+                RepeatIcon.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF0051"));
+            }
+            else if (state.repeat == RepeatState.RepeatSong)
+            {
+                state.repeat = RepeatState.NoRepeat;
+            }
+        }
     }
 }

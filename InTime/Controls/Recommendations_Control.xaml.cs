@@ -39,8 +39,9 @@ namespace InTime.Controls
             tape_panel.Children.Add(playlist_Scroller);
         }
 
-        public async void Init()
+        public async void Init(int id)
         {
+
             try
             {
                 Service1Client client = new Service1Client();
@@ -48,6 +49,7 @@ namespace InTime.Controls
                 AddList("Rock Today!", (await client.GetRockTodayAsync()).ToList());
                 AddList("Chill with Pop Music~~", (await client.GetPopTodayAsync()).ToList());
                 AddList("Dance!", (await client.GetHouseTodayAsync()).ToList());
+                //AddList("Special for you", (await client.GetSpecialForYouAsync(id)).ToList());
                 client.Close();
             }
             catch (FaultException<LoadPlaylistFailed> exception)

@@ -24,6 +24,8 @@ namespace InTime.Controls
     /// </summary>
     public partial class AlbumGrid : UserControl
     {
+        public event PlaySongFromPlaylist OnSongPlaying;
+        public event PauseSong OnSongPaused;
         public event ScrollCall ScrollCall;
         public AlbumGrid(Singer_Album album)
         {
@@ -90,6 +92,12 @@ namespace InTime.Controls
         }
         private void ListBoxItem_Selected(object sender, RoutedEventArgs e)
         {
+            Console.WriteLine("click");
+            SingerPage_Control tmp = FindParent<SingerPage_Control>(this);
+            foreach (AlbumGrid child in tmp.albums_panel.Children)
+            {
+                if (child != this) child.songs_lb.SelectedIndex = -1;
+            }
             ((ListBoxItem)sender).Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB8FF8F"));
             Border playBord = GetPlayBorder((ListBoxItem)sender);
             if (playBord != null)
@@ -147,6 +155,28 @@ namespace InTime.Controls
             {
                 ScrollCall?.Invoke(false);
             }
+        }
+
+        private void Songs_lb_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            
+        }
+
+        private void PlaylistSongClicked(object sender, MouseButtonEventArgs e)
+        {
+           
+        }
+
+        private void PlayAlbumSong(object sender, MouseButtonEventArgs e)
+        {
+            Song[] arr = new Song[200];
+            for (int i = 0; i < songs_lb.Items.Count; i++)
+            {
+                arr[i] = songs_lb.Items[i] as Song;
+            }
+
+            Console.WriteLine(songs_lb.SelectedIndex);
+            OnSongPlaying?.Invoke(new Song_Playlist{Songs =arr },(songs_lb.SelectedItem as Song).ID,(songs_lb.SelectedItem as Song));
         }
     }
 }
