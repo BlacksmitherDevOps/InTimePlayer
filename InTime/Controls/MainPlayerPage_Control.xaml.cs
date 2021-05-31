@@ -105,6 +105,7 @@ namespace InTime.Controls
             noImageList_Control.OnDragStarted += Playlist_OnDragStarted;
             noImageList_Control.Init();
             tape_panel.Child = noImageList_Control;
+            state.Current_Tab = noImageList_Control;
             client.Close();
         }
 
@@ -128,6 +129,7 @@ namespace InTime.Controls
 
         async void OpenPlaylist(int id)
         {
+            
             LoadingScreen();
             PlaylistGrid playlist = new PlaylistGrid(state.user);
             playlist.PlaylistsInfo = state.Playlists;
@@ -147,6 +149,7 @@ namespace InTime.Controls
             playlist.CurrentUser = state.user;
             playlist.Init();
             tape_panel.Child = playlist;
+            state.Current_Tab = playlist;
         }
 
         private void Playlist_CurrentListboxUPD(ListBox listBox)
@@ -156,11 +159,7 @@ namespace InTime.Controls
 
         private void Playlist_QueueUpdate(Queue<Song> list)
         {
-            state.Queue = list;
-            foreach (Song item in state.Queue)
-            {
-                Console.WriteLine(item.Title);
-            }
+           
         }
 
         private void Playlist_PauseSong()
@@ -211,6 +210,7 @@ namespace InTime.Controls
             SingerPage_Control singerPage_Control = new SingerPage_Control(singer);
             singerPage_Control.ScrollCall += Grid_ScrollCall;
             tape_panel.Child = singerPage_Control;
+            state.Current_Tab = singerPage_Control;
         }
 
         #region PlaySong
@@ -221,11 +221,7 @@ namespace InTime.Controls
             string path = Environment.CurrentDirectory + "\\temp.mp3";
             UpdateBottomPanel();
             byte[] file = await client.GetTrackAsync(ID);
-            if (state.Queue.Peek().ID != ID)
-                return;
             File.WriteAllBytes(path, file);
-            if (state.Queue.Peek().ID != ID)
-                return;
             PlaySong(path);
             client.Close();
         }
@@ -248,12 +244,7 @@ namespace InTime.Controls
 
         private void Player_MediaEnded(object sender, EventArgs e)
         {
-            state.Queue.Dequeue();
-            if (state.Queue.Count > 0)
-            {
-                state.current_ListBox.SelectedIndex = state.current_ListBox.Items.IndexOf(state.Queue.Peek());
-                PlaySongByID(state.Queue.Peek().ID);
-            }
+           
         }
         private void Next_btn_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
@@ -735,7 +726,50 @@ namespace InTime.Controls
 
         private async void Play_btn_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            PlaySongByID(21);
+            if (player.HasAudio)
+            {
+                    if (state.Current_Tab != null)
+                    {
+                        if (state.Current_Tab is PlaylistGrid)
+                        {
+                            Console.WriteLine("playlist");
+                            if ((state.Current_Tab as PlaylistGrid).SongList.SelectedIndex >= 0)
+                            {
+                                Console.WriteLine(((state.Current_Tab as PlaylistGrid).SongList.SelectedItem as Song)
+                                    .Title);
+                            }
+                        }
+                        else if (state.Current_Tab is NoImageList_Control)
+                        {
+                            Console.WriteLine("No image list");
+                            if ((state.Current_Tab as NoImageList_Control).SongList.SelectedIndex >= 0)
+                            {
+                                Console.WriteLine(((state.Current_Tab as NoImageList_Control).SongList.SelectedItem as Song)
+                                    .Title);
+                            }
+                        }
+                        else if (state.Current_Tab is SingerPage_Control)
+                        {
+                            Console.WriteLine("Singer page");
+                            foreach (var child in (state.Current_Tab as SingerPage_Control).albums_panel.Children)
+                            {
+                                if (child is AlbumGrid)
+                                {
+                                    if ((child as AlbumGrid).songs_lb.SelectedIndex >= 0)
+                                    {
+                                        Console.WriteLine(((child as AlbumGrid).songs_lb.SelectedItem as Song).Title);
+                                    }
+                                }
+                            }
+                        }
+                }
+        }
+            else
+            {
+                player.Pause();
+                state.IsPlaying = false;
+            }
+            //PlaySongByID(21);
         }
 
 

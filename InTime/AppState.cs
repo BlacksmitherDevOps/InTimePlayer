@@ -19,7 +19,10 @@ namespace InTime
         public Client_User user;
         public ListBox current_ListBox;
         public ObservableCollection<Song_Playlist> playlists;
-        public Queue<Song> Queue;
+        public object Current_Tab;
+        public Song_Playlist currentPlaylist;
+        public List<int> currentQueue;
+        public bool IsPlaying;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -52,4 +55,5 @@ namespace InTime
             }
         }
     }
+   
 }
