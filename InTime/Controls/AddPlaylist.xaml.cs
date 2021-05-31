@@ -31,6 +31,7 @@ namespace InTime.Controls
             Playlist = new Song_Playlist();
             _IsImageEdited = false;
             InitializeComponent();
+            IsEdited = false;
         }
         private void SaveBtnMouseEnter(object sender, MouseEventArgs e)
         {
@@ -61,11 +62,21 @@ namespace InTime.Controls
                 try
                 {
                     Service1Client client = new Service1Client();
-                    Playlist.Title = PlaylistNameBox.Text;
-                    Song_Playlist tmp = await client.AddPlaylistAsync(Playlist);
-                    Playlist = tmp;
-                    OnChangesAccepted?.Invoke();
-                    AddPlaylistErrorBox.Visibility = Visibility.Hidden;
+                    if (!IsEdited)
+                    {
+                        Playlist.Title = PlaylistNameBox.Text;
+                        Song_Playlist tmp = await client.AddPlaylistAsync(Playlist);
+                        Playlist = tmp;
+                        OnChangesAccepted?.Invoke();
+                        AddPlaylistErrorBox.Visibility = Visibility.Hidden;
+                    }
+                    else
+                    {
+                        Playlist.Title = PlaylistNameBox.Text;
+                        Song_Playlist tmp = await client.EditPlaylistAsync(Playlist);
+                        OnChangesAccepted?.Invoke();
+                        AddPlaylistErrorBox.Visibility = Visibility.Hidden;
+                    }
                 }
                 catch(Exception ex)
                 {
@@ -160,5 +171,19 @@ namespace InTime.Controls
         // Using a DependencyProperty as the backing store for _IsImageEdited.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty _IsImageEditedProperty =
             DependencyProperty.Register("_IsImageEdited", typeof(bool), typeof(AddPlaylist));
+
+
+
+        public bool IsEdited
+        {
+            get { return (bool)GetValue(IsEditedProperty); }
+            set { SetValue(IsEditedProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for IsEdited.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IsEditedProperty =
+            DependencyProperty.Register("IsEdited", typeof(bool), typeof(AddPlaylist));
+
+
     }
 }

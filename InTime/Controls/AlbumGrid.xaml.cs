@@ -148,5 +148,18 @@ namespace InTime.Controls
                 ScrollCall?.Invoke(false);
             }
         }
+
+        private void Songs_lb_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int index = songs_lb.SelectedIndex;
+            SingerPage_Control tmp=FindParent<SingerPage_Control>(this);
+            foreach (AlbumGrid child in tmp.albums_panel.Children)
+            {
+                Console.WriteLine(child);
+            }
+
+            Console.WriteLine("\n");
+            songs_lb.SelectedIndex = index;
+        }
     }
 }

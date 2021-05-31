@@ -183,7 +183,7 @@
             </Grid>
         </Grid>
         <ListBox x:Name="songs_lb" Grid.Row="1" Background="Transparent" ItemTemplate="{StaticResource item_Template}" 
-                 ItemsSource="{Binding}" Template="{StaticResource listBox_Template}" 
+                 ItemsSource="{Binding}" Template="{StaticResource listBox_Template}" SelectionChanged="Songs_lb_OnSelectionChanged"
                  ItemContainerStyle="{StaticResource item_Container}"
                  BorderThickness="0" VerticalAlignment="Top">
         </ListBox>

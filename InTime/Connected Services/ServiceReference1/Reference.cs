@@ -1578,6 +1578,13 @@ namespace InTime.ServiceReference1 {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/AddPlaylist", ReplyAction="http://tempuri.org/IService1/AddPlaylistResponse")]
         System.Threading.Tasks.Task<InTime.ServiceReference1.Song_Playlist> AddPlaylistAsync(InTime.ServiceReference1.Song_Playlist new_Playlist);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/EditPlaylist", ReplyAction="http://tempuri.org/IService1/EditPlaylistResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(InTime.ServiceReference1.AddPlaylistFailed), Action="http://tempuri.org/IService1/EditPlaylistAddPlaylistFailedFault", Name="AddPlaylistFailed", Namespace="http://schemas.datacontract.org/2004/07/PlayerService")]
+        InTime.ServiceReference1.Song_Playlist EditPlaylist(InTime.ServiceReference1.Song_Playlist new_Playlist);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/EditPlaylist", ReplyAction="http://tempuri.org/IService1/EditPlaylistResponse")]
+        System.Threading.Tasks.Task<InTime.ServiceReference1.Song_Playlist> EditPlaylistAsync(InTime.ServiceReference1.Song_Playlist new_Playlist);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/AddGenrePlaylist", ReplyAction="http://tempuri.org/IService1/AddGenrePlaylistResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(InTime.ServiceReference1.AddPlaylistFailed), Action="http://tempuri.org/IService1/AddGenrePlaylistAddPlaylistFailedFault", Name="AddPlaylistFailed", Namespace="http://schemas.datacontract.org/2004/07/PlayerService")]
         InTime.ServiceReference1.Song_Playlist AddGenrePlaylist(InTime.ServiceReference1.Song_Playlist new_Playlist);
@@ -1949,6 +1956,14 @@ namespace InTime.ServiceReference1 {
         
         public System.Threading.Tasks.Task<InTime.ServiceReference1.Song_Playlist> AddPlaylistAsync(InTime.ServiceReference1.Song_Playlist new_Playlist) {
             return base.Channel.AddPlaylistAsync(new_Playlist);
+        }
+        
+        public InTime.ServiceReference1.Song_Playlist EditPlaylist(InTime.ServiceReference1.Song_Playlist new_Playlist) {
+            return base.Channel.EditPlaylist(new_Playlist);
+        }
+        
+        public System.Threading.Tasks.Task<InTime.ServiceReference1.Song_Playlist> EditPlaylistAsync(InTime.ServiceReference1.Song_Playlist new_Playlist) {
+            return base.Channel.EditPlaylistAsync(new_Playlist);
         }
         
         public InTime.ServiceReference1.Song_Playlist AddGenrePlaylist(InTime.ServiceReference1.Song_Playlist new_Playlist) {
