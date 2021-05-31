@@ -28,7 +28,7 @@ namespace InTime.Controls
             InitializeComponent();
             state = new AppState(user);
             mainWindow = window;
-
+            
             InitUser(user);
             ShowRecomendsBord();
         }
@@ -46,13 +46,19 @@ namespace InTime.Controls
         */
 
         #region Startupinit
-        void InitUser(Client_User user)
+        async void InitUser(Client_User user)
         {
             ProfileEditItem.CurrentUser = user;
             Profile_tb.Text = user.NickName;
             AvatarBrush.ImageSource = ConvertToImage(user.Image);
             PlaylistBox.ItemsSource = state.user.Playlists;
             AddPlaylistItem.Playlist.Creator = user;
+            Service1Client client = new Service1Client();
+            string[] s = await client.GetSpecialForYouAsync(user.ID);
+            foreach (var item in s)
+            {
+                Console.WriteLine(item);
+            }
         }
         public BitmapSource ConvertToImage(byte[] arr)
         {
@@ -160,6 +166,7 @@ namespace InTime.Controls
 
         private void Playlist_OnSongPlaying(Song_Playlist playlist, int songId,Song song)
         {
+
             state.currentSong = song;
             state.currentPlaylist = playlist;
             PlaySongByID(songId);

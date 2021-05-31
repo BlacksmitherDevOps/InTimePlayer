@@ -44,6 +44,7 @@ namespace InTime.Controls
             try
             {
                 Service1Client client = new Service1Client();
+                AddList("Genres", (await client.GetAllGenresAsync()).ToList());
                 AddList("Rock Today!", (await client.GetRockTodayAsync()).ToList());
                 AddList("Chill with Pop Music~~", (await client.GetPopTodayAsync()).ToList());
                 AddList("Dance!", (await client.GetHouseTodayAsync()).ToList());

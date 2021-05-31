@@ -60,7 +60,6 @@ namespace InTime.Controls
             fav_btn.Content = CurrentUser.FavoritePlaylists.Any(c => c.ID == CurrentPlaylist.ID) ? "Remove from favorites" : "Add to favorites";
 
             if (!User.Playlists.Contains(CurrentPlaylist)) SongMenu.Items.RemoveAt(0);
-
         }
         TimeSpan GetDuration(Song_Playlist playlist)
         {
@@ -148,6 +147,7 @@ namespace InTime.Controls
                 playBord.Child.Visibility = Visibility.Visible;
                 moreBord.Child.Visibility = Visibility.Visible;
             }
+            SetPlaybordPlayIconToItem(SongList, SongList.Items[1] as Song);
         }
         private void ListBoxItem_MouseLeave(object sender, MouseEventArgs e)
         {
@@ -168,6 +168,18 @@ namespace InTime.Controls
                 playBord.Child.Visibility = Visibility.Hidden;
                 moreBord.Child.Visibility = Visibility.Hidden;
             }
+        }
+        public void SetPlaybordPlayIconToItem(ListBox lb, Song song)
+        {
+            ListBoxItem listitem = (ListBoxItem)(lb.ItemContainerGenerator.ContainerFromItem(song));
+            Border playBord = GetPlayBorder(listitem);
+            ((PackIcon)playBord.Child).Kind = PackIconKind.PlayCircleOutline;
+        }
+        public void SetPlaybordPauseIconToItem(ListBox lb, Song song)
+        {
+            ListBoxItem listitem = (ListBoxItem)(lb.ItemContainerGenerator.ContainerFromItem(song));
+            Border playBord = GetPlayBorder(listitem);
+            ((PackIcon)playBord.Child).Kind = PackIconKind.PauseCircleOutline;
         }
         private void ListBoxItem_Unselected(object sender, RoutedEventArgs e)
         {
