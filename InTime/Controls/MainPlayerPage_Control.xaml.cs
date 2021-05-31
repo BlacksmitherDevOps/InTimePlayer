@@ -154,9 +154,6 @@ namespace InTime.Controls
 
         private void Playlist_OnSongPlaying(Song_Playlist playlist, int songId,Song song)
         {
-            Console.WriteLine(playlist);
-            Console.WriteLine(songId);
-            Console.WriteLine(song);
             state.currentSong = song;
             state.currentPlaylist = playlist;
             PlaySongByID(songId);
@@ -251,8 +248,6 @@ namespace InTime.Controls
             {
                 bottomCurrentDuration_tb.Text = $"{state.player.Position.Minutes}:" + $"{state.player.Position.Seconds}";
             }
-
-            Console.WriteLine(bottomDuration_slider.Value);
             bottomDuration_slider.Value += 1;
         }
 
@@ -325,21 +320,22 @@ namespace InTime.Controls
                     {
                         if (((state.Current_Tab as PlaylistGrid).CurrentPlaylist) == state.currentPlaylist)
                         {
-                            Console.WriteLine(value);
                             (state.Current_Tab as PlaylistGrid).SongList.SelectedIndex = value == "0"?0: value == "+"?
-                                (state.Current_Tab as PlaylistGrid).SongList.SelectedIndex+1 :
+                                (state.Current_Tab as PlaylistGrid).SongList.SelectedIndex + 1:
                                 (state.Current_Tab as PlaylistGrid).SongList.SelectedIndex - 1;
-                            Console.WriteLine((state.Current_Tab as PlaylistGrid).SongList.SelectedIndex);
                         }
                     }
                 }
                 else if (state.Current_Tab is NoImageList_Control)
                 {
-                    Console.WriteLine("No image list");
                     if ((state.Current_Tab as NoImageList_Control).SongList.SelectedIndex >= 0)
                     {
-                        Console.WriteLine(((state.Current_Tab as NoImageList_Control).SongList.SelectedItem as Song)
-                            .Title);
+                        if (((state.Current_Tab as NoImageList_Control).CurrentPlaylist) == state.currentPlaylist)
+                        {
+                            (state.Current_Tab as NoImageList_Control).SongList.SelectedIndex = value == "0" ? 0 : value == "+" ?
+                                (state.Current_Tab as NoImageList_Control).SongList.SelectedIndex + 1 :
+                                (state.Current_Tab as NoImageList_Control).SongList.SelectedIndex - 1;
+                        }
                     }
                 }
                 else if (state.Current_Tab is SingerPage_Control)
