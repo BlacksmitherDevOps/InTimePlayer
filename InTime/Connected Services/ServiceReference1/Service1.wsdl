@@ -801,6 +801,7 @@
           <xs:element minOccurs="0" name="ID" type="xs:int" />
           <xs:element minOccurs="0" name="Image" nillable="true" type="xs:base64Binary" />
           <xs:element minOccurs="0" name="ImagePath" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PreLoaded" type="xs:boolean" />
           <xs:element minOccurs="0" name="Singers" nillable="true" type="tns:ArrayOfSong_Singer" />
           <xs:element minOccurs="0" name="Songs" nillable="true" type="tns:ArrayOfSong" />
           <xs:element minOccurs="0" name="Title" nillable="true" type="xs:string" />

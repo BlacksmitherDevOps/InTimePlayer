@@ -21,13 +21,14 @@ namespace InTime.Controls
     /// </summary>
     public partial class SearchItem : UserControl
     {
+        public event OpenAlbum OpenAlbum;
         public SearchItem()
         {
             InitializeComponent();
         }
 
 
-        public string Artist
+        public string AlbumArtist
         {
             get { return (string)GetValue(ArtistProperty); }
             set { SetValue(ArtistProperty, value); }
@@ -35,10 +36,10 @@ namespace InTime.Controls
 
         // Using a DependencyProperty as the backing store for Artist.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ArtistProperty =
-            DependencyProperty.Register("Artist", typeof(string), typeof(SearchItem));
+            DependencyProperty.Register("AlbumArtist", typeof(string), typeof(SearchItem));
 
 
-        public string Title
+        public string AlbumTitle
         {
             get { return (string)GetValue(TitleProperty); }
             set { SetValue(TitleProperty, value); }
@@ -46,11 +47,19 @@ namespace InTime.Controls
 
         // Using a DependencyProperty as the backing store for Title.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty TitleProperty =
-            DependencyProperty.Register("Title", typeof(string), typeof(SearchItem));
+            DependencyProperty.Register("AlbumTitle", typeof(string), typeof(SearchItem));
 
+        public int AlbumID
+        {
+            get { return (int)GetValue(IDProperty); }
+            set { SetValue(IDProperty, value); }
+        }
 
+        // Using a DependencyProperty as the backing store for Title.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IDProperty =
+            DependencyProperty.Register("AlbumID", typeof(int), typeof(SearchItem));
 
-        public byte[] Image
+        public byte[] AlbumImage
         {
             get { return (byte[])GetValue(ImageProperty); }
             set { SetValue(ImageProperty, value); }
@@ -58,7 +67,7 @@ namespace InTime.Controls
 
         // Using a DependencyProperty as the backing store for Image.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ImageProperty =
-            DependencyProperty.Register("Image", typeof(byte[]), typeof(SearchItem));
+            DependencyProperty.Register("AlbumImage", typeof(byte[]), typeof(SearchItem));
 
 
         private void ImageRectangle_OnMouseEnter(object sender, MouseEventArgs e)
@@ -90,6 +99,11 @@ namespace InTime.Controls
         {
             PlayIco.Visibility = Visibility.Visible;
             ImageRect.Opacity = 0.6;
+        }
+
+        private void Main_Grid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            OpenAlbum?.Invoke(AlbumID);
         }
     }
 }

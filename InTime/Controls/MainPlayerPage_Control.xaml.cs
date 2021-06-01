@@ -232,6 +232,7 @@ namespace InTime.Controls
             state.player.Open(new Uri(path));
             state.player.MediaOpened += Player_MediaOpened;
             state.player.MediaEnded += Player_MediaEnded;
+            state.player.Volume = SoundSlider.Value;
             state.player.Play();
         }
 
@@ -663,6 +664,9 @@ namespace InTime.Controls
                 searchPanel.ViewAllAlbums += SearchPanel_ViewAllAlbums;
                 searchPanel.ViewAllSingers += SearchPanel_ViewAllSingers;
                 searchPanel.ViewAllPlaylists += SearchPanel_ViewAllPlaylists;
+                searchPanel.OpenPlaylist += OpenPlaylist;
+                searchPanel.OpenAlbum += Albums_Panel_OpenAlbum;
+                searchPanel.OpenSingerPage += OpenSingerPage;
 
                 tape_panel.Child = null;
                 tape_panel.Child = searchPanel;

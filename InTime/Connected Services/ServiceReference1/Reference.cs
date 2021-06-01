@@ -685,6 +685,9 @@ namespace InTime.ServiceReference1 {
         private string ImagePathField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool PreLoadedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private InTime.ServiceReference1.Song_Singer[] SingersField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -777,6 +780,19 @@ namespace InTime.ServiceReference1 {
                 if ((object.ReferenceEquals(this.ImagePathField, value) != true)) {
                     this.ImagePathField = value;
                     this.RaisePropertyChanged("ImagePath");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool PreLoaded {
+            get {
+                return this.PreLoadedField;
+            }
+            set {
+                if ((this.PreLoadedField.Equals(value) != true)) {
+                    this.PreLoadedField = value;
+                    this.RaisePropertyChanged("PreLoaded");
                 }
             }
         }

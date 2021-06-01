@@ -4,13 +4,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:InTime.Controls"
+             xmlns:local="clr-namespace:InTime.Controls.Search_Items"
              mc:Ignorable="d" 
-             Name="itemplate">
+             Name="singerbord">
     <UserControl.Resources>
     </UserControl.Resources>
     <Grid Name="Main_Grid" Background="#FF2E2A2A" MouseEnter="Main_Grid_OnMouseEnter"
-          MouseLeave="Main_Grid_OnMouseLeave">
+          MouseLeave="Main_Grid_OnMouseLeave" MouseLeftButtonUp="Main_Grid_MouseLeftButtonUp">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="105"/>
                 <ColumnDefinition/>
@@ -26,7 +26,7 @@
                    MouseLeave="ImageRectangle_OnMouseLeave" Name="ImageRect" 
                    Panel.ZIndex="1" >
             <Rectangle.Fill>
-                <ImageBrush ImageSource="{Binding Image, ElementName=itemplate}" ></ImageBrush>
+                <ImageBrush ImageSource="{Binding AlbumImage, ElementName=singerbord}" ></ImageBrush>
             </Rectangle.Fill>
         </Rectangle>
             <Grid Name="TextGrid" Grid.Column="1" Background="Transparent">
@@ -34,11 +34,11 @@
                     <RowDefinition/>
                     <RowDefinition/> 
                 </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Text="{Binding Path=Artist,ElementName=itemplate}" VerticalAlignment="Center"
-                       Foreground="White" HorizontalAlignment="Left" ToolTip="{Binding Path=Artist,ElementName=itemplate}"
+            <TextBlock Grid.Row="0" Text="{Binding Path=AlbumArtist,ElementName=singerbord}" VerticalAlignment="Center"
+                       Foreground="White" HorizontalAlignment="Left" ToolTip="{Binding Path=AlbumImage,ElementName=singerbord}"
                        FontSize="18" Margin="4,0,0,0" TextTrimming="WordEllipsis"/>
-            <TextBlock Grid.Row="1" Text="{Binding Path=Title,ElementName=itemplate}" VerticalAlignment="Center"
-                       Foreground="White" HorizontalAlignment="Left" ToolTip="{Binding Path=Title,ElementName=itemplate}"
+            <TextBlock Grid.Row="1" Text="{Binding Path=AlbumTitle,ElementName=singerbord}" VerticalAlignment="Center"
+                       Foreground="White" HorizontalAlignment="Left" ToolTip="{Binding Path=AlbumTitle,ElementName=singerbord}"
                        FontSize="18" Margin="4,0,0,0" TextTrimming="WordEllipsis"/>
             </Grid>
     </Grid>

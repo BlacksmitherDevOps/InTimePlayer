@@ -20,13 +20,14 @@ namespace InTime.Controls
     /// </summary>
     public partial class SingleSearchItem : UserControl
     {
+        public event OpenSingerPage OpenSingerPage;
         public SingleSearchItem()
         {
             InitializeComponent();
         }
 
 
-        public byte[] Image
+        public byte[] SingerImage
         {
             get { return (byte[])GetValue(ImageProperty); }
             set { SetValue(ImageProperty, value); }
@@ -34,11 +35,11 @@ namespace InTime.Controls
 
         // Using a DependencyProperty as the backing store for Image.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ImageProperty =
-            DependencyProperty.Register("Image", typeof(byte[]), typeof(SingleSearchItem));
+            DependencyProperty.Register("SingerImage", typeof(byte[]), typeof(SingleSearchItem));
 
 
 
-        public string Title
+        public string SingerTitle
         {
             get { return (string)GetValue(TitleProperty); }
             set { SetValue(TitleProperty, value); }
@@ -46,10 +47,18 @@ namespace InTime.Controls
 
         // Using a DependencyProperty as the backing store for Title.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty TitleProperty =
-            DependencyProperty.Register("Title", typeof(string), typeof(SingleSearchItem));
+            DependencyProperty.Register("SingerTitle", typeof(string), typeof(SingleSearchItem));
 
+        public int SingerID
+        {
+            get { return (int)GetValue(IDProperty); }
+            set { SetValue(IDProperty, value); }
+        }
 
-        
+        // Using a DependencyProperty as the backing store for Title.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IDProperty =
+            DependencyProperty.Register("SingerID", typeof(int), typeof(SingleSearchItem));
+
 
         private void Main_Grid_OnMouseEnter(object sender, MouseEventArgs e)
         {
@@ -80,6 +89,11 @@ namespace InTime.Controls
         {
             PlayIco.Visibility = Visibility.Hidden;
             ImageRect.Opacity = 1;
+        }
+
+        private void Main_Grid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            OpenSingerPage?.Invoke(SingerID);
         }
     }
 }

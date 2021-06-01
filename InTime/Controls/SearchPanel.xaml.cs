@@ -1,4 +1,5 @@
-﻿using InTime.ServiceReference1;
+﻿using InTime.Controls.Search_Items;
+using InTime.ServiceReference1;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,10 @@ namespace InTime.Controls
         public event ViewAllSingers ViewAllSingers;
         public event ViewAllAlbums ViewAllAlbums;
         public event ViewAllPlaylists ViewAllPlaylists;
+
+        public event OpenSingerPage OpenSingerPage;
+        public event OpenAlbum OpenAlbum;
+        public event OpenPlaylist OpenPlaylist;
         public SearchPanel()
         {
             InitializeComponent();
@@ -119,7 +124,7 @@ namespace InTime.Controls
         {
             Service1Client client = new Service1Client();
             song.Image = await client.GetAlbumImageAsync(song.Album.ID);
-            SearchItem Item = new SearchItem();
+            SongSearchItem Item = new SongSearchItem();
             Item.Image = song.Image;
             Item.Title = song.Title;
             Item.Artist = song.Singers.First().Name;
@@ -131,34 +136,56 @@ namespace InTime.Controls
         void AddArtist(Song_Singer singer)
         {
             SingleSearchItem Item = new SingleSearchItem();
-            Item.Image = singer.Image;
-            Item.Title = singer.Name;
+            Item.SingerImage = singer.Image;
+            Item.SingerTitle = singer.Name;
+            Item.SingerID = singer.ID;
+            Item.OpenSingerPage += Item_OpenSingerPage;
             Item.Height = 80;
             Item.VerticalAlignment = VerticalAlignment.Center;
             GetFreeSlot(ArtistGrid, Item);
             ArtistGrid.Children.Add(Item);
         }
+
+        private void Item_OpenSingerPage(int id)
+        {
+            OpenSingerPage?.Invoke(id);
+        }
+
         void AddGenres(Song_Playlist playlist)
         {
-            SearchItem Item = new SearchItem();
-            Item.Image = playlist.Image;
-            Item.Title = "";
-            Item.Artist = playlist.Title;
+            PlaylistSearchItem Item = new PlaylistSearchItem();
+            Item.PlaylistImage = playlist.Image;
+            Item.PlaylistTitle = playlist.Title;
             Item.Height = 80;
+            Item.PlaylistID = playlist.ID;
+            OpenPlaylist += SearchPanel_OpenPlaylist;
             Item.VerticalAlignment = VerticalAlignment.Center;
             GetFreeSlot(GenresGrid, Item);
             GenresGrid.Children.Add(Item);
         }
+
+        private void SearchPanel_OpenPlaylist(int id)
+        {
+            OpenPlaylist?.Invoke(id);
+        }
+
         void AddAlbums(Singer_Album album)
         {
             SearchItem Item = new SearchItem();
-            Item.Image = album.Image;
-            Item.Title = album.Title;
-            Item.Artist = album.Singer.Name;
+            Item.AlbumImage = album.Image;
+            Item.AlbumTitle = album.Title;
+            Item.AlbumArtist = album.Singer.Name;
             Item.Height = 80;
+            Item.AlbumID = album.ID;
+            Item.OpenAlbum += Item_OpenAlbum;
             Item.VerticalAlignment = VerticalAlignment.Center;
             GetFreeSlot(AlbumsGrid, Item);
             AlbumsGrid.Children.Add(Item);
+        }
+
+        private void Item_OpenAlbum(int id)
+        {
+            OpenAlbum?.Invoke(id);
         }
 
         private void ViewAll_Albums_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)

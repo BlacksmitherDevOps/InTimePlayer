@@ -168,16 +168,22 @@
     <Compile Include="Controls\Rectangular_Item_Panels\SearchResult_Singers_Panel.xaml.cs">
       <DependentUpon>SearchResult_Singers_Panel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\SearchItem.xaml.cs">
+    <Compile Include="Controls\Search_Items\PlaylistSearchItem.xaml.cs">
+      <DependentUpon>PlaylistSearchItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Search_Items\SearchItem.xaml.cs">
       <DependentUpon>SearchItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\SearchPanel.xaml.cs">
       <DependentUpon>SearchPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Search_Items\SongSearchItem.xaml.cs">
+      <DependentUpon>SongSearchItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SingerPage_Control.xaml.cs">
       <DependentUpon>SingerPage_Control.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\SingleSearcItem.xaml.cs">
+    <Compile Include="Controls\Search_Items\SingleSearcItem.xaml.cs">
       <DependentUpon>SingleSearcItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="tempPlaylist.cs" />
@@ -250,7 +256,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\SearchItem.xaml">
+    <Page Include="Controls\Search_Items\PlaylistSearchItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Search_Items\SearchItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -258,11 +268,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\Search_Items\SongSearchItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\SingerPage_Control.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\SingleSearcItem.xaml">
+    <Page Include="Controls\Search_Items\SingleSearcItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
