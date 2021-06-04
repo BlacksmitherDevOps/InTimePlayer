@@ -29,7 +29,8 @@ namespace InTime.Controls
         public LoginScreen()
         {
             InitializeComponent();
-           
+            if (AutoLogin())
+                LoginBtnMouseDown(null, null);
         }
 
         #region LoginGrid
@@ -53,11 +54,39 @@ namespace InTime.Controls
             LoginBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#8d0d26"));
             this.Cursor = Cursors.Arrow;
         }
+        bool AutoLogin()
+        {
+            if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\InTime"))
+                return false;
+            if (!File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\InTime\\auto.log"))
+                return false;
 
+            StreamReader streamReader = new StreamReader(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\InTime\\auto.log");
+
+            LoginBox.Text = streamReader.ReadLine();
+            LoginPassBox.Password = streamReader.ReadLine();
+            streamReader.Close();
+            return true;
+        }
+        void SetAutoLogin(Login_User user)
+        {
+            if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\InTime"))
+                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\InTime");
+            if (!File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\InTime\\auto.log"))
+                File.Create(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\InTime\\auto.log");
+
+
+            StreamWriter streamWriter = new StreamWriter(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\InTime\\auto.log");
+
+            streamWriter.WriteLine(user.Login);
+            streamWriter.WriteLine(user.Password);
+            streamWriter.Close();
+        }
         private async void LoginBtnMouseDown(object sender, MouseButtonEventArgs e)
         {
             try
             {
+
                 if ((LoginBox.Text == String.Empty || LoginPassBox.Password == String.Empty) 
                     || (LoginBox.Text == String.Empty && LoginPassBox.Password == String.Empty))
                 {
@@ -66,9 +95,14 @@ namespace InTime.Controls
                 }
                 else 
                 {
+                    loadBord.Visibility = Visibility.Visible;
                     Console.WriteLine("asd");
                     Service1Client client = new Service1Client();
-                    OnWindowClosed?.Invoke(await client.TryLoginAsync(new Login_User{Image = null,ExtensionData = null,Login=LoginBox.Text,Password = LoginPassBox.Password,Email = null}));
+                    Login_User logUser = new Login_User { Image = null, ExtensionData = null, Login = LoginBox.Text, Password = LoginPassBox.Password, Email = null };
+                    Console.WriteLine(logUser.Password);
+                    Client_User user = await client.TryLoginAsync(logUser);
+                    SetAutoLogin(logUser);
+                    OnWindowClosed?.Invoke(user);
                     this.Close();
                 }
             }
@@ -76,15 +110,17 @@ namespace InTime.Controls
             {
                 ErrorText.Text = exception.Detail.Message;
                 NetworkError.Visibility = Visibility.Visible;
+                loadBord.Visibility = Visibility.Hidden;
                 return;
             }
             catch
             {
                 ErrorText.Text = "Network issues. Please check your\ninternet connection and try again.";
+                loadBord.Visibility = Visibility.Hidden;
                 NetworkError.Visibility = Visibility.Visible;
                 return;
             }
-
+            loadBord.Visibility = Visibility.Hidden;
             NetworkError.Visibility = Visibility.Hidden;
         }
 
@@ -417,7 +453,10 @@ namespace InTime.Controls
                     Password = RegisterPassbox1.Password
                 });
                 SignUpGrid.Visibility = Visibility.Hidden;
-                LoginGrid.Visibility = Visibility.Visible;
+                loadBord.Visibility = Visibility.Visible;
+                Console.WriteLine("asd");
+                OnWindowClosed?.Invoke(await client.TryLoginAsync(new Login_User { Image = null, ExtensionData = null, Login = RegisterMail.Text, Password = RegisterPassbox1.Password, Email = null }));
+                this.Close();
             }
             catch (FaultException<RegFailed> exception)
             {

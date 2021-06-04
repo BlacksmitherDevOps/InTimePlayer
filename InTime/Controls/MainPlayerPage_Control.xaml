@@ -600,10 +600,10 @@
                         <Grid>
                             <Menu Background="Transparent" Panel.ZIndex="10" ToolTip="{ Binding Path=Text,ElementName=Profile_tb}">
                                 <MenuItem Width="183" Height="38" >
-                                    <MenuItem Header="Friends" Margin="30,0,0,0" Background="#8d0d26" Foreground="White"/>
+                                    <!--<MenuItem Header="Friends" Margin="30,0,0,0" Background="#8d0d26" Foreground="White"/>-->
                                     <MenuItem Header="Edit" Margin="30,0,0,0" Background="#8d0d26" Foreground="White" Click="EditProfile"/>
-                                    <MenuItem Header="Settings" Margin="30,0,0,0" Background="#8d0d26" Foreground="White"/>
-                                    <MenuItem Header="Log out" Margin="30,0,0,0" Background="#8d0d26" Foreground="White"/>
+                                    <!--<MenuItem Header="Settings" Margin="30,0,0,0" Background="#8d0d26" Foreground="White"/>-->
+                                    <MenuItem Header="Log out" Margin="30,0,0,0" Background="#8d0d26" Foreground="White" Click="LogOut_Click"/>
                                 </MenuItem>
                             </Menu>
                             <!--Avatar-->
