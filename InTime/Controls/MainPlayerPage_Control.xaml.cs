@@ -23,6 +23,7 @@ namespace InTime.Controls
     public partial class MainPlayerPage_Control : UserControl
     {
         private AppState state;
+        public event LogOut LogOutCall;
         Window mainWindow;
         public MainPlayerPage_Control(Window window, Client_User user)
         {
@@ -51,7 +52,8 @@ namespace InTime.Controls
         {
             ProfileEditItem.CurrentUser = user;
             Profile_tb.Text = user.NickName;
-            AvatarBrush.ImageSource = ConvertToImage(user.Image);
+            if(user.Image != null)
+                AvatarBrush.ImageSource = ConvertToImage(user.Image);
             PlaylistBox.ItemsSource = state.user.Playlists;
             AddPlaylistItem.Playlist.Creator = user;
         }
@@ -161,17 +163,19 @@ namespace InTime.Controls
         private void Playlist_OnSongPaused()
         {
             if (state.player.CanPause)
+            {
                 state.player.Pause();
+                state.IsPlaying = true;
+            }
         }
 
-        private void Playlist_OnSongPlaying(Song_Playlist playlist, int songId,Song song)
+        private void Playlist_OnSongPlaying(Song_Playlist playlist, int songId, Song song)
         {
-                Console.WriteLine(songId);
-                Console.WriteLine(playlist.Songs[1].ID);
-                state.currentSong = song;
-                state.currentPlaylist = playlist;
-                PlaySongByID(songId);
             
+            state.currentSong = song;
+            state.currentPlaylist = playlist;
+            PlaySongByID(songId);
+
         }
 
         private async void UserPlaylistChanged()
@@ -209,22 +213,25 @@ namespace InTime.Controls
         #region PlaySong
         async void PlaySongByID(int ID)
         {
-            if (state.player.CanPause)
-            {
-                state.player.Pause();
-                state.player.Close();
-                state.playTimer.Tick -= PlayTimer_Tick;
-            }
-            Service1Client client = new Service1Client();
-            string path = Environment.CurrentDirectory + "\\temp.mp3";
-            byte[] file = await client.GetTrackAsync(state.user.ID, ID);
-            if (state.currentSong.ID != ID)
-                return;
-            File.WriteAllBytes(path, file);
-            if (state.currentSong.ID != ID)
-                return;
-            PlaySong(path);
-            client.Close();
+
+                if (state.player.CanPause)
+                {
+                    state.player.Pause();
+                    state.player.Close();
+                    state.playTimer.Tick -= PlayTimer_Tick;
+                }
+                Service1Client client = new Service1Client();
+                string path = Environment.CurrentDirectory + "\\temp.mp3";
+                byte[] file = await client.GetTrackAsync(state.user.ID, ID);
+                if (state.currentSong.ID != ID)
+                    return;
+                File.WriteAllBytes(path, file);
+                if (state.currentSong.ID != ID)
+                    return;
+                PlaySong(path);
+                client.Close();
+
+                state.IsPlaying = true;
         }
         void PlaySong(string path)
         {
@@ -1125,6 +1132,11 @@ namespace InTime.Controls
             {
                 state.repeat = RepeatState.NoRepeat;
             }
+        }
+
+        private void LogOut_Click(object sender, RoutedEventArgs e)
+        {
+            LogOutCall?.Invoke();
         }
     }
 }

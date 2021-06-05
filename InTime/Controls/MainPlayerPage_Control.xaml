@@ -600,10 +600,10 @@
                         <Grid>
                             <Menu Background="Transparent" Panel.ZIndex="10" ToolTip="{ Binding Path=Text,ElementName=Profile_tb}">
                                 <MenuItem Width="183" Height="38" >
-                                    <MenuItem Header="Friends" Margin="30,0,0,0" Background="#8d0d26" Foreground="White"/>
+                                    <!--<MenuItem Header="Friends" Margin="30,0,0,0" Background="#8d0d26" Foreground="White"/>-->
                                     <MenuItem Header="Edit" Margin="30,0,0,0" Background="#8d0d26" Foreground="White" Click="EditProfile"/>
-                                    <MenuItem Header="Settings" Margin="30,0,0,0" Background="#8d0d26" Foreground="White"/>
-                                    <MenuItem Header="Log out" Margin="30,0,0,0" Background="#8d0d26" Foreground="White"/>
+                                    <!--<MenuItem Header="Settings" Margin="30,0,0,0" Background="#8d0d26" Foreground="White"/>-->
+                                    <MenuItem Header="Log out" Margin="30,0,0,0" Background="#8d0d26" Foreground="White" Click="LogOut_Click"/>
                                 </MenuItem>
                             </Menu>
                             <!--Avatar-->
@@ -662,13 +662,13 @@
                         <ColumnDefinition />
                         <ColumnDefinition Width="300"/>
                     </Grid.ColumnDefinitions>
-                    <Image x:Name="songImg" Source="3E-zsSjyGLU.jpg" Margin="5" Grid.Column="0"/>
+                    <Image x:Name="songImg" Margin="5" Grid.Column="0"/>
                     <Grid Grid.Column="1">
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <TextBlock x:Name="singerBottomField" Text="Singer" Foreground="White" FontSize="18" Margin="10,0,0,0" 
+                        <TextBlock x:Name="singerBottomField" Text="" Foreground="White" FontSize="18" Margin="10,0,0,0" 
                                    VerticalAlignment="Center" HorizontalAlignment="Left"
                                    FontWeight="Medium">
                             <TextBlock.Style>
@@ -685,7 +685,7 @@
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
-                        <TextBlock x:Name="songBottomField" Text="Track name" Foreground="White" FontSize="18" Margin="10,0,0,0"
+                        <TextBlock x:Name="songBottomField" Text="" Foreground="White" FontSize="18" Margin="10,0,0,0"
                                    VerticalAlignment="Top" HorizontalAlignment="Left" FontWeight="Medium" Grid.Row="2"/>
                     </Grid>
                     <Grid Grid.Column="2">

@@ -40,6 +40,8 @@ namespace InTime
     public delegate void PlaySongFromPlaylist(Song_Playlist playlist, int songId,Song song);
     public delegate void PauseSongFromPlaylist();
 
+    public delegate void LogOut();
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -48,23 +50,33 @@ namespace InTime
         public MainWindow()
         {
             InitializeComponent();
+            SetLoginScreen();
+
+
+        }
+        void SetLoginScreen()
+        {
             this.Visibility = Visibility.Hidden;
             LoginScreen tmp = new LoginScreen();
             tmp.OnWindowClosed += Tmp_OnWindowClosed;
             tmp.ShowDialog();
-            
         }
-
         private void Tmp_OnWindowClosed(Client_User user)
         {
             this.Visibility = Visibility.Visible;
-            Control_Bord.Child = new MainPlayerPage_Control(this,user);
+            MainPlayerPage_Control mainPlayerPage_Control = new MainPlayerPage_Control(this, user);
+            mainPlayerPage_Control.LogOutCall += MainPlayerPage_Control_LogOutCall;
+            Control_Bord.Child = mainPlayerPage_Control;
             Console.WriteLine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData));
         }
-        void AutoLogin()
+
+        private void MainPlayerPage_Control_LogOutCall()
         {
-           // Directory.Exists(Environment.UserName)
+            if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\InTime\\auto.log"))
+                File.Delete(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\InTime\\auto.log");
+            SetLoginScreen();
         }
+
         private void Window_StateChanged(object sender, EventArgs e)
         {
             if (this.WindowState == WindowState.Maximized)

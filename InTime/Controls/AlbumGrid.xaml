@@ -40,7 +40,7 @@
             <Storyboard x:Key="Selected_Animation" FillBehavior="HoldEnd">
                 <ColorAnimation
                        Duration="0:0:0.1" 
-                       To="#FF746767"
+                       To="#FFAC445C"
                        Storyboard.TargetProperty ="Background.Color"/>
                 <ColorAnimation
                        Duration="0:0:0.1" 
@@ -51,7 +51,7 @@
             <Storyboard x:Key="Unselected_Animation" FillBehavior="HoldEnd">
                 <ColorAnimation
                        Duration="0:0:0.1" 
-                       To="#FF2E2A2A"
+                       To="#FF272626"
                        Storyboard.TargetProperty ="Background.Color"/>
                 <ColorAnimation
                        Duration="0:0:0.1" 
@@ -103,7 +103,7 @@
 
             <Style x:Key="item_Container" TargetType="{x:Type ListBoxItem}">
 
-                <Setter Property="Background" Value="#FF2E2A2A"/>
+                <Setter Property="Background" Value="#FF272626"/>
                 <Setter Property="Foreground" Value="White"/>
                 <Setter Property="BorderThickness" Value="0,0,0,0"/>
                 <Setter Property="BorderBrush" Value="#FFFF0051"/>
