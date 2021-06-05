@@ -557,7 +557,7 @@ namespace InTime.Controls
                 //await client.AddGenrePlaylistAsync(new Song_Playlist { Title= "House", Image= File.ReadAllBytes("d:\\housemus.jpg") });
                 //await client.tmpAsync(File.ReadAllBytes("d:\\ger.jpg"));
                 
-                OnWindowClosed?.Invoke(await client.TryLoginAsync(new Login_User { Image = null, ExtensionData = null, Login = "BogdanLysenkoLox", Password = "dsa", Email = null }));
+                OnWindowClosed?.Invoke(await client.TryLoginAsync(new Login_User { Image = null, ExtensionData = null, Login = "BogdanLysenkoLox", Password = "Aa12345678!", Email = null }));
                 this.Close();
             }
             catch (FaultException<LoginFailed> ex)
